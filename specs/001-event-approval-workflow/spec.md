@@ -41,7 +41,7 @@ An approver uses a dashboard to review pending requests, inspect full request de
 
 ### User Story 3 - Track Status and Notifications (Priority: P3)
 
-Employees and approvers can track request history and receive notifications when request status changes.
+Employees and approvers can track request history; request submitters receive notifications when request status changes.
 
 **Why this priority**: Transparency and timely communication reduce follow-up overhead and ensure users act on current request status.
 
@@ -57,7 +57,7 @@ Employees and approvers can track request history and receive notifications when
 - A user attempts to submit a request where all estimated cost categories are zero or blank.
 - A user enters an invalid or unreachable event website.
 - An approver opens a request that was already decided by another approver moments earlier.
-- A request includes unusually large estimated costs that may indicate entry error.
+- A request includes unusually large estimated costs that may indicate entry error and require explicit confirmation before submission.
 - Notification delivery is delayed; users must still be able to see the latest status directly in request history.
 
 ## Requirements *(mandatory)*
@@ -76,7 +76,9 @@ Employees and approvers can track request history and receive notifications when
 - **FR-010**: System MUST record an immutable history of status changes, decisions, comments, and timestamps for each request.
 - **FR-011**: System MUST notify the request submitter whenever request status changes.
 - **FR-012**: System MUST make notification content include request identifier, updated status, and most recent approver comment.
-- **FR-013**: System MUST preserve submitted request details and decision history for audit and reporting use.
+- **FR-013**: System MUST retain submitted request details, decisions, history entries, and notifications indefinitely unless superseded by organizational policy.
+- **FR-018**: System MUST validate event website as a syntactically valid `https` URL before request submission.
+- **FR-019**: If event website reachability checks fail or time out, system MUST show a non-blocking warning and still allow submission.
 - **FR-014**: Feature MUST define code quality gates and fail release readiness checks when quality gates are not met.
 - **FR-015**: Feature MUST define required automated and manual test coverage for submission, approval, rejection, history, and notifications.
 - **FR-016**: Feature MUST define consistent behavior for loading, empty, error, and stale-data states across employee and approver views.

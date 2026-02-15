@@ -16,7 +16,7 @@ Build a Power Apps code app (React + TypeScript, Vite template) that lets employ
 **Target Platform**: Power Apps code apps runtime in browser (Edge/Chrome), local `npm run dev` for development  
 **Project Type**: Web application (single frontend delivered as Power Apps code app)  
 **Performance Goals**: Form submit p95 < 2s local/< 4s pro, dashboard load p95 < 3s local/< 5s pro, decision-to-history visibility < 10s, notification enqueue < 60s  
-**Constraints**: Same browser profile for local play + tenant auth; local network access permission in Edge/Chrome (Dec 2025 restriction); immutable history records; role-based access via existing tenant identity  
+**Constraints**: Same browser profile for local play + tenant auth; local network access permission in Edge/Chrome (Dec 2025 restriction); immutable history records; role-based access via existing tenant identity; indefinite data retention by default unless organizational policy overrides; event website validation requires `https` format and non-blocking warning on reachability timeout/failure  
 **Scale/Scope**: Initial rollout: up to 2k employees, 200 approvers, 20k requests/year, 5 primary screens (submit, history, dashboard, review, notifications)
 
 ## Constitution Check
@@ -27,7 +27,7 @@ Build a Power Apps code app (React + TypeScript, Vite template) that lets employ
 - Testing Gate: Required coverage includes request submit validation, approve/reject transitions, immutable history creation, notification payload correctness, and one regression test per fixed workflow defect.
 - UX Consistency Gate: Reuse one shared view-state pattern (`loading`, `empty`, `error`, `stale`) across employee + approver pages; acceptance checks for all four states per story.
 - Performance Gate: Track and report p95 timings for submit, dashboard load, status-change propagation; fail readiness if budgets exceed agreed thresholds.
-- Traceability Gate: Every endpoint/model in design maps to FR-001..FR-017 and stories P1..P3 in spec artifacts.
+- Traceability Gate: Every endpoint/model in design maps to FR-001..FR-019 and stories P1..P3 in spec artifacts.
 
 ## Project Structure
 
@@ -79,7 +79,7 @@ apps/event-approval-codeapp/
 - Testing Gate: PASS (unit/integration/contract/e2e matrix and mandatory regression tests defined).
 - UX Consistency Gate: PASS (state handling and acceptance checks defined in quickstart and data model transitions).
 - Performance Gate: PASS (measurable budgets and validation approach specified).
-- Traceability Gate: PASS (contracts + entities map directly to FR-001..FR-017).
+- Traceability Gate: PASS (contracts + entities map directly to FR-001..FR-019).
 
 ## Complexity Tracking
 
