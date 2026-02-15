@@ -17,13 +17,13 @@
 
 **Purpose**: Project initialization and baseline tooling for the Power Apps code app.
 
-- [ ] T001 Scaffold app from Vite template and commit base structure in apps/event-approval-codeapp/package.json
-- [ ] T002 Initialize Power Apps code app runtime metadata with pac in apps/event-approval-codeapp/src/app
-- [ ] T003 [P] Configure TypeScript strict mode and path aliases in apps/event-approval-codeapp/tsconfig.json
-- [ ] T004 [P] Configure ESLint + Prettier quality gates in apps/event-approval-codeapp/eslint.config.js
-- [ ] T005 [P] Add Vitest and Testing Library setup in apps/event-approval-codeapp/tests/unit/setupTests.ts
-- [ ] T006 [P] Add Playwright smoke configuration in apps/event-approval-codeapp/tests/e2e/playwright.config.ts
-- [ ] T007 [P] Add environment mode contract (`mock|dataverse`) in apps/event-approval-codeapp/src/services/api-client/environment.ts
+- [X] T001 Scaffold app from Vite template and commit base structure in apps/event-approval-codeapp/package.json
+- [X] T002 Initialize Power Apps code app runtime metadata with pac in apps/event-approval-codeapp/src/app
+- [X] T003 [P] Configure TypeScript strict mode and path aliases in apps/event-approval-codeapp/tsconfig.json
+- [X] T004 [P] Configure ESLint + Prettier quality gates in apps/event-approval-codeapp/eslint.config.js
+- [X] T005 [P] Add Vitest and Testing Library setup in apps/event-approval-codeapp/tests/unit/setupTests.ts
+- [X] T006 [P] Add Playwright smoke configuration in apps/event-approval-codeapp/tests/e2e/playwright.config.ts
+- [X] T007 [P] Add environment mode contract (`mock|dataverse`) in apps/event-approval-codeapp/src/services/api-client/environment.ts
 
 ---
 
@@ -33,16 +33,16 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete.
 
-- [ ] T008 Define domain types and enums from data model in apps/event-approval-codeapp/src/models/eventApproval.ts
-- [ ] T009 [P] Implement Zod shared schemas for request/decision/history validation in apps/event-approval-codeapp/src/validation/schemas.ts
-- [ ] T010 [P] Create shared API client interface + error model in apps/event-approval-codeapp/src/services/api-client/types.ts
-- [ ] T011 Implement IDataProvider contract and provider selector in apps/event-approval-codeapp/src/services/api-client/providerFactory.ts
-- [ ] T012 [P] Implement deterministic fixture seed for local mock mode in apps/event-approval-codeapp/src/services/mocks/fixtures.ts
-- [ ] T013 Implement MockDataProvider base CRUD and transition helpers in apps/event-approval-codeapp/src/services/mocks/mockDataProvider.ts
-- [ ] T014 [P] Implement DataverseDataProvider skeleton and method signatures in apps/event-approval-codeapp/src/services/dataverse/dataverseDataProvider.ts
-- [ ] T015 [P] Implement shared view-state (`loading|empty|error|stale`) hook in apps/event-approval-codeapp/src/app/useViewState.ts
-- [ ] T016 [P] Add app shell routing + role-aware navigation in apps/event-approval-codeapp/src/app/App.tsx
-- [ ] T017 Configure CI quality/test scripts for lint, typecheck, unit, integration, contract, e2e in apps/event-approval-codeapp/package.json
+- [X] T008 Define domain types and enums from data model in apps/event-approval-codeapp/src/models/eventApproval.ts
+- [X] T009 [P] Implement Zod shared schemas for request/decision/history validation in apps/event-approval-codeapp/src/validation/schemas.ts
+- [X] T010 [P] Create shared API client interface + error model in apps/event-approval-codeapp/src/services/api-client/types.ts
+- [X] T011 Implement IDataProvider contract and provider selector in apps/event-approval-codeapp/src/services/api-client/providerFactory.ts
+- [X] T012 [P] Implement deterministic fixture seed for local mock mode in apps/event-approval-codeapp/src/services/mocks/fixtures.ts
+- [X] T013 Implement MockDataProvider base CRUD and transition helpers in apps/event-approval-codeapp/src/services/mocks/mockDataProvider.ts
+- [X] T014 [P] Implement DataverseDataProvider skeleton and method signatures in apps/event-approval-codeapp/src/services/dataverse/dataverseDataProvider.ts
+- [X] T015 [P] Implement shared view-state (`loading|empty|error|stale`) hook in apps/event-approval-codeapp/src/app/useViewState.ts
+- [X] T016 [P] Add app shell routing + role-aware navigation in apps/event-approval-codeapp/src/app/App.tsx
+- [X] T017 Configure CI quality/test scripts for lint, typecheck, unit, integration, contract, e2e in apps/event-approval-codeapp/package.json
 
 **Checkpoint**: Foundation ready; user story work can start.
 
@@ -56,22 +56,22 @@
 
 ### Tests for User Story 1
 
-- [ ] T018 [P] [US1] Add contract tests for `POST /requests` and validation failures in apps/event-approval-codeapp/tests/contract/requests.submit.contract.test.ts
-- [ ] T019 [P] [US1] Add contract tests for `GET /requests/history` in apps/event-approval-codeapp/tests/contract/requests.history.contract.test.ts
-- [ ] T020 [P] [US1] Add integration test for valid submission journey in apps/event-approval-codeapp/tests/integration/submit-request.integration.test.ts
-- [ ] T021 [P] [US1] Add integration test for required-field and zero-cost validation errors in apps/event-approval-codeapp/tests/integration/submit-request.validation.integration.test.ts
-- [ ] T058 [P] [US1] Add integration tests for invalid website URL and non-blocking unreachable website warning in apps/event-approval-codeapp/tests/integration/submit-request.website-validation.integration.test.ts
+- [X] T018 [P] [US1] Add contract tests for `POST /requests` and validation failures in apps/event-approval-codeapp/tests/contract/requests.submit.contract.test.ts
+- [X] T019 [P] [US1] Add contract tests for `GET /requests/history` in apps/event-approval-codeapp/tests/contract/requests.history.contract.test.ts
+- [X] T020 [P] [US1] Add integration test for valid submission journey in apps/event-approval-codeapp/tests/integration/submit-request.integration.test.ts
+- [X] T021 [P] [US1] Add integration test for required-field and zero-cost validation errors in apps/event-approval-codeapp/tests/integration/submit-request.validation.integration.test.ts
+- [X] T058 [P] [US1] Add integration tests for invalid website URL and non-blocking unreachable website warning in apps/event-approval-codeapp/tests/integration/submit-request.website-validation.integration.test.ts
 
 ### Implementation for User Story 1
 
-- [ ] T022 [P] [US1] Implement submit-request form state and field components in apps/event-approval-codeapp/src/features/submit-request/SubmitRequestForm.tsx
-- [ ] T023 [US1] Implement submit-request schema and business validation rules in apps/event-approval-codeapp/src/features/submit-request/submitRequestSchema.ts
-- [ ] T059 [US1] Implement `https` website validation and non-blocking reachability warning behavior in apps/event-approval-codeapp/src/features/submit-request/submitRequestSchema.ts
-- [ ] T024 [US1] Implement request submission service (`submitRequest`) in apps/event-approval-codeapp/src/services/api-client/requests.ts
-- [ ] T025 [US1] Implement employee request history list service (`listMyRequests`) in apps/event-approval-codeapp/src/services/api-client/requests.ts
-- [ ] T026 [P] [US1] Implement submit-request page with shared view states in apps/event-approval-codeapp/src/features/submit-request/SubmitRequestPage.tsx
-- [ ] T027 [P] [US1] Implement request-history page for employees in apps/event-approval-codeapp/src/features/request-history/RequestHistoryPage.tsx
-- [ ] T028 [US1] Add US1 route wiring and navigation entries in apps/event-approval-codeapp/src/app/App.tsx
+- [X] T022 [P] [US1] Implement submit-request form state and field components in apps/event-approval-codeapp/src/features/submit-request/SubmitRequestForm.tsx
+- [X] T023 [US1] Implement submit-request schema and business validation rules in apps/event-approval-codeapp/src/features/submit-request/submitRequestSchema.ts
+- [X] T059 [US1] Implement `https` website validation and non-blocking reachability warning behavior in apps/event-approval-codeapp/src/features/submit-request/submitRequestSchema.ts
+- [X] T024 [US1] Implement request submission service (`submitRequest`) in apps/event-approval-codeapp/src/services/api-client/requests.ts
+- [X] T025 [US1] Implement employee request history list service (`listMyRequests`) in apps/event-approval-codeapp/src/services/api-client/requests.ts
+- [X] T026 [P] [US1] Implement submit-request page with shared view states in apps/event-approval-codeapp/src/features/submit-request/SubmitRequestPage.tsx
+- [X] T027 [P] [US1] Implement request-history page for employees in apps/event-approval-codeapp/src/features/request-history/RequestHistoryPage.tsx
+- [X] T028 [US1] Add US1 route wiring and navigation entries in apps/event-approval-codeapp/src/app/App.tsx
 
 **Checkpoint**: User Story 1 is independently functional and testable.
 
@@ -85,21 +85,21 @@
 
 ### Tests for User Story 2
 
-- [ ] T029 [P] [US2] Add contract tests for `GET /approvals/pending` in apps/event-approval-codeapp/tests/contract/approvals.pending.contract.test.ts
-- [ ] T030 [P] [US2] Add contract tests for `POST /approvals/{requestId}/decision` including `409` conflict in apps/event-approval-codeapp/tests/contract/approvals.decision.contract.test.ts
-- [ ] T031 [P] [US2] Add integration test for approve flow with comment in apps/event-approval-codeapp/tests/integration/approver-decision.approve.integration.test.ts
-- [ ] T032 [P] [US2] Add integration test for reject flow and stale version conflict in apps/event-approval-codeapp/tests/integration/approver-decision.reject-stale.integration.test.ts
-- [ ] T054 [P] [US2] Add integration tests for approver dashboard `loading|empty|error|stale` states in apps/event-approval-codeapp/tests/integration/approver-dashboard.view-states.integration.test.ts
-- [ ] T055 [P] [US2] Add integration tests for request review panel `loading|error|stale-conflict` state messaging in apps/event-approval-codeapp/tests/integration/request-review.view-states.integration.test.ts
+- [X] T029 [P] [US2] Add contract tests for `GET /approvals/pending` in apps/event-approval-codeapp/tests/contract/approvals.pending.contract.test.ts
+- [X] T030 [P] [US2] Add contract tests for `POST /approvals/{requestId}/decision` including `409` conflict in apps/event-approval-codeapp/tests/contract/approvals.decision.contract.test.ts
+- [X] T031 [P] [US2] Add integration test for approve flow with comment in apps/event-approval-codeapp/tests/integration/approver-decision.approve.integration.test.ts
+- [X] T032 [P] [US2] Add integration test for reject flow and stale version conflict in apps/event-approval-codeapp/tests/integration/approver-decision.reject-stale.integration.test.ts
+- [X] T054 [P] [US2] Add integration tests for approver dashboard `loading|empty|error|stale` states in apps/event-approval-codeapp/tests/integration/approver-dashboard.view-states.integration.test.ts
+- [X] T055 [P] [US2] Add integration tests for request review panel `loading|error|stale-conflict` state messaging in apps/event-approval-codeapp/tests/integration/request-review.view-states.integration.test.ts
 
 ### Implementation for User Story 2
 
-- [ ] T033 [P] [US2] Implement pending approvals service (`listPendingApprovals`) in apps/event-approval-codeapp/src/services/api-client/approvals.ts
-- [ ] T034 [P] [US2] Implement decision submission service (`decideRequest`) with version handling in apps/event-approval-codeapp/src/services/api-client/approvals.ts
-- [ ] T035 [P] [US2] Implement approver dashboard list and request selection UI in apps/event-approval-codeapp/src/features/approver-dashboard/ApproverDashboardPage.tsx
-- [ ] T036 [US2] Implement request review panel with approve/reject + mandatory comment form in apps/event-approval-codeapp/src/features/approver-dashboard/RequestReviewPanel.tsx
-- [ ] T037 [US2] Record immutable decision/history entries in mock provider transition path in apps/event-approval-codeapp/src/services/mocks/mockDataProvider.ts
-- [ ] T038 [US2] Add approver routes and access checks in apps/event-approval-codeapp/src/app/App.tsx
+- [X] T033 [P] [US2] Implement pending approvals service (`listPendingApprovals`) in apps/event-approval-codeapp/src/services/api-client/approvals.ts
+- [X] T034 [P] [US2] Implement decision submission service (`decideRequest`) with version handling in apps/event-approval-codeapp/src/services/api-client/approvals.ts
+- [X] T035 [P] [US2] Implement approver dashboard list and request selection UI in apps/event-approval-codeapp/src/features/approver-dashboard/ApproverDashboardPage.tsx
+- [X] T036 [US2] Implement request review panel with approve/reject + mandatory comment form in apps/event-approval-codeapp/src/features/approver-dashboard/RequestReviewPanel.tsx
+- [X] T037 [US2] Record immutable decision/history entries in mock provider transition path in apps/event-approval-codeapp/src/services/mocks/mockDataProvider.ts
+- [X] T038 [US2] Add approver routes and access checks in apps/event-approval-codeapp/src/app/App.tsx
 
 **Checkpoint**: User Stories 1 and 2 both operate independently.
 
@@ -113,21 +113,21 @@
 
 ### Tests for User Story 3
 
-- [ ] T039 [P] [US3] Add contract tests for `GET /requests/{requestId}/history` in apps/event-approval-codeapp/tests/contract/requests.timeline.contract.test.ts
-- [ ] T040 [P] [US3] Add contract tests for `GET /notifications` payload fields in apps/event-approval-codeapp/tests/contract/notifications.list.contract.test.ts
-- [ ] T041 [P] [US3] Add integration test for status-change notification creation in apps/event-approval-codeapp/tests/integration/notifications.status-change.integration.test.ts
-- [ ] T042 [P] [US3] Add integration test for chronological timeline rendering in apps/event-approval-codeapp/tests/integration/request-timeline.integration.test.ts
-- [ ] T056 [P] [US3] Add integration tests for request timeline `loading|empty|error|stale` states in apps/event-approval-codeapp/tests/integration/request-timeline.view-states.integration.test.ts
-- [ ] T057 [P] [US3] Add integration tests for notifications center `loading|empty|error|stale` states in apps/event-approval-codeapp/tests/integration/notifications-center.view-states.integration.test.ts
+- [X] T039 [P] [US3] Add contract tests for `GET /requests/{requestId}/history` in apps/event-approval-codeapp/tests/contract/requests.timeline.contract.test.ts
+- [X] T040 [P] [US3] Add contract tests for `GET /notifications` payload fields in apps/event-approval-codeapp/tests/contract/notifications.list.contract.test.ts
+- [X] T041 [P] [US3] Add integration test for status-change notification creation in apps/event-approval-codeapp/tests/integration/notifications.status-change.integration.test.ts
+- [X] T042 [P] [US3] Add integration test for chronological timeline rendering in apps/event-approval-codeapp/tests/integration/request-timeline.integration.test.ts
+- [X] T056 [P] [US3] Add integration tests for request timeline `loading|empty|error|stale` states in apps/event-approval-codeapp/tests/integration/request-timeline.view-states.integration.test.ts
+- [X] T057 [P] [US3] Add integration tests for notifications center `loading|empty|error|stale` states in apps/event-approval-codeapp/tests/integration/notifications-center.view-states.integration.test.ts
 
 ### Implementation for User Story 3
 
-- [ ] T043 [P] [US3] Implement request timeline service (`getRequestHistory`) in apps/event-approval-codeapp/src/services/api-client/history.ts
-- [ ] T044 [P] [US3] Implement notifications service (`listNotifications`) in apps/event-approval-codeapp/src/services/api-client/notifications.ts
-- [ ] T045 [P] [US3] Implement request timeline component in apps/event-approval-codeapp/src/features/request-history/RequestTimeline.tsx
-- [ ] T046 [P] [US3] Implement notifications center page with delivery status in apps/event-approval-codeapp/src/features/notifications/NotificationsPage.tsx
-- [ ] T047 [US3] Generate notification records on decision transitions in apps/event-approval-codeapp/src/services/mocks/mockDataProvider.ts
-- [ ] T048 [US3] Add notification and timeline navigation routes in apps/event-approval-codeapp/src/app/App.tsx
+- [X] T043 [P] [US3] Implement request timeline service (`getRequestHistory`) in apps/event-approval-codeapp/src/services/api-client/history.ts
+- [X] T044 [P] [US3] Implement notifications service (`listNotifications`) in apps/event-approval-codeapp/src/services/api-client/notifications.ts
+- [X] T045 [P] [US3] Implement request timeline component in apps/event-approval-codeapp/src/features/request-history/RequestTimeline.tsx
+- [X] T046 [P] [US3] Implement notifications center page with delivery status in apps/event-approval-codeapp/src/features/notifications/NotificationsPage.tsx
+- [X] T047 [US3] Generate notification records on decision transitions in apps/event-approval-codeapp/src/services/mocks/mockDataProvider.ts
+- [X] T048 [US3] Add notification and timeline navigation routes in apps/event-approval-codeapp/src/app/App.tsx
 
 **Checkpoint**: All user stories are independently functional.
 
@@ -137,14 +137,14 @@
 
 **Purpose**: Final hardening, docs, and release-readiness validation.
 
-- [ ] T049 [P] Add performance instrumentation for submit/dashboard/decision propagation in apps/event-approval-codeapp/src/app/perfMetrics.ts
-- [ ] T050 [P] Add smoke e2e covering end-to-end employee→approver→notification flow in apps/event-approval-codeapp/tests/e2e/event-approval.smoke.spec.ts
-- [ ] T051 [P] Add regression test template and bugfix policy notes in apps/event-approval-codeapp/tests/integration/README.md
-- [ ] T052 Update quickstart commands and local/pro mode runbook in specs/001-event-approval-workflow/quickstart.md
-- [ ] T053 Add requirements-to-tests traceability matrix (FR-001..FR-019, including FR-016 coverage by T054-T057) in specs/001-event-approval-workflow/checklists/requirements.md
-- [ ] T060 [P] Add contract tests for audit retrieval filters and indefinite-retention assumptions in apps/event-approval-codeapp/tests/contract/audit-retrieval.contract.test.ts
-- [ ] T061 Implement indefinite-retention behavior in mock provider lifecycle logic in apps/event-approval-codeapp/src/services/mocks/mockDataProvider.ts
-- [ ] T062 [P] Add integration tests validating records remain retrievable over time in apps/event-approval-codeapp/tests/integration/retention-policy.integration.test.ts
+- [X] T049 [P] Add performance instrumentation for submit/dashboard/decision propagation in apps/event-approval-codeapp/src/app/perfMetrics.ts
+- [X] T050 [P] Add smoke e2e covering end-to-end employee→approver→notification flow in apps/event-approval-codeapp/tests/e2e/event-approval.smoke.spec.ts
+- [X] T051 [P] Add regression test template and bugfix policy notes in apps/event-approval-codeapp/tests/integration/README.md
+- [X] T052 Update quickstart commands and local/pro mode runbook in specs/001-event-approval-workflow/quickstart.md
+- [X] T053 Add requirements-to-tests traceability matrix (FR-001..FR-019, including FR-016 coverage by T054-T057) in specs/001-event-approval-workflow/checklists/requirements.md
+- [X] T060 [P] Add contract tests for audit retrieval filters and indefinite-retention assumptions in apps/event-approval-codeapp/tests/contract/audit-retrieval.contract.test.ts
+- [X] T061 Implement indefinite-retention behavior in mock provider lifecycle logic in apps/event-approval-codeapp/src/services/mocks/mockDataProvider.ts
+- [X] T062 [P] Add integration tests validating records remain retrievable over time in apps/event-approval-codeapp/tests/integration/retention-policy.integration.test.ts
 
 ---
 

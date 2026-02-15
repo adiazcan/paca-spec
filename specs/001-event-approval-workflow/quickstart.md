@@ -6,7 +6,7 @@
 - Access to Power Platform environment(s)
 - Browser profile signed into tenant account
 
-## 2. Scaffold code app (React + TypeScript)
+## 2. Install and initialize
 ```bash
 npx degit github:microsoft/PowerAppsCodeApps/templates/vite apps/event-approval-codeapp
 cd apps/event-approval-codeapp
@@ -16,30 +16,34 @@ pac env select --environment <ENVIRONMENT_ID>
 pac code init --displayname "Event Approval Workflow"
 ```
 
-## 3. Local development mode (fully mocked)
-1. Set environment variable:
-   - PowerShell:
-     ```powershell
-     $env:VITE_APP_DATA_MODE="mock"
-     ```
-2. Start app:
+## 3. Local mode runbook (`mock`)
+1. Set mode in PowerShell:
+   ```powershell
+   $env:VITE_APP_DATA_MODE="mock"
+   ```
+2. Start local run:
    ```bash
    npm run dev
    ```
-3. Open `Local Play` URL in the same browser profile as the authenticated tenant.
-4. If browser blocks localhost access, allow local network access (Edge/Chrome Dec 2025 behavior).
+3. Validate local workflow:
+   ```bash
+   npm run test:contract
+   npm run test:integration
+   ```
+4. Open Local Play URL in the same browser profile used for tenant auth.
+5. If localhost is blocked, allow local network access in Edge/Chrome.
 
-## 4. Pro environment mode (Dataverse)
-1. Set environment variable:
-   - PowerShell:
-     ```powershell
-     $env:VITE_APP_DATA_MODE="dataverse"
-     ```
-2. Ensure Dataverse tables and relationships exist per `data-model.md`.
-3. Configure connector bindings/permissions for current environment.
-4. Run and verify:
+## 4. Pro mode runbook (`dataverse`)
+1. Set mode in PowerShell:
+   ```powershell
+   $env:VITE_APP_DATA_MODE="dataverse"
+   ```
+2. Ensure Dataverse schema is provisioned per `data-model.md`.
+3. Verify connector bindings and role permissions for employee + approver users.
+4. Start app and validate core checks:
    ```bash
    npm run dev
+   npm run test:e2e:smoke
    ```
 
 ## 5. Build and publish
@@ -70,3 +74,9 @@ npm run test:e2e:smoke
 - Dashboard load p95: < 3s local, < 5s pro
 - Decision history update visibility: < 10s
 - Notification delivery completion: < 60s
+
+## 9. Release-readiness checklist
+1. Run all quality gates in Section 6.
+2. Verify smoke e2e includes employee submit -> approver decision -> employee notification.
+3. Confirm retention validation tests pass for indefinite audit retrieval assumptions.
+4. Confirm traceability matrix in `checklists/requirements.md` is current for FR-001..FR-019.
