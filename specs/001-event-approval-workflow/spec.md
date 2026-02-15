@@ -54,11 +54,14 @@ Employees and approvers can track request history; request submitters receive no
 
 ### Edge Cases
 
-- A user attempts to submit a request where all estimated cost categories are zero or blank.
 - A user enters an invalid or unreachable event website.
 - An approver opens a request that was already decided by another approver moments earlier.
-- A request includes unusually large estimated costs that may indicate entry error and require explicit confirmation before submission.
 - Notification delivery is delayed; users must still be able to see the latest status directly in request history.
+
+### Deferred for This Release
+
+- Zero-cost submission confirmation behavior is deferred to a future iteration.
+- High-cost explicit confirmation thresholds and prompts are deferred to a future iteration.
 
 ## Requirements *(mandatory)*
 
