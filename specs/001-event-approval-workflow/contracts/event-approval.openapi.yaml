@@ -1,0 +1,327 @@
+openapi: 3.0.3
+info:
+  title: Event Approval Workflow API
+  version: 1.0.0
+  description: API contract for employee request submission, approver decisions, history, and notifications.
+servers:
+  - url: https://api.example.local
+    description: Local mock/dev server
+  - url: https://api.powerapps.pro
+    description: Pro environment (Dataverse-backed)
+tags:
+  - name: Requests
+  - name: Approvals
+  - name: Notifications
+paths:
+  /requests:
+    post:
+      tags: [Requests]
+      summary: Create and submit a new event approval request
+      operationId: submitRequest
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmitRequestInput'
+      responses:
+        '201':
+          description: Request submitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventApprovalRequest'
+        '400':
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /requests/{requestId}:
+    get:
+      tags: [Requests]
+      summary: Get full request details
+      operationId: getRequest
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+      responses:
+        '200':
+          description: Request details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventApprovalRequestDetail'
+        '404':
+          description: Not found
+  /requests/history:
+    get:
+      tags: [Requests]
+      summary: Get request history for current employee
+      operationId: listMyRequests
+      parameters:
+        - in: query
+          name: status
+          schema:
+            $ref: '#/components/schemas/RequestStatus'
+      responses:
+        '200':
+          description: Employee request history
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EventApprovalRequestSummary'
+  /approvals/pending:
+    get:
+      tags: [Approvals]
+      summary: List requests awaiting approver decision
+      operationId: listPendingApprovals
+      responses:
+        '200':
+          description: Pending requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EventApprovalRequestSummary'
+  /approvals/{requestId}/decision:
+    post:
+      tags: [Approvals]
+      summary: Approve or reject a pending request
+      operationId: decideRequest
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DecisionInput'
+      responses:
+        '200':
+          description: Decision recorded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApprovalDecision'
+        '409':
+          description: Conflict/stale data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /requests/{requestId}/history:
+    get:
+      tags: [Requests]
+      summary: Get immutable lifecycle history for a request
+      operationId: getRequestHistory
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+      responses:
+        '200':
+          description: Request timeline
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/RequestHistoryEntry'
+  /notifications:
+    get:
+      tags: [Notifications]
+      summary: List status notifications for current user
+      operationId: listNotifications
+      responses:
+        '200':
+          description: Notifications list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/StatusNotification'
+components:
+  parameters:
+    RequestId:
+      name: requestId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    RoleType:
+      type: string
+      enum: [speaker, organizer, assistant]
+    TransportationMode:
+      type: string
+      enum: [air, rail, car, bus, other]
+    RequestStatus:
+      type: string
+      enum: [submitted, approved, rejected]
+    CostEstimate:
+      type: object
+      required: [registration, travel, hotels, meals, other, currencyCode, total]
+      properties:
+        registration: { type: number, minimum: 0 }
+        travel: { type: number, minimum: 0 }
+        hotels: { type: number, minimum: 0 }
+        meals: { type: number, minimum: 0 }
+        other: { type: number, minimum: 0 }
+        currencyCode: { type: string, minLength: 3, maxLength: 3 }
+        total: { type: number, minimum: 0 }
+    SubmitRequestInput:
+      type: object
+      required:
+        - eventName
+        - eventWebsite
+        - role
+        - transportationMode
+        - origin
+        - destination
+        - costEstimate
+      properties:
+        eventName: { type: string, minLength: 3, maxLength: 200 }
+        eventWebsite: { type: string, format: uri }
+        role: { $ref: '#/components/schemas/RoleType' }
+        transportationMode: { $ref: '#/components/schemas/TransportationMode' }
+        origin: { type: string, minLength: 1, maxLength: 150 }
+        destination: { type: string, minLength: 1, maxLength: 150 }
+        costEstimate: { $ref: '#/components/schemas/CostEstimate' }
+    EventApprovalRequest:
+      type: object
+      required:
+        - requestId
+        - requestNumber
+        - submitterId
+        - eventName
+        - eventWebsite
+        - role
+        - transportationMode
+        - origin
+        - destination
+        - costEstimate
+        - status
+        - submittedAt
+      properties:
+        requestId: { type: string, format: uuid }
+        requestNumber: { type: string }
+        submitterId: { type: string }
+        eventName: { type: string }
+        eventWebsite: { type: string, format: uri }
+        role: { $ref: '#/components/schemas/RoleType' }
+        transportationMode: { $ref: '#/components/schemas/TransportationMode' }
+        origin: { type: string }
+        destination: { type: string }
+        costEstimate: { $ref: '#/components/schemas/CostEstimate' }
+        status: { $ref: '#/components/schemas/RequestStatus' }
+        submittedAt: { type: string, format: date-time }
+    EventApprovalRequestSummary:
+      type: object
+      required: [requestId, requestNumber, eventName, role, status, submittedAt]
+      properties:
+        requestId: { type: string, format: uuid }
+        requestNumber: { type: string }
+        eventName: { type: string }
+        role: { $ref: '#/components/schemas/RoleType' }
+        status: { $ref: '#/components/schemas/RequestStatus' }
+        submittedAt: { type: string, format: date-time }
+    EventApprovalRequestDetail:
+      allOf:
+        - $ref: '#/components/schemas/EventApprovalRequest'
+        - type: object
+          properties:
+            decisions:
+              type: array
+              items:
+                $ref: '#/components/schemas/ApprovalDecision'
+            history:
+              type: array
+              items:
+                $ref: '#/components/schemas/RequestHistoryEntry'
+    DecisionInput:
+      type: object
+      required: [decisionType, comment, version]
+      properties:
+        decisionType:
+          type: string
+          enum: [approved, rejected]
+        comment:
+          type: string
+          minLength: 1
+          maxLength: 2000
+        version:
+          type: integer
+          minimum: 1
+    ApprovalDecision:
+      type: object
+      required: [decisionId, requestId, approverId, decisionType, comment, decidedAt]
+      properties:
+        decisionId: { type: string, format: uuid }
+        requestId: { type: string, format: uuid }
+        approverId: { type: string }
+        decisionType:
+          type: string
+          enum: [approved, rejected]
+        comment: { type: string }
+        decidedAt: { type: string, format: date-time }
+    RequestHistoryEntry:
+      type: object
+      required: [historyEntryId, requestId, eventType, actorId, actorRole, occurredAt]
+      properties:
+        historyEntryId: { type: string, format: uuid }
+        requestId: { type: string, format: uuid }
+        eventType:
+          type: string
+          enum: [submitted, approved, rejected, commented, notification_sent, stale_detected]
+        actorId: { type: string }
+        actorRole:
+          type: string
+          enum: [employee, approver, system]
+        comment: { type: string, nullable: true }
+        metadata:
+          type: object
+          additionalProperties: true
+        occurredAt: { type: string, format: date-time }
+    StatusNotification:
+      type: object
+      required: [notificationId, requestId, recipientId, payload, deliveryStatus, createdAt]
+      properties:
+        notificationId: { type: string, format: uuid }
+        requestId: { type: string, format: uuid }
+        recipientId: { type: string }
+        payload:
+          type: object
+          required: [requestId, status, comment]
+          properties:
+            requestId: { type: string, format: uuid }
+            status: { $ref: '#/components/schemas/RequestStatus' }
+            comment: { type: string }
+        deliveryStatus:
+          type: string
+          enum: [queued, sent, failed]
+        createdAt: { type: string, format: date-time }
+        sentAt: { type: string, format: date-time, nullable: true }
+    ErrorResponse:
+      type: object
+      required: [code, message]
+      properties:
+        code: { type: string }
+        message: { type: string }
+        details:
+          type: object
+          additionalProperties: true
