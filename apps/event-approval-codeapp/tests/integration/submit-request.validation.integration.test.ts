@@ -16,7 +16,7 @@ describe('submit request validation errors', () => {
 
     render(createElement(SubmitRequestPage))
 
-    await user.click(screen.getByRole('button', { name: 'Submit request' }))
+    await user.click(screen.getByRole('button', { name: /Submit Request/i }))
 
     expect(
       await screen.findByText('Event name is required (min 3 characters).'),

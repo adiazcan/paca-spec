@@ -1,0 +1,28 @@
+:root {
+  --color-bg-page: #f9fafb;
+  --color-bg-card: #ffffff;
+  --color-bg-input: #f3f3f5;
+  --color-bg-muted: #f9fafb;
+  --color-bg-total: #eff6ff;
+  --color-border: rgba(0, 0, 0, 0.1);
+  --color-border-total: #bedbff;
+  --color-text-primary: #0a0a0a;
+  --color-text-secondary: #4a5565;
+  --color-text-muted: #717182;
+  --color-text-comment: #364153;
+  --color-text-empty: #6a7282;
+  --color-link: #155dfc;
+  --color-nav-active-bg: #030213;
+  --color-nav-active-text: #ffffff;
+  --color-status-pending: #f0b100;
+  --color-status-pending-count: #d08700;
+  --color-status-approved: #00c950;
+  --color-status-approved-count: #00a63e;
+  --color-status-rejected: #fb2c36;
+  --color-status-rejected-count: #e7000b;
+  --color-btn-approve: #00a63e;
+  --color-btn-reject: #d4183d;
+  --radius-card: 14px;
+  --radius-btn: 8px;
+  --font-family: 'Arimo', sans-serif;
+}

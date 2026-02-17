@@ -39,11 +39,24 @@ export const submitRequestInputSchema = z.object({
   costEstimate: costEstimateSchema,
 })
 
-export const decisionInputSchema = z.object({
-  decisionType: z.enum(decisionTypes),
-  comment: z.string().trim().min(1).max(2000),
-  version: z.number().int().min(1),
-})
+export const decisionInputSchema = z
+  .object({
+    decisionType: z.enum(decisionTypes),
+    comment: z.string().trim().max(2000),
+    version: z.number().int().min(1),
+  })
+  .superRefine((value, context) => {
+    if (
+      value.decisionType === 'rejected' &&
+      value.comment.trim().length === 0
+    ) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['comment'],
+        message: 'Comment is required when rejecting a request',
+      })
+    }
+  })
 
 export const requestHistoryEntrySchema = z.object({
   historyEntryId: z.uuid(),

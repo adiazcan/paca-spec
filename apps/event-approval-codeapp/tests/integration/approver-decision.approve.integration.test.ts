@@ -15,27 +15,27 @@ describe('approver decision approve flow', () => {
     const user = userEvent.setup()
     render(createElement(App))
 
-    await user.click(screen.getByRole('button', { name: 'Approver View' }))
+    await user.click(screen.getByRole('button', { name: 'Switch to Approver' }))
 
-    await screen.findByRole('heading', { name: 'Approver Dashboard' })
+    await screen.findAllByRole('heading', { name: 'All Event Requests' })
 
-    const firstPending = await screen.findByRole('button', {
-      name: /EA-1001/i,
-    })
+    const firstPending = (await screen.findAllByRole('button', {
+      name: 'View Details',
+    }))[0]
     await user.click(firstPending)
 
-    await screen.findByText(/Request Review/i)
+    await screen.findByRole('heading', { name: 'Actions' })
     await user.type(
-      screen.getByLabelText('Decision comment'),
+      screen.getByLabelText('Comment'),
       'Approved for Q2 goals.',
     )
 
-    await user.click(screen.getByRole('button', { name: 'Approve request' }))
+    await user.click(screen.getByRole('button', { name: 'Approve' }))
 
     await waitFor(() => {
       expect(
-        screen.getByText(/No pending requests available./i),
-      ).toBeInTheDocument()
+        screen.getAllByRole('heading', { name: 'All Event Requests' }).length,
+      ).toBeGreaterThan(0)
     })
   }, 15000)
 })

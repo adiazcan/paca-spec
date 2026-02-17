@@ -244,7 +244,13 @@ export function SubmitRequestForm({
         ) : null}
       </fieldset>
 
-      <button type="button" disabled={isSubmitting} onClick={() => { void handleSubmit() }}>
+      <button
+        type="button"
+        disabled={isSubmitting}
+        onClick={() => {
+          void handleSubmit()
+        }}
+      >
         {isSubmitting ? 'Submitting…' : 'Submit request'}
       </button>
     </div>

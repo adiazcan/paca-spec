@@ -320,6 +320,9 @@ export class DataverseDataProvider implements IDataProvider {
         role: roleTypeFromChoice(row.paca_rolecode),
         status: requestStatusFromChoice(row.paca_statuscode),
         submittedAt: row.paca_submittedat ?? null,
+        destination: row.paca_destination,
+        totalCost: Number(row.paca_totalcost),
+        submitterDisplayName: row.paca_submitterdisplayname,
       }))
     } catch (error) {
       handleDataverseError(error, 'List my requests failed')
@@ -330,6 +333,55 @@ export class DataverseDataProvider implements IDataProvider {
    * T025: Implement getRequest
    *
    * Retrieves full request details by ID with assembled CostEstimate
+
+  public async listAllRequests(): Promise<EventApprovalRequestSummary[]> {
+    try {
+      const [requestsResult, decisionsResult] = await Promise.all([
+        Paca_eventapprovalrequestsService.getAll({
+          orderBy: ['paca_submittedat desc'],
+        }),
+        Paca_approvaldecisionsService.getAll({
+          orderBy: ['paca_decidedat desc'],
+        }),
+      ])
+
+      requireSuccessResult(requestsResult, 'List all requests')
+      requireSuccessResult(decisionsResult, 'List approval decisions')
+
+      if (!requestsResult.data || requestsResult.data.length === 0) {
+        return []
+      }
+
+      const latestCommentsByRequestId = new Map<string, string>()
+
+      for (const decision of decisionsResult.data ?? []) {
+        const requestId = decision._paca_requestid_value
+
+        if (!requestId || latestCommentsByRequestId.has(requestId)) {
+          continue
+        }
+
+        latestCommentsByRequestId.set(requestId, decision.paca_comment)
+      }
+
+      return requestsResult.data.map((row) => ({
+        requestId: row.paca_eventapprovalrequestid,
+        requestNumber: row.paca_requestnumber,
+        eventName: row.paca_eventname,
+        role: roleTypeFromChoice(row.paca_rolecode),
+        status: requestStatusFromChoice(row.paca_statuscode),
+        submittedAt: row.paca_submittedat ?? null,
+        destination: row.paca_destination,
+        totalCost: Number(row.paca_totalcost),
+        submitterDisplayName: row.paca_submitterdisplayname,
+        latestComment: latestCommentsByRequestId.get(
+          row.paca_eventapprovalrequestid,
+        ),
+      }))
+    } catch (error) {
+      handleDataverseError(error, 'List all requests failed')
+    }
+  }
    */
   public async getRequest(requestId: string): Promise<EventApprovalRequest> {
     try {
@@ -376,6 +428,9 @@ export class DataverseDataProvider implements IDataProvider {
         role: roleTypeFromChoice(row.paca_rolecode),
         status: requestStatusFromChoice(row.paca_statuscode),
         submittedAt: row.paca_submittedat ?? null,
+        destination: row.paca_destination,
+        totalCost: Number(row.paca_totalcost),
+        submitterDisplayName: row.paca_submitterdisplayname,
       }))
     } catch (error) {
       handleDataverseError(error, 'List pending approvals failed')

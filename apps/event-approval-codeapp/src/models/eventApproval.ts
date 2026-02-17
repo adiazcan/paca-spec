@@ -91,6 +91,59 @@ export interface EventApprovalRequestSummary {
   role: RoleType
   status: RequestStatus
   submittedAt: string | null
+  destination?: string
+  totalCost?: number
+  submitterDisplayName?: string
+  latestComment?: string
+}
+
+export interface DashboardSummary {
+  total: number
+  pending: number
+  approved: number
+  rejected: number
+}
+
+export interface RequestCardData {
+  requestId: string
+  eventName: string
+  status: RequestStatus
+  role: RoleType
+  submittedAt: string | null
+  destination: string
+  totalCost: number
+  submitterDisplayName?: string
+  latestComment?: string
+}
+
+export interface RequestDetailData {
+  requestId: string
+  eventName: string
+  status: RequestStatus
+  submittedAt: string | null
+  submitterDisplayName: string
+  eventWebsite: string
+  role: RoleType
+  transportationMode: TransportationMode
+  origin: string
+  destination: string
+  costEstimate: CostEstimate
+  version: number
+}
+
+export const appScreens = [
+  'employee-dashboard',
+  'new-request',
+  'view-request',
+  'approver-dashboard',
+  'approve-request',
+] as const
+export type AppScreen = (typeof appScreens)[number]
+
+export interface AppNavState {
+  role: 'employee' | 'approver'
+  screen: AppScreen
+  selectedRequestId: string | null
 }
 
 export interface DecisionInput {

@@ -1,0 +1,79 @@
+.header {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  margin-bottom: 20px;
+  padding: 16px;
+}
+
+.topRow {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.title {
+  color: var(--color-text-primary);
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.userInfo {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+.userName {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+}
+
+.switchButton {
+  background: var(--color-bg-input);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font: inherit;
+  padding: 8px 12px;
+}
+
+.nav {
+  display: flex;
+  gap: 8px;
+}
+
+.navButton,
+.navActive {
+  align-items: center;
+  border-radius: var(--radius-btn);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  gap: 8px;
+  padding: 8px 12px;
+}
+
+.navButton {
+  background: var(--color-bg-card);
+  color: var(--color-text-primary);
+}
+
+.navActive {
+  background: var(--color-nav-active-bg);
+  color: var(--color-nav-active-text);
+}
+
+.badge {
+  background: var(--color-status-rejected);
+  border-radius: 999px;
+  color: var(--color-nav-active-text);
+  font-size: 0.75rem;
+  line-height: 1;
+  min-width: 20px;
+  padding: 4px 6px;
+  text-align: center;
+}

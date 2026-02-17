@@ -77,6 +77,7 @@ export interface IDataProvider {
     input: SubmitRequestInput,
     context?: ProviderContext,
   ): Promise<EventApprovalRequest>
+  listAllRequests(): Promise<EventApprovalRequestSummary[]>
   listMyRequests(
     options?: ListMyRequestsOptions,
     context?: ProviderContext,

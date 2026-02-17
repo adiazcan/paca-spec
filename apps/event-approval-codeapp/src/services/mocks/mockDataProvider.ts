@@ -120,6 +120,14 @@ export class MockDataProvider implements IDataProvider {
       .map((request) => this.toSummary(request))
   }
 
+  public async listAllRequests(): Promise<EventApprovalRequestSummary[]> {
+    return this.requests
+      .filter((request) =>
+        this.shouldRetainRecord(request.submittedAt ?? request.createdAt),
+      )
+      .map((request) => this.toSummary(request))
+  }
+
   public async getRequest(requestId: string): Promise<EventApprovalRequest> {
     const request = this.requests.find((item) => item.requestId === requestId)
 
@@ -271,6 +279,10 @@ export class MockDataProvider implements IDataProvider {
   private toSummary(
     request: EventApprovalRequest,
   ): EventApprovalRequestSummary {
+    const latestDecision = this.decisions
+      .filter((decision) => decision.requestId === request.requestId)
+      .sort((left, right) => right.decidedAt.localeCompare(left.decidedAt))[0]
+
     return {
       requestId: request.requestId,
       requestNumber: request.requestNumber,
@@ -278,6 +290,10 @@ export class MockDataProvider implements IDataProvider {
       role: request.role,
       status: request.status,
       submittedAt: request.submittedAt,
+      destination: request.destination,
+      totalCost: request.costEstimate.total,
+      submitterDisplayName: request.submitterDisplayName,
+      latestComment: latestDecision?.comment,
     }
   }
 

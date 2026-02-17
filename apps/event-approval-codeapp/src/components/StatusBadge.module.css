@@ -1,0 +1,24 @@
+.badge {
+  border-radius: var(--radius-btn);
+  color: #fff;
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 4px 10px;
+}
+
+.pending {
+  background: var(--color-status-pending);
+}
+
+.approved {
+  background: var(--color-status-approved);
+}
+
+.rejected {
+  background: var(--color-status-rejected);
+}
+
+.draft {
+  background: var(--color-text-muted);
+}

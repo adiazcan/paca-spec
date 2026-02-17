@@ -1,0 +1,43 @@
+.card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 16px;
+}
+
+.headerRow {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.title {
+  color: var(--color-text-primary);
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.meta {
+  color: var(--color-text-secondary);
+  margin: 4px 0;
+}
+
+.comment {
+  background: var(--color-bg-muted);
+  border-radius: var(--radius-btn);
+  color: var(--color-text-comment);
+  margin: 10px 0;
+  padding: 8px 10px;
+}
+
+.button {
+  background: var(--color-nav-active-bg);
+  border: 0;
+  border-radius: var(--radius-btn);
+  color: var(--color-nav-active-text);
+  cursor: pointer;
+  font: inherit;
+  margin-top: 10px;
+  padding: 8px 12px;
+}

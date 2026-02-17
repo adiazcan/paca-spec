@@ -1,0 +1,25 @@
+.container {
+  display: grid;
+  gap: 20px;
+}
+
+.header {
+  display: grid;
+  gap: 6px;
+}
+
+.title {
+  color: var(--color-text-primary);
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.requestList {
+  display: grid;
+  gap: 16px;
+}

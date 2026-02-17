@@ -1,4 +1,4 @@
-# Copilot Instructions (Compatibility Shim)
+﻿# Copilot Instructions (Compatibility Shim)
 
 This file is kept for tool compatibility only.
 
