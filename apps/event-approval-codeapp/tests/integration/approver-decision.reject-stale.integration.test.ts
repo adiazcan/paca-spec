@@ -20,9 +20,11 @@ describe('approver decision reject stale flow', () => {
 
     await user.click(screen.getByRole('button', { name: 'Switch to Approver' }))
 
-    const firstPending = (await screen.findAllByRole('button', {
-      name: 'View Details',
-    }))[0]
+    const firstPending = (
+      await screen.findAllByRole('button', {
+        name: 'View Details',
+      })
+    )[0]
     await user.click(firstPending)
 
     await screen.findByRole('heading', { name: 'Actions' })

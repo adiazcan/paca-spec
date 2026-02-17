@@ -19,16 +19,15 @@ describe('approver decision approve flow', () => {
 
     await screen.findAllByRole('heading', { name: 'All Event Requests' })
 
-    const firstPending = (await screen.findAllByRole('button', {
-      name: 'View Details',
-    }))[0]
+    const firstPending = (
+      await screen.findAllByRole('button', {
+        name: 'View Details',
+      })
+    )[0]
     await user.click(firstPending)
 
     await screen.findByRole('heading', { name: 'Actions' })
-    await user.type(
-      screen.getByLabelText('Comment'),
-      'Approved for Q2 goals.',
-    )
+    await user.type(screen.getByLabelText('Comment'), 'Approved for Q2 goals.')
 
     await user.click(screen.getByRole('button', { name: 'Approve' }))
 

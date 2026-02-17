@@ -330,9 +330,10 @@ export class DataverseDataProvider implements IDataProvider {
   }
 
   /**
-   * T025: Implement getRequest
+   * T025a: Implement listAllRequests
    *
-   * Retrieves full request details by ID with assembled CostEstimate
+   * Retrieves all requests for approver dashboard including latest decision comment
+   */
 
   public async listAllRequests(): Promise<EventApprovalRequestSummary[]> {
     try {
@@ -382,6 +383,11 @@ export class DataverseDataProvider implements IDataProvider {
       handleDataverseError(error, 'List all requests failed')
     }
   }
+
+  /**
+   * T025: Implement getRequest
+   *
+   * Retrieves full request details by ID with assembled CostEstimate
    */
   public async getRequest(requestId: string): Promise<EventApprovalRequest> {
     try {

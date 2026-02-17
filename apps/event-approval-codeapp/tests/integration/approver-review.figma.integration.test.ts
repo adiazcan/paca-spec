@@ -19,7 +19,9 @@ describe('approver review figma workflow', () => {
 
     await screen.findAllByRole('heading', { name: 'All Event Requests' })
 
-    await user.click((await screen.findAllByRole('button', { name: 'View Details' }))[0])
+    await user.click(
+      (await screen.findAllByRole('button', { name: 'View Details' }))[0],
+    )
     await screen.findByRole('heading', { name: 'Actions' })
 
     await user.click(screen.getByRole('button', { name: 'Approve' }))
@@ -38,7 +40,9 @@ describe('approver review figma workflow', () => {
     await user.click(screen.getByRole('button', { name: 'Switch to Approver' }))
     await screen.findAllByRole('heading', { name: 'All Event Requests' })
 
-    await user.click((await screen.findAllByRole('button', { name: 'View Details' }))[0])
+    await user.click(
+      (await screen.findAllByRole('button', { name: 'View Details' }))[0],
+    )
     await screen.findByRole('heading', { name: 'Actions' })
 
     await user.click(screen.getByRole('button', { name: 'Reject' }))
