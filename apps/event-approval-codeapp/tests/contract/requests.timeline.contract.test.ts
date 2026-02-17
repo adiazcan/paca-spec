@@ -10,9 +10,9 @@ describe('GET /requests/{requestId}/history contract', () => {
     const items = await provider.getRequestHistory(pending[0].requestId)
 
     expect(items.length).toBeGreaterThan(0)
-    expect(items.every((entry) => entry.requestId === pending[0].requestId)).toBe(
-      true,
-    )
+    expect(
+      items.every((entry) => entry.requestId === pending[0].requestId),
+    ).toBe(true)
   })
 
   it('returns timeline payload fields for each history entry', async () => {

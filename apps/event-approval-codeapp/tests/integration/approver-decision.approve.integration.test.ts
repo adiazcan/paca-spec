@@ -33,7 +33,9 @@ describe('approver decision approve flow', () => {
     await user.click(screen.getByRole('button', { name: 'Approve request' }))
 
     await waitFor(() => {
-      expect(screen.getByText(/No pending requests available./i)).toBeInTheDocument()
+      expect(
+        screen.getByText(/No pending requests available./i),
+      ).toBeInTheDocument()
     })
   }, 15000)
 })

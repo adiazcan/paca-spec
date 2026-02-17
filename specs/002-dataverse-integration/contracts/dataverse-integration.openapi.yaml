@@ -1,0 +1,435 @@
+openapi: 3.0.3
+info:
+  title: Event Approval Workflow — Dataverse Integration API
+  version: 2.0.0
+  description: >
+    API contract for the Dataverse-backed event approval workflow.
+    Extends the v1 contract with Dataverse column mappings, Entra ID identity
+    resolution, and Power Automate notification tracking. Operations map to
+    Power Apps SDK generated service calls against Dataverse custom tables.
+servers:
+  - url: https://api.example.local
+    description: Local mock (VITE_APP_DATA_MODE=mock)
+  - url: https://{environmentId}.crm.dynamics.com
+    description: Dataverse environment (VITE_APP_DATA_MODE=dataverse)
+    variables:
+      environmentId:
+        default: 3cfbd021-d1a1-eff9-9a6f-ad42a3afc90e
+tags:
+  - name: Requests
+    description: Event approval request CRUD
+  - name: Approvals
+    description: Approver decision operations
+  - name: Notifications
+    description: Status notification tracking
+  - name: Identity
+    description: Entra ID user resolution
+
+paths:
+  /requests:
+    post:
+      tags: [Requests]
+      summary: Submit a new event approval request
+      operationId: submitRequest
+      description: >
+        Creates a `paca_eventapprovalrequest` row in Dataverse with embedded cost
+        fields. Sets `submitterId` and `submitterDisplayName` from the authenticated
+        Entra ID user profile (Office 365 Users connector). Auto-generates
+        `requestNumber`, sets status to `submitted`, and version to `1`.
+        Also creates a `paca_requesthistoryentry` row for the `submitted` event.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmitRequestInput'
+      responses:
+        '201':
+          description: Request submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventApprovalRequest'
+        '400':
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /requests/history:
+    get:
+      tags: [Requests]
+      summary: List current user's requests
+      operationId: listMyRequests
+      description: >
+        Queries `paca_eventapprovalrequest` filtered by `paca_submitterid` matching
+        the authenticated user's Entra ID. Row-level security ensures employees
+        only see their own rows.
+      parameters:
+        - in: query
+          name: status
+          schema:
+            $ref: '#/components/schemas/RequestStatus'
+          description: Optional filter by request status
+      responses:
+        '200':
+          description: Employee request list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EventApprovalRequestSummary'
+
+  /requests/{requestId}:
+    get:
+      tags: [Requests]
+      summary: Get full request details
+      operationId: getRequest
+      description: >
+        Retrieves a single `paca_eventapprovalrequest` row by primary key.
+        Returns embedded cost fields assembled into a `CostEstimate` object.
+        Choice columns are mapped from integer values to string enum labels.
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+      responses:
+        '200':
+          description: Request details with embedded cost estimate
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventApprovalRequest'
+        '404':
+          description: Request not found
+
+  /requests/{requestId}/history:
+    get:
+      tags: [Requests]
+      summary: Get request lifecycle history
+      operationId: getRequestHistory
+      description: >
+        Queries `paca_requesthistoryentry` filtered by `paca_requestid` lookup.
+        History entries are immutable once created. Sorted by `paca_occurredat` ascending.
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+      responses:
+        '200':
+          description: Chronological history entries
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/RequestHistoryEntry'
+
+  /approvals/pending:
+    get:
+      tags: [Approvals]
+      summary: List requests awaiting decision
+      operationId: listPendingApprovals
+      description: >
+        Queries `paca_eventapprovalrequest` filtered by `paca_status = 1` (submitted).
+        Only users with the "Event Approver" security role can see all submitted
+        requests. Dataverse row-level security enforces this — employees receive
+        an empty result or permission error.
+      responses:
+        '200':
+          description: Pending approval requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EventApprovalRequestSummary'
+        '403':
+          description: Insufficient permissions (not an approver)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /approvals/{requestId}/decision:
+    post:
+      tags: [Approvals]
+      summary: Approve or reject a request
+      operationId: decideRequest
+      description: >
+        Sequential multi-record operation:
+        1. Creates `paca_approvaldecision` row with lookup to request.
+        2. Updates `paca_eventapprovalrequest` status and increments version.
+        3. Creates `paca_requesthistoryentry` row for the decision event.
+        Optimistic concurrency: rejects if `version` in input doesn't match stored version.
+        The status change triggers a Power Automate Cloud Flow for notifications.
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DecisionInput'
+      responses:
+        '200':
+          description: Decision recorded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApprovalDecision'
+        '409':
+          description: Version conflict or request no longer pending
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /notifications:
+    get:
+      tags: [Notifications]
+      summary: List notifications for current user
+      operationId: listNotifications
+      description: >
+        Queries `paca_statusnotification` filtered by `paca_recipientid` matching
+        the authenticated user. Notifications are created by Power Automate Cloud
+        Flow, not by app code.
+      responses:
+        '200':
+          description: User notifications
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/StatusNotification'
+
+  /identity/me:
+    get:
+      tags: [Identity]
+      summary: Get current user profile from Entra ID
+      operationId: getCurrentUser
+      description: >
+        Calls `Office365UsersService.MyProfile_V2("id,displayName")` to resolve
+        the authenticated user's identity from Entra ID via the Office 365 Users
+        connector. Used to populate `submitterId` and `submitterDisplayName`.
+      responses:
+        '200':
+          description: Current user profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+
+components:
+  parameters:
+    RequestId:
+      name: requestId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+
+  schemas:
+    RoleType:
+      type: string
+      enum: [speaker, organizer, assistant]
+
+    TransportationMode:
+      type: string
+      enum: [air, rail, car, bus, other]
+
+    RequestStatus:
+      type: string
+      enum: [draft, submitted, approved, rejected]
+
+    DecisionType:
+      type: string
+      enum: [approved, rejected]
+
+    HistoryEventType:
+      type: string
+      enum: [submitted, approved, rejected, commented, notification_sent, stale_detected]
+
+    ActorRole:
+      type: string
+      enum: [employee, approver, system]
+
+    NotificationChannel:
+      type: string
+      enum: [in_app, email, teams]
+
+    NotificationDeliveryStatus:
+      type: string
+      enum: [queued, sent, failed]
+
+    CostEstimate:
+      type: object
+      required: [registration, travel, hotels, meals, other, currencyCode, total]
+      properties:
+        registration: { type: number, minimum: 0 }
+        travel: { type: number, minimum: 0 }
+        hotels: { type: number, minimum: 0 }
+        meals: { type: number, minimum: 0 }
+        other: { type: number, minimum: 0 }
+        currencyCode: { type: string, minLength: 3, maxLength: 3 }
+        total: { type: number, minimum: 0 }
+
+    SubmitRequestInput:
+      type: object
+      required:
+        - eventName
+        - eventWebsite
+        - role
+        - transportationMode
+        - origin
+        - destination
+        - costEstimate
+      properties:
+        eventName: { type: string, minLength: 3, maxLength: 200 }
+        eventWebsite: { type: string, format: uri }
+        role: { $ref: '#/components/schemas/RoleType' }
+        transportationMode: { $ref: '#/components/schemas/TransportationMode' }
+        origin: { type: string, minLength: 1, maxLength: 150 }
+        destination: { type: string, minLength: 1, maxLength: 150 }
+        costEstimate: { $ref: '#/components/schemas/CostEstimate' }
+
+    EventApprovalRequest:
+      type: object
+      required:
+        - requestId
+        - requestNumber
+        - submitterId
+        - submitterDisplayName
+        - eventName
+        - eventWebsite
+        - role
+        - transportationMode
+        - origin
+        - destination
+        - costEstimate
+        - status
+        - createdAt
+        - updatedAt
+        - version
+      properties:
+        requestId: { type: string, format: uuid }
+        requestNumber: { type: string }
+        submitterId: { type: string }
+        submitterDisplayName: { type: string }
+        eventName: { type: string }
+        eventWebsite: { type: string, format: uri }
+        role: { $ref: '#/components/schemas/RoleType' }
+        transportationMode: { $ref: '#/components/schemas/TransportationMode' }
+        origin: { type: string }
+        destination: { type: string }
+        costEstimate: { $ref: '#/components/schemas/CostEstimate' }
+        status: { $ref: '#/components/schemas/RequestStatus' }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+        submittedAt: { type: string, format: date-time, nullable: true }
+        version: { type: integer, minimum: 1 }
+
+    EventApprovalRequestSummary:
+      type: object
+      required: [requestId, requestNumber, eventName, role, status, submittedAt]
+      properties:
+        requestId: { type: string, format: uuid }
+        requestNumber: { type: string }
+        eventName: { type: string }
+        role: { $ref: '#/components/schemas/RoleType' }
+        status: { $ref: '#/components/schemas/RequestStatus' }
+        submittedAt: { type: string, format: date-time, nullable: true }
+
+    DecisionInput:
+      type: object
+      required: [decisionType, comment, version]
+      properties:
+        decisionType: { $ref: '#/components/schemas/DecisionType' }
+        comment: { type: string, minLength: 1, maxLength: 2000 }
+        version: { type: integer, minimum: 1 }
+
+    ApprovalDecision:
+      type: object
+      required: [decisionId, requestId, approverId, approverDisplayName, decisionType, comment, decidedAt]
+      properties:
+        decisionId: { type: string, format: uuid }
+        requestId: { type: string, format: uuid }
+        approverId: { type: string }
+        approverDisplayName: { type: string }
+        decisionType: { $ref: '#/components/schemas/DecisionType' }
+        comment: { type: string }
+        decidedAt: { type: string, format: date-time }
+
+    RequestHistoryEntry:
+      type: object
+      required: [historyEntryId, requestId, eventType, actorId, actorRole, occurredAt]
+      properties:
+        historyEntryId: { type: string, format: uuid }
+        requestId: { type: string, format: uuid }
+        eventType: { $ref: '#/components/schemas/HistoryEventType' }
+        actorId: { type: string }
+        actorRole: { $ref: '#/components/schemas/ActorRole' }
+        comment: { type: string, nullable: true }
+        metadata:
+          type: object
+          additionalProperties: true
+          nullable: true
+        occurredAt: { type: string, format: date-time }
+
+    StatusNotification:
+      type: object
+      required: [notificationId, requestId, recipientId, channel, payload, deliveryStatus, createdAt]
+      properties:
+        notificationId: { type: string, format: uuid }
+        requestId: { type: string, format: uuid }
+        recipientId: { type: string }
+        channel: { $ref: '#/components/schemas/NotificationChannel' }
+        payload:
+          type: object
+          required: [requestId, status, comment]
+          properties:
+            requestId: { type: string, format: uuid }
+            status: { $ref: '#/components/schemas/RequestStatus' }
+            comment: { type: string }
+        deliveryStatus: { $ref: '#/components/schemas/NotificationDeliveryStatus' }
+        createdAt: { type: string, format: date-time }
+        sentAt: { type: string, format: date-time, nullable: true }
+
+    UserProfile:
+      type: object
+      required: [id, displayName]
+      properties:
+        id: { type: string, description: Entra ID object ID }
+        displayName: { type: string }
+        userPrincipalName: { type: string, format: email }
+        jobTitle: { type: string, nullable: true }
+
+    ErrorResponse:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+          enum: [VALIDATION_ERROR, NOT_FOUND, CONFLICT, FORBIDDEN, UNAUTHORIZED, NOT_IMPLEMENTED, UNKNOWN]
+        message: { type: string }
+        details:
+          type: object
+          additionalProperties: true

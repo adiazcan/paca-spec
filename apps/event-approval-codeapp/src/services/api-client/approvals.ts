@@ -27,9 +27,14 @@ export async function decideRequest(
   const parsed = decisionInputSchema.safeParse(input)
 
   if (!parsed.success) {
-    throw createApiError('VALIDATION_ERROR', 'Decision payload failed validation', 400, {
-      errors: parsed.error.issues,
-    })
+    throw createApiError(
+      'VALIDATION_ERROR',
+      'Decision payload failed validation',
+      400,
+      {
+        errors: parsed.error.issues,
+      },
+    )
   }
 
   const provider = createDataProvider()

@@ -52,10 +52,12 @@ describe('indefinite retention retrieval', () => {
       },
     })
 
-    expect(requests.some((request) => request.requestId === targetRequest.requestId)).toBe(
-      true,
-    )
-    expect(history.some((entry) => entry.occurredAt === historicalTimestamp)).toBe(true)
+    expect(
+      requests.some((request) => request.requestId === targetRequest.requestId),
+    ).toBe(true)
+    expect(
+      history.some((entry) => entry.occurredAt === historicalTimestamp),
+    ).toBe(true)
     expect(
       notifications.some(
         (notification) =>

@@ -9,7 +9,9 @@ describe('GET /notifications contract', () => {
     const items = await provider.listNotifications()
 
     expect(items.length).toBeGreaterThan(0)
-    expect(items.every((item) => item.recipientId === 'employee-001')).toBe(true)
+    expect(items.every((item) => item.recipientId === 'employee-001')).toBe(
+      true,
+    )
   })
 
   it('returns payload fields with request id, status, and comment', async () => {

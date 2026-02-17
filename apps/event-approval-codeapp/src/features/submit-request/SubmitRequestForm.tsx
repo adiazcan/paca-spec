@@ -1,4 +1,4 @@
-import { useMemo, useState, type ChangeEvent, type FormEvent } from 'react'
+import { useMemo, useState, type ChangeEvent } from 'react'
 
 import type { SubmitRequestInput } from '@/models/eventApproval'
 import { validateSubmitRequestInput } from '@/features/submit-request/submitRequestSchema'
@@ -70,9 +70,7 @@ export function SubmitRequestForm({
     setValues((current) => ({ ...current, [name]: value }))
   }
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
-    event.preventDefault()
-
+  async function handleSubmit(): Promise<void> {
     const payload: SubmitRequestInput = {
       eventName: values.eventName,
       eventWebsite: values.eventWebsite,
@@ -102,22 +100,37 @@ export function SubmitRequestForm({
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <div>
       <div>
         <label htmlFor="eventName">Event name</label>
-        <input id="eventName" name="eventName" value={values.eventName} onChange={updateField} />
+        <input
+          id="eventName"
+          name="eventName"
+          value={values.eventName}
+          onChange={updateField}
+        />
         {errors.eventName ? <p role="alert">{errors.eventName}</p> : null}
       </div>
 
       <div>
         <label htmlFor="eventWebsite">Event website</label>
-        <input id="eventWebsite" name="eventWebsite" value={values.eventWebsite} onChange={updateField} />
+        <input
+          id="eventWebsite"
+          name="eventWebsite"
+          value={values.eventWebsite}
+          onChange={updateField}
+        />
         {errors.eventWebsite ? <p role="alert">{errors.eventWebsite}</p> : null}
       </div>
 
       <div>
         <label htmlFor="role">Role</label>
-        <select id="role" name="role" value={values.role} onChange={updateField}>
+        <select
+          id="role"
+          name="role"
+          value={values.role}
+          onChange={updateField}
+        >
           {roleOptions.map((option) => (
             <option key={option} value={option}>
               {option}
@@ -144,35 +157,86 @@ export function SubmitRequestForm({
 
       <div>
         <label htmlFor="origin">Origin</label>
-        <input id="origin" name="origin" value={values.origin} onChange={updateField} />
+        <input
+          id="origin"
+          name="origin"
+          value={values.origin}
+          onChange={updateField}
+        />
         {errors.origin ? <p role="alert">{errors.origin}</p> : null}
       </div>
 
       <div>
         <label htmlFor="destination">Destination</label>
-        <input id="destination" name="destination" value={values.destination} onChange={updateField} />
+        <input
+          id="destination"
+          name="destination"
+          value={values.destination}
+          onChange={updateField}
+        />
         {errors.destination ? <p role="alert">{errors.destination}</p> : null}
       </div>
 
       <fieldset>
         <legend>Cost estimate</legend>
         <label htmlFor="registration">Registration</label>
-        <input id="registration" name="registration" type="number" min="0" value={values.registration} onChange={updateField} />
+        <input
+          id="registration"
+          name="registration"
+          type="number"
+          min="0"
+          value={values.registration}
+          onChange={updateField}
+        />
 
         <label htmlFor="travel">Travel</label>
-        <input id="travel" name="travel" type="number" min="0" value={values.travel} onChange={updateField} />
+        <input
+          id="travel"
+          name="travel"
+          type="number"
+          min="0"
+          value={values.travel}
+          onChange={updateField}
+        />
 
         <label htmlFor="hotels">Hotels</label>
-        <input id="hotels" name="hotels" type="number" min="0" value={values.hotels} onChange={updateField} />
+        <input
+          id="hotels"
+          name="hotels"
+          type="number"
+          min="0"
+          value={values.hotels}
+          onChange={updateField}
+        />
 
         <label htmlFor="meals">Meals</label>
-        <input id="meals" name="meals" type="number" min="0" value={values.meals} onChange={updateField} />
+        <input
+          id="meals"
+          name="meals"
+          type="number"
+          min="0"
+          value={values.meals}
+          onChange={updateField}
+        />
 
         <label htmlFor="other">Other</label>
-        <input id="other" name="other" type="number" min="0" value={values.other} onChange={updateField} />
+        <input
+          id="other"
+          name="other"
+          type="number"
+          min="0"
+          value={values.other}
+          onChange={updateField}
+        />
 
         <label htmlFor="currencyCode">Currency</label>
-        <input id="currencyCode" name="currencyCode" value={values.currencyCode} onChange={updateField} maxLength={3} />
+        <input
+          id="currencyCode"
+          name="currencyCode"
+          value={values.currencyCode}
+          onChange={updateField}
+          maxLength={3}
+        />
 
         <p>Total: {costTotal.toFixed(2)}</p>
         {errors['costEstimate.total'] ? (
@@ -180,9 +244,9 @@ export function SubmitRequestForm({
         ) : null}
       </fieldset>
 
-      <button type="submit" disabled={isSubmitting}>
+      <button type="button" disabled={isSubmitting} onClick={() => { void handleSubmit() }}>
         {isSubmitting ? 'Submitting…' : 'Submit request'}
       </button>
-    </form>
+    </div>
   )
 }

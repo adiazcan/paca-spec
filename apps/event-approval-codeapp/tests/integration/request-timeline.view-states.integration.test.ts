@@ -31,11 +31,15 @@ describe('request timeline view states', () => {
 
     render(createElement(RequestTimeline, { requestId: 'request-1' }))
 
-    expect(await screen.findByText(/No timeline events found\./i)).toBeInTheDocument()
+    expect(
+      await screen.findByText(/No timeline events found\./i),
+    ).toBeInTheDocument()
   })
 
   it('renders error state when timeline load fails', async () => {
-    getRequestHistoryMock.mockRejectedValueOnce(new Error('Unable to load request timeline.'))
+    getRequestHistoryMock.mockRejectedValueOnce(
+      new Error('Unable to load request timeline.'),
+    )
 
     render(createElement(RequestTimeline, { requestId: 'request-1' }))
 
@@ -45,12 +49,16 @@ describe('request timeline view states', () => {
   })
 
   it('renders stale state when timeline load returns conflict', async () => {
-    getRequestHistoryMock.mockRejectedValueOnce(new ApiError('CONFLICT', 'stale', 409))
+    getRequestHistoryMock.mockRejectedValueOnce(
+      new ApiError('CONFLICT', 'stale', 409),
+    )
 
     render(createElement(RequestTimeline, { requestId: 'request-1' }))
 
     expect(
-      await screen.findByText(/Request timeline is stale\. Reload and try again\./i),
+      await screen.findByText(
+        /Request timeline is stale\. Reload and try again\./i,
+      ),
     ).toBeInTheDocument()
   })
 })

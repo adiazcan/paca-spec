@@ -2,12 +2,42 @@
   "appId": "",
   "appDisplayName": "Event Approval Workflow",
   "description": null,
-  "environmentId": "3cfbd021-d1a1-eff9-9a6f-ad42a3afc90e",
+  "environmentId": "bd11e676-dda2-ee6a-8693-69c9ba750f19",
   "buildPath": "./dist",
   "buildEntryPoint": "index.html",
   "logoPath": "Default",
   "localAppUrl": "http://localhost:3000/",
   "region": "prod",
-  "connectionReferences": {},
-  "databaseReferences": {}
+  "connectionReferences": {
+    "3cc206b1-cf23-44af-b325-8be292047d31": {
+      "id": "/providers/Microsoft.PowerApps/apis/shared_office365users",
+      "displayName": "Office 365 Users",
+      "dataSources": ["office365users"],
+      "dataSets": {}
+    }
+  },
+  "databaseReferences": {
+    "default.cds": {
+      "dataSources": {
+        "eventapprovalrequests": {
+          "entitySetName": "paca_eventapprovalrequests",
+          "logicalName": "paca_eventapprovalrequest"
+        },
+        "approvaldecisions": {
+          "entitySetName": "paca_approvaldecisions",
+          "logicalName": "paca_approvaldecision"
+        },
+        "requesthistoryentries": {
+          "entitySetName": "paca_requesthistoryentries",
+          "logicalName": "paca_requesthistoryentry"
+        },
+        "statusnotifications": {
+          "entitySetName": "paca_statusnotifications",
+          "logicalName": "paca_statusnotification"
+        }
+      },
+      "environmentVariableName": ""
+    }
+  },
+  "version": "1.0"
 }

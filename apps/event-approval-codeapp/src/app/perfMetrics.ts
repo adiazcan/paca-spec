@@ -2,6 +2,7 @@ export type PerfMetricName =
   | 'submit-request'
   | 'dashboard-load'
   | 'decision-propagation'
+  | 'history-retrieval'
 
 export interface PerfMetricSample {
   name: PerfMetricName

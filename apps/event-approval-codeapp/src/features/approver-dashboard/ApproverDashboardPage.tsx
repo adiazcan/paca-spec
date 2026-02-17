@@ -10,7 +10,9 @@ import { RequestReviewPanel } from './RequestReviewPanel'
 export function ApproverDashboardPage() {
   const viewState = useViewState<EventApprovalRequestSummary[]>([])
   const { setLoading, setData, setError, setStale } = viewState
-  const [selectedRequestId, setSelectedRequestId] = useState<string | null>(null)
+  const [selectedRequestId, setSelectedRequestId] = useState<string | null>(
+    null,
+  )
 
   const loadPending = useCallback(async () => {
     setLoading()
@@ -54,10 +56,16 @@ export function ApproverDashboardPage() {
     <section>
       <h2>Pending Approvals</h2>
 
-      {viewState.isLoading ? <p role="status">Loading pending approvals…</p> : null}
-      {viewState.isEmpty ? <p role="status">No pending requests available.</p> : null}
+      {viewState.isLoading ? (
+        <p role="status">Loading pending approvals…</p>
+      ) : null}
+      {viewState.isEmpty ? (
+        <p role="status">No pending requests available.</p>
+      ) : null}
       {viewState.isError ? (
-        <p role="alert">{viewState.error?.message ?? 'Unable to load pending approvals.'}</p>
+        <p role="alert">
+          {viewState.error?.message ?? 'Unable to load pending approvals.'}
+        </p>
       ) : null}
       {viewState.isStale ? (
         <p role="status">Pending approvals are stale. Reload and try again.</p>
@@ -73,7 +81,8 @@ export function ApproverDashboardPage() {
                   onClick={() => setSelectedRequestId(request.requestId)}
                   type="button"
                 >
-                  {request.requestNumber} — {request.eventName} — {request.status}
+                  {request.requestNumber} — {request.eventName} —{' '}
+                  {request.status}
                 </button>
               </li>
             ))}

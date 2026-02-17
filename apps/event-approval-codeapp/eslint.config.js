@@ -8,7 +8,14 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['node_modules', 'dist', 'build', 'coverage', '**/*.min.js']),
+  globalIgnores([
+    'node_modules',
+    'dist',
+    'build',
+    'coverage',
+    '**/*.min.js',
+    'src/generated',
+  ]),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -23,6 +30,11 @@ export default defineConfig([
     },
     rules: {
       'prettier/prettier': 'error',
+      'react-hooks/set-state-in-effect': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
     },
     languageOptions: {
       ecmaVersion: 2020,

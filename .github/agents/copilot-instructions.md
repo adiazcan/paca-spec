@@ -1,30 +1,15 @@
-# paca-spec Development Guidelines
+# Copilot Instructions (Compatibility Shim)
 
-Auto-generated from all feature plans. Last updated: 2026-02-15
+This file is kept for tool compatibility only.
 
-## Active Technologies
+## Canonical Source
 
-- TypeScript 5.x, Node.js LTS (v20+), React 18 + `@microsoft/power-apps` runtime SDK (via `pac code init`), React, Vite, Vitest, Testing Library, Mock Service Worker (MSW), Zod for request validation (001-event-approval-workflow)
+Use [.github/copilot/copilot-instructions.md](../copilot/copilot-instructions.md) as the single source of truth for repository coding guidance.
 
-## Project Structure
+## Precedence Rule
 
-```text
-backend/
-frontend/
-tests/
-```
+If guidance in this file conflicts with the canonical file, the canonical file wins.
 
-## Commands
+## Maintenance Rule
 
-npm test; npm run lint
-
-## Code Style
-
-TypeScript 5.x, Node.js LTS (v20+), React 18: Follow standard conventions
-
-## Recent Changes
-
-- 001-event-approval-workflow: Added TypeScript 5.x, Node.js LTS (v20+), React 18 + `@microsoft/power-apps` runtime SDK (via `pac code init`), React, Vite, Vitest, Testing Library, Mock Service Worker (MSW), Zod for request validation
-
-<!-- MANUAL ADDITIONS START -->
-<!-- MANUAL ADDITIONS END -->
+Do not add project-specific rules here. Update only the canonical file.
