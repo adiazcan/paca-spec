@@ -7,7 +7,15 @@ import { listPendingApprovals } from '@/services/api-client/approvals'
 
 import { RequestReviewPanel } from './RequestReviewPanel'
 
-export function ApproverDashboardPage() {
+interface ApproverDashboardPageProps {
+  onPendingCountChange?: (count: number) => void
+  onViewRequest?: (requestId: string) => void
+}
+
+export function ApproverDashboardPage({
+  onPendingCountChange,
+  onViewRequest,
+}: ApproverDashboardPageProps) {
   const viewState = useViewState<EventApprovalRequestSummary[]>([])
   const { setLoading, setData, setError, setStale } = viewState
   const [selectedRequestId, setSelectedRequestId] = useState<string | null>(null)
@@ -18,6 +26,7 @@ export function ApproverDashboardPage() {
     try {
       const items = await listPendingApprovals()
       setData(items)
+      onPendingCountChange?.(items.length)
       setSelectedRequestId((currentSelection) => {
         if (items.length === 0) {
           return null
@@ -44,7 +53,7 @@ export function ApproverDashboardPage() {
           : new Error('Unable to load pending approvals.'),
       )
     }
-  }, [setData, setError, setLoading, setStale])
+  }, [onPendingCountChange, setData, setError, setLoading, setStale])
 
   useEffect(() => {
     void loadPending()
@@ -69,8 +78,14 @@ export function ApproverDashboardPage() {
             {viewState.data?.map((request) => (
               <li key={request.requestId}>
                 <button
-                  aria-pressed={selectedRequestId === request.requestId}
-                  onClick={() => setSelectedRequestId(request.requestId)}
+                  onClick={() => {
+                    if (onViewRequest) {
+                      onViewRequest(request.requestId)
+                      return
+                    }
+
+                    setSelectedRequestId(request.requestId)
+                  }}
                   type="button"
                 >
                   {request.requestNumber} — {request.eventName} — {request.status}
@@ -79,13 +94,15 @@ export function ApproverDashboardPage() {
             ))}
           </ul>
 
-          <RequestReviewPanel
-            onDecisionSaved={() => {
-              setSelectedRequestId(null)
-              void loadPending()
-            }}
-            requestId={selectedRequestId}
-          />
+          {!onViewRequest ? (
+            <RequestReviewPanel
+              onDecisionSaved={() => {
+                setSelectedRequestId(null)
+                void loadPending()
+              }}
+              requestId={selectedRequestId}
+            />
+          ) : null}
         </div>
       ) : null}
     </section>

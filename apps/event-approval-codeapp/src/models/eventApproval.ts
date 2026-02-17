@@ -91,6 +91,10 @@ export interface EventApprovalRequestSummary {
   role: RoleType
   status: RequestStatus
   submittedAt: string | null
+  submitterDisplayName?: string
+  destination?: string
+  costTotal?: number
+  latestComment?: string
 }
 
 export interface DecisionInput {

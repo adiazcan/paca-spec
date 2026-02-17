@@ -1,5 +1,5 @@
 import { createElement } from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it } from 'vitest'
 
@@ -15,25 +15,28 @@ describe('approver decision approve flow', () => {
     const user = userEvent.setup()
     render(createElement(App))
 
-    await user.click(screen.getByRole('button', { name: 'Approver View' }))
+    await user.click(screen.getByRole('button', { name: 'Switch to Approver' }))
+    await user.click(screen.getByRole('button', { name: /Approvals/i }))
 
-    await screen.findByRole('heading', { name: 'Approver Dashboard' })
+    await screen.findByRole('heading', { name: 'Pending Approvals' })
 
     const firstPending = await screen.findByRole('button', {
       name: /EA-1001/i,
     })
     await user.click(firstPending)
 
-    await screen.findByText(/Request Review/i)
+    await screen.findByRole('button', { name: /Approve Request/i })
     await user.type(
-      screen.getByLabelText('Decision comment'),
+      screen.getByPlaceholderText(
+        /Add a comment \(optional for approval, required for rejection\)\.\.\./i,
+      ),
       'Approved for Q2 goals.',
     )
 
-    await user.click(screen.getByRole('button', { name: 'Approve request' }))
+    await user.click(screen.getByRole('button', { name: 'Approve Request' }))
 
-    await waitFor(() => {
-      expect(screen.getByText(/No pending requests available./i)).toBeInTheDocument()
-    })
+    expect(
+      await screen.findByRole('heading', { name: /All Event Requests/i }),
+    ).toBeInTheDocument()
   }, 15000)
 })

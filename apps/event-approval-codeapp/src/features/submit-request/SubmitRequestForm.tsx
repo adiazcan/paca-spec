@@ -6,6 +6,23 @@ import { validateSubmitRequestInput } from '@/features/submit-request/submitRequ
 const roleOptions = ['speaker', 'organizer', 'assistant'] as const
 const transportationOptions = ['air', 'rail', 'car', 'bus', 'other'] as const
 
+const roleOptionLabels: Record<(typeof roleOptions)[number], string> = {
+  speaker: 'Speaker',
+  organizer: 'Organizer',
+  assistant: 'Assistant',
+}
+
+const transportationOptionLabels: Record<
+  (typeof transportationOptions)[number],
+  string
+> = {
+  air: 'Flight',
+  rail: 'Rail',
+  car: 'Car',
+  bus: 'Bus',
+  other: 'Other',
+}
+
 interface SubmitRequestFormValues {
   eventName: string
   eventWebsite: string
@@ -38,6 +55,7 @@ const initialValues: SubmitRequestFormValues = {
 
 export interface SubmitRequestFormProps {
   isSubmitting: boolean
+  onCancel?: () => void
   onSubmit: (payload: SubmitRequestInput) => Promise<void>
 }
 
@@ -48,6 +66,7 @@ function toNumber(value: string): number {
 
 export function SubmitRequestForm({
   isSubmitting,
+  onCancel,
   onSubmit,
 }: SubmitRequestFormProps) {
   const [values, setValues] = useState<SubmitRequestFormValues>(initialValues)
@@ -102,87 +121,239 @@ export function SubmitRequestForm({
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="eventName">Event name</label>
-        <input id="eventName" name="eventName" value={values.eventName} onChange={updateField} />
-        {errors.eventName ? <p role="alert">{errors.eventName}</p> : null}
-      </div>
+    <form className="form-body" onSubmit={handleSubmit}>
+      <section className="form-section">
+        <h3 className="form-section__heading">Event Information</h3>
 
-      <div>
-        <label htmlFor="eventWebsite">Event website</label>
-        <input id="eventWebsite" name="eventWebsite" value={values.eventWebsite} onChange={updateField} />
-        {errors.eventWebsite ? <p role="alert">{errors.eventWebsite}</p> : null}
-      </div>
+        <div className="form-group">
+          <label className="form-label" htmlFor="eventName">
+            Event Name *
+          </label>
+          <input
+            className="form-input"
+            id="eventName"
+            name="eventName"
+            onChange={updateField}
+            placeholder="e.g., Tech Conference 2026"
+            value={values.eventName}
+          />
+          {errors.eventName ? (
+            <p className="form-error" role="alert">
+              {errors.eventName}
+            </p>
+          ) : null}
+        </div>
 
-      <div>
-        <label htmlFor="role">Role</label>
-        <select id="role" name="role" value={values.role} onChange={updateField}>
-          {roleOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-      </div>
+        <div className="form-group">
+          <label className="form-label" htmlFor="eventWebsite">
+            Event Website *
+          </label>
+          <input
+            className="form-input"
+            id="eventWebsite"
+            name="eventWebsite"
+            onChange={updateField}
+            placeholder="https://example.com"
+            value={values.eventWebsite}
+          />
+          {errors.eventWebsite ? (
+            <p className="form-error" role="alert">
+              {errors.eventWebsite}
+            </p>
+          ) : null}
+        </div>
 
-      <div>
-        <label htmlFor="transportationMode">Transportation</label>
-        <select
-          id="transportationMode"
-          name="transportationMode"
-          value={values.transportationMode}
-          onChange={updateField}
-        >
-          {transportationOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-      </div>
+        <div className="form-group">
+          <label className="form-label" htmlFor="role">
+            Your Role *
+          </label>
+          <select
+            className="form-select"
+            id="role"
+            name="role"
+            onChange={updateField}
+            value={values.role}
+          >
+            {roleOptions.map((option) => (
+              <option key={option} value={option}>
+                {roleOptionLabels[option]}
+              </option>
+            ))}
+          </select>
+        </div>
+      </section>
 
-      <div>
-        <label htmlFor="origin">Origin</label>
-        <input id="origin" name="origin" value={values.origin} onChange={updateField} />
-        {errors.origin ? <p role="alert">{errors.origin}</p> : null}
-      </div>
+      <section className="form-section">
+        <h3 className="form-section__heading">Travel Details</h3>
 
-      <div>
-        <label htmlFor="destination">Destination</label>
-        <input id="destination" name="destination" value={values.destination} onChange={updateField} />
-        {errors.destination ? <p role="alert">{errors.destination}</p> : null}
-      </div>
+        <div className="form-group">
+          <label className="form-label" htmlFor="transportationMode">
+            Transportation Mode *
+          </label>
+          <select
+            className="form-select"
+            id="transportationMode"
+            name="transportationMode"
+            onChange={updateField}
+            value={values.transportationMode}
+          >
+            {transportationOptions.map((option) => (
+              <option key={option} value={option}>
+                {transportationOptionLabels[option]}
+              </option>
+            ))}
+          </select>
+        </div>
 
-      <fieldset>
-        <legend>Cost estimate</legend>
-        <label htmlFor="registration">Registration</label>
-        <input id="registration" name="registration" type="number" min="0" value={values.registration} onChange={updateField} />
+        <div className="form-row">
+          <div className="form-group">
+            <label className="form-label" htmlFor="origin">
+              Origin *
+            </label>
+            <input
+              className="form-input"
+              id="origin"
+              name="origin"
+              onChange={updateField}
+              placeholder="e.g., New York, NY"
+              value={values.origin}
+            />
+            {errors.origin ? (
+              <p className="form-error" role="alert">
+                {errors.origin}
+              </p>
+            ) : null}
+          </div>
 
-        <label htmlFor="travel">Travel</label>
-        <input id="travel" name="travel" type="number" min="0" value={values.travel} onChange={updateField} />
+          <div className="form-group">
+            <label className="form-label" htmlFor="destination">
+              Destination *
+            </label>
+            <input
+              className="form-input"
+              id="destination"
+              name="destination"
+              onChange={updateField}
+              placeholder="e.g., San Francisco, CA"
+              value={values.destination}
+            />
+            {errors.destination ? (
+              <p className="form-error" role="alert">
+                {errors.destination}
+              </p>
+            ) : null}
+          </div>
+        </div>
+      </section>
 
-        <label htmlFor="hotels">Hotels</label>
-        <input id="hotels" name="hotels" type="number" min="0" value={values.hotels} onChange={updateField} />
+      <section className="form-section">
+        <h3 className="form-section__heading">Estimated Costs</h3>
 
-        <label htmlFor="meals">Meals</label>
-        <input id="meals" name="meals" type="number" min="0" value={values.meals} onChange={updateField} />
+        <div className="form-row">
+          <div className="form-group">
+            <label className="form-label" htmlFor="registration">
+              Registration Fee ($)
+            </label>
+            <input
+              className="form-input"
+              id="registration"
+              min="0"
+              name="registration"
+              onChange={updateField}
+              placeholder="0.00"
+              type="number"
+              value={values.registration}
+            />
+          </div>
 
-        <label htmlFor="other">Other</label>
-        <input id="other" name="other" type="number" min="0" value={values.other} onChange={updateField} />
+          <div className="form-group">
+            <label className="form-label" htmlFor="travel">
+              Travel Cost ($)
+            </label>
+            <input
+              className="form-input"
+              id="travel"
+              min="0"
+              name="travel"
+              onChange={updateField}
+              placeholder="0.00"
+              type="number"
+              value={values.travel}
+            />
+          </div>
 
-        <label htmlFor="currencyCode">Currency</label>
-        <input id="currencyCode" name="currencyCode" value={values.currencyCode} onChange={updateField} maxLength={3} />
+          <div className="form-group">
+            <label className="form-label" htmlFor="hotels">
+              Hotel Cost ($)
+            </label>
+            <input
+              className="form-input"
+              id="hotels"
+              min="0"
+              name="hotels"
+              onChange={updateField}
+              placeholder="0.00"
+              type="number"
+              value={values.hotels}
+            />
+          </div>
 
-        <p>Total: {costTotal.toFixed(2)}</p>
+          <div className="form-group">
+            <label className="form-label" htmlFor="meals">
+              Meals ($)
+            </label>
+            <input
+              className="form-input"
+              id="meals"
+              min="0"
+              name="meals"
+              onChange={updateField}
+              placeholder="0.00"
+              type="number"
+              value={values.meals}
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label" htmlFor="other">
+              Other Expenses ($)
+            </label>
+            <input
+              className="form-input"
+              id="other"
+              min="0"
+              name="other"
+              onChange={updateField}
+              placeholder="0.00"
+              type="number"
+              value={values.other}
+            />
+          </div>
+
+          <div aria-hidden="true" />
+        </div>
+
+        <input id="currencyCode" name="currencyCode" type="hidden" value={values.currencyCode} />
+
+        <div className="cost-total-bar">
+          <span className="cost-total-bar__label">Total Estimated Cost:</span>
+          <span className="cost-total-bar__value">${costTotal.toFixed(2)}</span>
+        </div>
         {errors['costEstimate.total'] ? (
-          <p role="alert">{errors['costEstimate.total']}</p>
+          <p className="form-error" role="alert">
+            {errors['costEstimate.total']}
+          </p>
         ) : null}
-      </fieldset>
+      </section>
 
-      <button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? 'Submitting…' : 'Submit request'}
-      </button>
+      <div className="form-actions">
+        <button className="btn-primary" type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Submitting…' : 'Submit Request'}
+        </button>
+        <button className="btn-secondary" onClick={onCancel} type="button">
+          Cancel
+        </button>
+      </div>
     </form>
   )
 }

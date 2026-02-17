@@ -87,6 +87,43 @@ export function createFixtureSeed(): FixtureSeed {
     decidedAt: offsetIso(70),
   }
 
+  const requestRejected: EventApprovalRequest = {
+    requestId: deterministicUuid(103),
+    requestNumber: 'EA-1003',
+    submitterId: 'employee-002',
+    submitterDisplayName: 'Jordan Employee',
+    eventName: 'Modern Data Platform Forum',
+    eventWebsite: 'https://events.adventure-works.example/data-forum',
+    role: 'assistant',
+    transportationMode: 'car',
+    origin: 'Seattle',
+    destination: 'Portland',
+    costEstimate: {
+      registration: 200,
+      travel: 120,
+      hotels: 300,
+      meals: 90,
+      other: 40,
+      currencyCode: 'USD',
+      total: 750,
+    },
+    status: 'rejected',
+    createdAt: offsetIso(90),
+    updatedAt: offsetIso(130),
+    submittedAt: offsetIso(100),
+    version: 2,
+  }
+
+  const rejectedDecision: ApprovalDecision = {
+    decisionId: deterministicUuid(202),
+    requestId: requestRejected.requestId,
+    approverId: 'approver-001',
+    approverDisplayName: 'Ari Approver',
+    decisionType: 'rejected',
+    comment: 'Please revise budget and resubmit for next quarter.',
+    decidedAt: offsetIso(130),
+  }
+
   const historyEntries: RequestHistoryEntry[] = [
     {
       historyEntryId: deterministicUuid(301),
@@ -113,6 +150,23 @@ export function createFixtureSeed(): FixtureSeed {
       comment: decision.comment,
       occurredAt: offsetIso(70),
     },
+    {
+      historyEntryId: deterministicUuid(304),
+      requestId: requestRejected.requestId,
+      eventType: 'submitted',
+      actorId: 'employee-002',
+      actorRole: 'employee',
+      occurredAt: offsetIso(100),
+    },
+    {
+      historyEntryId: deterministicUuid(305),
+      requestId: requestRejected.requestId,
+      eventType: 'rejected',
+      actorId: 'approver-001',
+      actorRole: 'approver',
+      comment: rejectedDecision.comment,
+      occurredAt: offsetIso(130),
+    },
   ]
 
   const notifications: StatusNotification[] = [
@@ -130,11 +184,25 @@ export function createFixtureSeed(): FixtureSeed {
       createdAt: offsetIso(71),
       sentAt: offsetIso(72),
     },
+    {
+      notificationId: deterministicUuid(402),
+      requestId: requestRejected.requestId,
+      recipientId: requestRejected.submitterId,
+      channel: 'in_app',
+      payload: {
+        requestId: requestRejected.requestId,
+        status: requestRejected.status,
+        comment: rejectedDecision.comment,
+      },
+      deliveryStatus: 'sent',
+      createdAt: offsetIso(131),
+      sentAt: offsetIso(132),
+    },
   ]
 
   return {
-    requests: [requestSubmitted, requestApproved],
-    decisions: [decision],
+    requests: [requestSubmitted, requestApproved, requestRejected],
+    decisions: [decision, rejectedDecision],
     historyEntries,
     notifications,
   }

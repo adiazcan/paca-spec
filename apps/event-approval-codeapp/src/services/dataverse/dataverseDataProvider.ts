@@ -42,6 +42,14 @@ export class DataverseDataProvider implements IDataProvider {
     )
   }
 
+  public async listAllRequests(): Promise<EventApprovalRequestSummary[]> {
+    throw createApiError(
+      'NOT_IMPLEMENTED',
+      'Dataverse listAllRequests is not implemented yet.',
+      501,
+    )
+  }
+
   public async getRequest(_requestId: string): Promise<EventApprovalRequest> {
     void _requestId
     throw createApiError(

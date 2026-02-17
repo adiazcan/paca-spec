@@ -7,16 +7,16 @@ import App from '@/app/App'
 import { resetDataProviderCache } from '@/services/api-client/providerFactory'
 
 async function fillValidForm(user: ReturnType<typeof userEvent.setup>) {
-  await user.type(screen.getByLabelText('Event name'), 'Contoso Ignite 2026')
+  await user.type(screen.getByLabelText('Event Name *'), 'Contoso Ignite 2026')
   await user.type(
-    screen.getByLabelText('Event website'),
+    screen.getByLabelText('Event Website *'),
     'https://events.contoso.com/ignite-2026',
   )
-  await user.type(screen.getByLabelText('Origin'), 'Redmond')
-  await user.type(screen.getByLabelText('Destination'), 'London')
+  await user.type(screen.getByLabelText('Origin *'), 'Redmond')
+  await user.type(screen.getByLabelText('Destination *'), 'London')
 
-  await user.clear(screen.getByLabelText('Registration'))
-  await user.type(screen.getByLabelText('Registration'), '500')
+  await user.clear(screen.getByLabelText('Registration Fee ($)'))
+  await user.type(screen.getByLabelText('Registration Fee ($)'), '500')
 }
 
 describe('submit request journey', () => {
@@ -37,12 +37,14 @@ describe('submit request journey', () => {
 
     render(createElement(App))
 
+    await user.click(screen.getByRole('button', { name: 'New Request' }))
+
     await fillValidForm(user)
-    await user.click(screen.getByRole('button', { name: 'Submit request' }))
+    await user.click(screen.getByRole('button', { name: 'Submit Request' }))
 
     await screen.findByText(/submitted with status submitted/i)
 
-    await user.click(screen.getByRole('button', { name: 'My History' }))
+    await user.click(screen.getByRole('button', { name: 'Dashboard' }))
 
     await waitFor(() => {
       expect(screen.getByText(/Contoso Ignite 2026/)).toBeInTheDocument()

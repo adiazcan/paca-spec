@@ -6,7 +6,11 @@ import { listMyRequests } from '@/services/api-client/requests'
 
 import { RequestTimeline } from './RequestTimeline'
 
-export function RequestHistoryPage() {
+interface RequestHistoryPageProps {
+  onViewRequest?: (requestId: string) => void
+}
+
+export function RequestHistoryPage({ onViewRequest }: RequestHistoryPageProps) {
   const viewState = useViewState<EventApprovalRequestSummary[]>([])
   const { setLoading, setEmpty, setData, setError } = viewState
   const [selectedRequestId, setSelectedRequestId] = useState<string | null>(
@@ -94,6 +98,11 @@ export function RequestHistoryPage() {
                 {request.status}{' '}
                 <button
                   onClick={() => {
+                    if (onViewRequest) {
+                      onViewRequest(request.requestId)
+                      return
+                    }
+
                     setSelectedRequestId(request.requestId)
                     setSelectedRequestNumber(request.requestNumber)
                   }}

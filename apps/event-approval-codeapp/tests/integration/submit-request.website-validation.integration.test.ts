@@ -7,11 +7,11 @@ import { SubmitRequestPage } from '@/features/submit-request/SubmitRequestPage'
 import { resetDataProviderCache } from '@/services/api-client/providerFactory'
 
 async function fillCommonFields(user: ReturnType<typeof userEvent.setup>) {
-  await user.type(screen.getByLabelText('Event name'), 'Fabrikam AI Summit')
-  await user.type(screen.getByLabelText('Origin'), 'Seattle')
-  await user.type(screen.getByLabelText('Destination'), 'Tokyo')
-  await user.clear(screen.getByLabelText('Registration'))
-  await user.type(screen.getByLabelText('Registration'), '350')
+  await user.type(screen.getByLabelText('Event Name *'), 'Fabrikam AI Summit')
+  await user.type(screen.getByLabelText('Origin *'), 'Seattle')
+  await user.type(screen.getByLabelText('Destination *'), 'Tokyo')
+  await user.clear(screen.getByLabelText('Registration Fee ($)'))
+  await user.type(screen.getByLabelText('Registration Fee ($)'), '350')
 }
 
 describe('website validation behavior', () => {
@@ -28,9 +28,9 @@ describe('website validation behavior', () => {
     render(createElement(SubmitRequestPage))
 
     await fillCommonFields(user)
-    await user.type(screen.getByLabelText('Event website'), 'http://example.com')
+    await user.type(screen.getByLabelText('Event Website *'), 'http://example.com')
 
-    await user.click(screen.getByRole('button', { name: 'Submit request' }))
+    await user.click(screen.getByRole('button', { name: 'Submit Request' }))
 
     expect(await screen.findByText('Event website must use https.')).toBeInTheDocument()
   })
@@ -42,9 +42,9 @@ describe('website validation behavior', () => {
     render(createElement(SubmitRequestPage))
 
     await fillCommonFields(user)
-    await user.type(screen.getByLabelText('Event website'), 'https://example.com')
+    await user.type(screen.getByLabelText('Event Website *'), 'https://example.com')
 
-    await user.click(screen.getByRole('button', { name: 'Submit request' }))
+    await user.click(screen.getByRole('button', { name: 'Submit Request' }))
 
     expect(
       await screen.findByText(/Website could not be reached right now/i),

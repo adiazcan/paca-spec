@@ -15,12 +15,13 @@ describe('approver decision reject stale flow', () => {
     const user = userEvent.setup()
     render(createElement(App))
 
-    await user.click(screen.getByRole('button', { name: 'Approver View' }))
+    await user.click(screen.getByRole('button', { name: 'Switch to Approver' }))
+    await user.click(screen.getByRole('button', { name: /Approvals/i }))
 
     const firstPending = await screen.findByRole('button', { name: /EA-1001/i })
     await user.click(firstPending)
 
-    await screen.findByText(/Request Review/i)
+    await screen.findByRole('button', { name: /Reject Request/i })
 
     const provider = createDataProvider()
     const pending = await provider.listPendingApprovals()
@@ -32,14 +33,19 @@ describe('approver decision reject stale flow', () => {
       version: latest.version,
     })
 
-    await user.type(screen.getByLabelText('Decision comment'), 'Reject due to overlap')
-    await user.click(screen.getByRole('button', { name: 'Reject request' }))
+    await user.type(
+      screen.getByPlaceholderText(
+        /Add a comment \(optional for approval, required for rejection\)\.\.\./i,
+      ),
+      'Reject due to overlap',
+    )
+    await user.click(screen.getByRole('button', { name: 'Reject Request' }))
 
     expect(
       await screen.findByText(/already updated\. Reload and review the latest state\./i),
     ).toBeInTheDocument()
     expect(
-      screen.getByText(/Request details are stale because another decision was saved\./i),
+      screen.getByText(/Request details are stale because another update was saved\./i),
     ).toBeInTheDocument()
   }, 15000)
 })

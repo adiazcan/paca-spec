@@ -5,13 +5,13 @@ test('employee -> approver -> notification smoke flow', async ({ page }) => {
 
   await page.goto('/')
 
-  await page.getByLabel('Event name').fill('Global Reliability Summit 2026')
+  await page.getByLabel('Event Name *').fill('Global Reliability Summit 2026')
   await page
-    .getByLabel('Event website')
+    .getByLabel('Event Website *')
     .fill('https://events.contoso.com/reliability-2026')
-  await page.getByLabel('Origin').fill('Seattle')
-  await page.getByLabel('Destination').fill('London')
-  await page.getByLabel('Registration').fill('950')
+  await page.getByLabel('Origin *').fill('Seattle')
+  await page.getByLabel('Destination *').fill('London')
+  await page.getByLabel('Registration Fee ($)').fill('950')
 
   await page.locator('form button[type="submit"]').click()
   await expect(
