@@ -75,12 +75,8 @@
       },
       "host": "usa002-004.azure-apihub.net",
       "basePath": "/apim/office365users",
-      "schemes": [
-        "https"
-      ],
-      "produces": [
-        "application/json"
-      ],
+      "schemes": ["https"],
+      "produces": ["application/json"],
       "paths": {
         "/{connectionId}/codeless/v1.0/me": {
           "patch": {
@@ -273,9 +269,7 @@
         },
         "/{connectionId}/users/{userId}/relevantpeople": {
           "get": {
-            "tags": [
-              "People"
-            ],
+            "tags": ["People"],
             "summary": "Get relevant people",
             "description": "Get relevant people.",
             "operationId": "RelevantPeople",
@@ -323,9 +317,7 @@
         },
         "/{connectionId}/users/me": {
           "get": {
-            "tags": [
-              "Users"
-            ],
+            "tags": ["Users"],
             "summary": "Get my profile (V1)",
             "description": "Retrieves the profile of the current user.",
             "operationId": "MyProfile",
@@ -385,9 +377,7 @@
         },
         "/{connectionId}/users/{userId}": {
           "get": {
-            "tags": [
-              "Users"
-            ],
+            "tags": ["Users"],
             "summary": "Get user profile (V1)",
             "description": "Retrieves the profile of a specific user.",
             "operationId": "UserProfile",
@@ -455,9 +445,7 @@
         },
         "/{connectionId}/users/photo": {
           "get": {
-            "tags": [
-              "Users"
-            ],
+            "tags": ["Users"],
             "summary": "Get user photo metadata",
             "description": "Get user photo metadata.",
             "operationId": "UserPhotoMetadata",
@@ -504,9 +492,7 @@
         },
         "/{connectionId}/users/photo/value": {
           "get": {
-            "tags": [
-              "Users"
-            ],
+            "tags": ["Users"],
             "summary": "Get user photo (V1)",
             "description": "Retrieves the photo of the specified user if they have one.",
             "operationId": "UserPhoto",
@@ -557,9 +543,7 @@
         },
         "/{connectionId}/users/{userId}/manager": {
           "get": {
-            "tags": [
-              "Users"
-            ],
+            "tags": ["Users"],
             "summary": "Get manager (V1)",
             "description": "Retrieves the profile of the specified user's manager.",
             "operationId": "Manager",
@@ -627,9 +611,7 @@
         },
         "/{connectionId}/users/{userId}/directReports": {
           "get": {
-            "tags": [
-              "Users"
-            ],
+            "tags": ["Users"],
             "summary": "Get direct reports (V1)",
             "description": "Retrieves the user profiles of the specified user's direct reports.",
             "operationId": "DirectReports",
@@ -700,9 +682,7 @@
         },
         "/{connectionId}/users": {
           "get": {
-            "tags": [
-              "Users"
-            ],
+            "tags": ["Users"],
             "summary": "Search for users",
             "description": "Retrieves the user profiles that match the search term.",
             "operationId": "SearchUser",
@@ -784,9 +764,7 @@
         },
         "/{connectionId}/v2/users": {
           "get": {
-            "tags": [
-              "Users"
-            ],
+            "tags": ["Users"],
             "summary": "Search for users (V2)",
             "description": "Retrieves the user profiles that match the search term (V2).",
             "operationId": "SearchUserV2",
@@ -886,9 +864,7 @@
         },
         "/{connectionId}/testconnection": {
           "get": {
-            "tags": [
-              "Users"
-            ],
+            "tags": ["Users"],
             "summary": "Tests the connection",
             "description": "Tests the connection.",
             "operationId": "TestConnection",
@@ -1222,13 +1198,7 @@
                 "in": "header",
                 "description": "The HTTP method (default is GET).",
                 "default": "GET",
-                "enum": [
-                  "GET",
-                  "POST",
-                  "PUT",
-                  "PATCH",
-                  "DELETE"
-                ],
+                "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"],
                 "required": true,
                 "x-ms-summary": "Method",
                 "type": "string"
@@ -1655,9 +1625,7 @@
         },
         "User": {
           "description": "Represents a User object in the directory",
-          "required": [
-            "Id"
-          ],
+          "required": ["Id"],
           "type": "object",
           "properties": {
             "Id": {
@@ -2007,9 +1975,7 @@
       },
       "security": [
         {
-          "oauth2_auth": [
-            "Sites.Read.All User.ReadBasic.All User.ReadWrite"
-          ]
+          "oauth2_auth": ["Sites.Read.All User.ReadBasic.All User.ReadWrite"]
         }
       ],
       "tags": [],
@@ -2069,9 +2035,7 @@
         "current": "releases/v1.0.1788\\1.0.1788.4524"
       }
     },
-    "capabilities": [
-      "actions"
-    ],
+    "capabilities": ["actions"],
     "interfaces": {},
     "description": "Office 365 Users Connection provider lets you access user profiles in your organization using your Office 365 account. You can perform various actions such as get your profile, a user's profile, a user's manager or direct reports and also update a user profile.",
     "createdTime": "2024-03-26T19:22:24.6319451Z",
@@ -2084,9 +2048,7 @@
         "Read your full user profile",
         "Read the full profile of all users"
       ],
-      "wont": [
-        "Modify or delete any user-profile information"
-      ]
+      "wont": ["Modify or delete any user-profile information"]
     },
     "rateLimit": 0,
     "apiVersion": "None"

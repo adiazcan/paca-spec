@@ -235,21 +235,9 @@
           "x-ms-dataverse-type": "PicklistType",
           "x-ms-schema-name": "paca_actorrolecode",
           "required": true,
-          "enum": [
-            "Employee",
-            "Approver",
-            "System"
-          ],
-          "x-ms-enum-values": [
-            0,
-            1,
-            2
-          ],
-          "Color": [
-            null,
-            null,
-            null
-          ],
+          "enum": ["Employee", "Approver", "System"],
+          "x-ms-enum-values": [0, 1, 2],
+          "Color": [null, null, null],
           "x-ms-optionsetmetadataid": "05208463-620b-f111-8342-000d3a316a82",
           "x-ms-isGlobal": true,
           "x-ms-optionsetdisplayname": "Actor Role",
@@ -286,22 +274,8 @@
             "Notification Sent",
             "Stale Detected"
           ],
-          "x-ms-enum-values": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "Color": [
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-          ],
+          "x-ms-enum-values": [0, 1, 2, 3, 4, 5],
+          "Color": [null, null, null, null, null, null],
           "x-ms-optionsetmetadataid": "01208463-620b-f111-8342-000d3a316a82",
           "x-ms-isGlobal": true,
           "x-ms-optionsetdisplayname": "History Event Type",
@@ -364,18 +338,9 @@
           "x-ms-dataverse-type": "StateType",
           "x-ms-schema-name": "statecode",
           "required": true,
-          "enum": [
-            "Active",
-            "Inactive"
-          ],
-          "x-ms-enum-values": [
-            0,
-            1
-          ],
-          "Color": [
-            null,
-            null
-          ],
+          "enum": ["Active", "Inactive"],
+          "x-ms-enum-values": [0, 1],
+          "Color": [null, null],
           "x-ms-optionsetmetadataid": "c34622a1-620b-f111-8342-000d3a316a82",
           "x-ms-isGlobal": false,
           "x-ms-optionsetdisplayname": "Status",
@@ -395,18 +360,9 @@
           "x-ms-dataverse-attribute": "statuscode",
           "x-ms-dataverse-type": "StatusType",
           "x-ms-schema-name": "statuscode",
-          "enum": [
-            "Active",
-            "Inactive"
-          ],
-          "x-ms-enum-values": [
-            1,
-            2
-          ],
-          "Color": [
-            null,
-            null
-          ],
+          "enum": ["Active", "Inactive"],
+          "x-ms-enum-values": [1, 2],
+          "Color": [null, null],
           "x-ms-optionsetmetadataid": "cd4622a1-620b-f111-8342-000d3a316a82",
           "x-ms-isGlobal": false,
           "x-ms-optionsetdisplayname": "Status Reason",

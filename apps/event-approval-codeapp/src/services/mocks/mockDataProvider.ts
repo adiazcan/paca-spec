@@ -123,7 +123,10 @@ export class MockDataProvider implements IDataProvider {
   public async getRequest(requestId: string): Promise<EventApprovalRequest> {
     const request = this.requests.find((item) => item.requestId === requestId)
 
-    if (!request || !this.shouldRetainRecord(request.submittedAt ?? request.createdAt)) {
+    if (
+      !request ||
+      !this.shouldRetainRecord(request.submittedAt ?? request.createdAt)
+    ) {
       throw createApiError(
         'NOT_FOUND',
         `Request ${requestId} was not found`,
@@ -242,7 +245,9 @@ export class MockDataProvider implements IDataProvider {
           ? options.eventTypes.includes(entry.eventType)
           : true,
       )
-      .filter((entry) => (options?.from ? entry.occurredAt >= options.from : true))
+      .filter((entry) =>
+        options?.from ? entry.occurredAt >= options.from : true,
+      )
       .filter((entry) => (options?.to ? entry.occurredAt <= options.to : true))
       .sort((left, right) => left.occurredAt.localeCompare(right.occurredAt))
       .map((entry) => ({ ...entry }))

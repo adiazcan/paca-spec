@@ -28,27 +28,40 @@ describe('website validation behavior', () => {
     render(createElement(SubmitRequestPage))
 
     await fillCommonFields(user)
-    await user.type(screen.getByLabelText('Event website'), 'http://example.com')
+    await user.type(
+      screen.getByLabelText('Event website'),
+      'http://example.com',
+    )
 
     await user.click(screen.getByRole('button', { name: 'Submit request' }))
 
-    expect(await screen.findByText('Event website must use https.')).toBeInTheDocument()
+    expect(
+      await screen.findByText('Event website must use https.'),
+    ).toBeInTheDocument()
   })
 
   it('shows non-blocking warning when website is unreachable and still submits', async () => {
-    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('network timeout')))
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockRejectedValue(new Error('network timeout')),
+    )
 
     const user = userEvent.setup()
     render(createElement(SubmitRequestPage))
 
     await fillCommonFields(user)
-    await user.type(screen.getByLabelText('Event website'), 'https://example.com')
+    await user.type(
+      screen.getByLabelText('Event website'),
+      'https://example.com',
+    )
 
     await user.click(screen.getByRole('button', { name: 'Submit request' }))
 
     expect(
       await screen.findByText(/Website could not be reached right now/i),
     ).toBeInTheDocument()
-    expect(await screen.findByText(/submitted with status submitted/i)).toBeInTheDocument()
+    expect(
+      await screen.findByText(/submitted with status submitted/i),
+    ).toBeInTheDocument()
   })
 })

@@ -12,9 +12,7 @@
     "3cc206b1-cf23-44af-b325-8be292047d31": {
       "id": "/providers/Microsoft.PowerApps/apis/shared_office365users",
       "displayName": "Office 365 Users",
-      "dataSources": [
-        "office365users"
-      ],
+      "dataSources": ["office365users"],
       "dataSets": {}
     }
   },

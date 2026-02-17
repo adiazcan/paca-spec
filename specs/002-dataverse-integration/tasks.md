@@ -77,14 +77,14 @@
 
 ### Implementation for User Story 6
 
-- [ ] T012 [US6] Create the "Event Approver" security role in the Dataverse environment with organization-level read on `paca_eventapprovalrequest`, user-level create on `paca_approvaldecision` and `paca_requesthistoryentry`, and user-level write on `paca_eventapprovalrequest` (status and version fields)
-- [ ] T013 [US6] Configure default employee access: user-level read/create on own rows for `paca_eventapprovalrequest`, user-level read on own rows for `paca_approvaldecision`, `paca_requesthistoryentry`, and `paca_statusnotification`
-- [ ] T014 [US6] Assign the "Event Approver" role to designated approver test accounts and verify row-level access by querying requests as employee vs approver
+- [x] T012 [US6] Create the "Event Approver" security role in the Dataverse environment with organization-level read on `paca_eventapprovalrequest`, user-level create on `paca_approvaldecision` and `paca_requesthistoryentry`, and user-level write on `paca_eventapprovalrequest` (status and version fields)
+- [x] T013 [US6] Configure default employee access: user-level read/create on own rows for `paca_eventapprovalrequest`, user-level read on own rows for `paca_approvaldecision`, `paca_requesthistoryentry`, and `paca_statusnotification`
+- [x] T014 [US6] Assign the "Event Approver" role to designated approver test accounts and verify row-level access by querying requests as employee vs approver
 
 ### Tests for User Story 6 (REQUIRED) ⚠️
 
-- [ ] T014a [P] [US6] Create integration test verifying that an employee-scoped query returns only own rows and an approver-scoped query returns all submitted rows in `apps/event-approval-codeapp/tests/integration/dataverse-provider.integration.test.ts`
-- [ ] T014b [P] [US6] Create integration test verifying that an employee attempting `decideRequest` receives a `FORBIDDEN` error in `apps/event-approval-codeapp/tests/integration/dataverse-provider.integration.test.ts`
+- [x] T014a [P] [US6] Create integration test verifying that an employee-scoped query returns only own rows and an approver-scoped query returns all submitted rows in `apps/event-approval-codeapp/tests/integration/dataverse-provider.integration.test.ts`
+- [x] T014b [P] [US6] Create integration test verifying that an employee attempting `decideRequest` receives a `FORBIDDEN` error in `apps/event-approval-codeapp/tests/integration/dataverse-provider.integration.test.ts`
 
 **Checkpoint**: Security role provisioned — data provider can now enforce access boundaries
 
@@ -98,26 +98,26 @@
 
 ### Tests for User Story 2 (REQUIRED) ⚠️
 
-- [ ] T015 [P] [US2] Create integration test for `submitRequest` — verify a new `paca_eventapprovalrequest` row is created in Dataverse with embedded cost fields, correct submitter identity, status `submitted`, version `1`, and an accompanying `paca_requesthistoryentry` for the `submitted` event — in `apps/event-approval-codeapp/tests/integration/dataverse-provider.integration.test.ts`
-- [ ] T016 [P] [US2] Create integration test for `listMyRequests` — verify filtered results by current user and optional status filter — in `apps/event-approval-codeapp/tests/integration/dataverse-provider.integration.test.ts`
-- [ ] T017 [P] [US2] Create integration test for `getRequest` — verify full request details with assembled CostEstimate and choice-to-enum mappings — in `apps/event-approval-codeapp/tests/integration/dataverse-provider.integration.test.ts`
-- [ ] T018 [P] [US2] Create integration test for `listPendingApprovals` — verify only `submitted` status requests are returned — in `apps/event-approval-codeapp/tests/integration/dataverse-provider.integration.test.ts`
-- [ ] T019 [P] [US2] Create integration test for `decideRequest` — verify decision row created, request status updated, history entry created, and optimistic concurrency conflict detection — in `apps/event-approval-codeapp/tests/integration/dataverse-provider.integration.test.ts`
-- [ ] T020 [P] [US2] Create integration test for `getRequestHistory` — verify chronological order and filter options — in `apps/event-approval-codeapp/tests/integration/dataverse-provider.integration.test.ts`
-- [ ] T021 [P] [US2] Create integration test for `listNotifications` — verify notifications filtered by current user — in `apps/event-approval-codeapp/tests/integration/dataverse-provider.integration.test.ts`
-- [ ] T022 [P] [US2] Create contract test validating response shapes from `DataverseDataProvider` against the OpenAPI v2 spec in `apps/event-approval-codeapp/tests/contract/dataverse-contract.test.ts`
+- [x] T015 [P] [US2] Create integration test for `submitRequest` — verify a new `paca_eventapprovalrequest` row is created in Dataverse with embedded cost fields, correct submitter identity, status `submitted`, version `1`, and an accompanying `paca_requesthistoryentry` for the `submitted` event — in `apps/event-approval-codeapp/tests/integration/dataverse-provider.integration.test.ts`
+- [x] T016 [P] [US2] Create integration test for `listMyRequests` — verify filtered results by current user and optional status filter — in `apps/event-approval-codeapp/tests/integration/dataverse-provider.integration.test.ts`
+- [x] T017 [P] [US2] Create integration test for `getRequest` — verify full request details with assembled CostEstimate and choice-to-enum mappings — in `apps/event-approval-codeapp/tests/integration/dataverse-provider.integration.test.ts`
+- [x] T018 [P] [US2] Create integration test for `listPendingApprovals` — verify only `submitted` status requests are returned — in `apps/event-approval-codeapp/tests/integration/dataverse-provider.integration.test.ts`
+- [x] T019 [P] [US2] Create integration test for `decideRequest` — verify decision row created, request status updated, history entry created, and optimistic concurrency conflict detection — in `apps/event-approval-codeapp/tests/integration/dataverse-provider.integration.test.ts`
+- [x] T020 [P] [US2] Create integration test for `getRequestHistory` — verify chronological order and filter options — in `apps/event-approval-codeapp/tests/integration/dataverse-provider.integration.test.ts`
+- [x] T021 [P] [US2] Create integration test for `listNotifications` — verify notifications filtered by current user — in `apps/event-approval-codeapp/tests/integration/dataverse-provider.integration.test.ts`
+- [x] T022 [P] [US2] Create contract test validating response shapes from `DataverseDataProvider` against the OpenAPI v2 spec in `apps/event-approval-codeapp/tests/contract/dataverse-contract.test.ts`
 
 ### Implementation for User Story 2
 
-- [ ] T023 [US2] Implement `submitRequest` in `apps/event-approval-codeapp/src/services/dataverse/dataverseDataProvider.ts` — use `PacaEventapprovalrequestService.create()` with mapped input fields, auto-generate `requestNumber`, set status to `submitted` and version to `1`, populate `submitterId`/`submitterDisplayName` from identity service, then create a `paca_requesthistoryentry` row via `PacaRequesthistoryentryService.create()` with the `submitted` event type
-- [ ] T024 [US2] Implement `listMyRequests` in `apps/event-approval-codeapp/src/services/dataverse/dataverseDataProvider.ts` — use `PacaEventapprovalrequestService.getAll()` with OData filter on `paca_submitterid` matching current user, optional status filter, and map results to `EventApprovalRequestSummary[]`
-- [ ] T025 [US2] Implement `getRequest` in `apps/event-approval-codeapp/src/services/dataverse/dataverseDataProvider.ts` — use `PacaEventapprovalrequestService.get()` by primary key and map Dataverse row to `EventApprovalRequest` with assembled `CostEstimate`
-- [ ] T026 [US2] Implement `listPendingApprovals` in `apps/event-approval-codeapp/src/services/dataverse/dataverseDataProvider.ts` — use `PacaEventapprovalrequestService.getAll()` with OData filter `paca_status eq 1` (submitted) and map to `EventApprovalRequestSummary[]`
-- [ ] T027 [US2] Implement `decideRequest` in `apps/event-approval-codeapp/src/services/dataverse/dataverseDataProvider.ts` — sequential operations: (1) read current request and assert version matches, (2) create `paca_approvaldecision` row via `PacaApprovaldecisionService.create()` with lookup to request, (3) update request status and increment version via `PacaEventapprovalrequestService.update()`, (4) create `paca_requesthistoryentry` row for the decision event; handle concurrency conflict and return appropriate `CONFLICT` error
-- [ ] T028 [US2] Implement `getRequestHistory` in `apps/event-approval-codeapp/src/services/dataverse/dataverseDataProvider.ts` — use `PacaRequesthistoryentryService.getAll()` filtered by `paca_requestid` lookup, sorted by `paca_occurredat` ascending, with optional eventType and date range filters
-- [ ] T029 [US2] Implement `listNotifications` in `apps/event-approval-codeapp/src/services/dataverse/dataverseDataProvider.ts` — use `PacaStatusnotificationService.getAll()` filtered by `paca_recipientid` matching current user, parse JSON `paca_payload` into `NotificationPayload`
-- [ ] T030 [US2] Add error handling to all `DataverseDataProvider` methods — map Dataverse service errors to `ApiError` codes (`NOT_FOUND`, `CONFLICT`, `FORBIDDEN`, `UNKNOWN`), handle network failures with user-friendly messages following existing UX patterns in `apps/event-approval-codeapp/src/services/dataverse/dataverseDataProvider.ts`
-- [ ] T030a [US2] Add graceful startup error when `VITE_APP_DATA_MODE=dataverse` but Dataverse environment is not provisioned or unreachable — display a clear configuration error instead of crashing, in `apps/event-approval-codeapp/src/services/dataverse/dataverseDataProvider.ts`
+- [x] T023 [US2] Implement `submitRequest` in `apps/event-approval-codeapp/src/services/dataverse/dataverseDataProvider.ts` — use `PacaEventapprovalrequestService.create()` with mapped input fields, auto-generate `requestNumber`, set status to `submitted` and version to `1`, populate `submitterId`/`submitterDisplayName` from identity service, then create a `paca_requesthistoryentry` row via `PacaRequesthistoryentryService.create()` with the `submitted` event type
+- [x] T024 [US2] Implement `listMyRequests` in `apps/event-approval-codeapp/src/services/dataverse/dataverseDataProvider.ts` — use `PacaEventapprovalrequestService.getAll()` with OData filter on `paca_submitterid` matching current user, optional status filter, and map results to `EventApprovalRequestSummary[]`
+- [x] T025 [US2] Implement `getRequest` in `apps/event-approval-codeapp/src/services/dataverse/dataverseDataProvider.ts` — use `PacaEventapprovalrequestService.get()` by primary key and map Dataverse row to `EventApprovalRequest` with assembled `CostEstimate`
+- [x] T026 [US2] Implement `listPendingApprovals` in `apps/event-approval-codeapp/src/services/dataverse/dataverseDataProvider.ts` — use `PacaEventapprovalrequestService.getAll()` with OData filter `paca_status eq 1` (submitted) and map to `EventApprovalRequestSummary[]`
+- [x] T027 [US2] Implement `decideRequest` in `apps/event-approval-codeapp/src/services/dataverse/dataverseDataProvider.ts` — sequential operations: (1) read current request and assert version matches, (2) create `paca_approvaldecision` row via `PacaApprovaldecisionService.create()` with lookup to request, (3) update request status and increment version via `PacaEventapprovalrequestService.update()`, (4) create `paca_requesthistoryentry` row for the decision event; handle concurrency conflict and return appropriate `CONFLICT` error
+- [x] T028 [US2] Implement `getRequestHistory` in `apps/event-approval-codeapp/src/services/dataverse/dataverseDataProvider.ts` — use `PacaRequesthistoryentryService.getAll()` filtered by `paca_requestid` lookup, sorted by `paca_occurredat` ascending, with optional eventType and date range filters
+- [x] T029 [US2] Implement `listNotifications` in `apps/event-approval-codeapp/src/services/dataverse/dataverseDataProvider.ts` — use `PacaStatusnotificationService.getAll()` filtered by `paca_recipientid` matching current user, parse JSON `paca_payload` into `NotificationPayload`
+- [x] T030 [US2] Add error handling to all `DataverseDataProvider` methods — map Dataverse service errors to `ApiError` codes (`NOT_FOUND`, `CONFLICT`, `FORBIDDEN`, `UNKNOWN`), handle network failures with user-friendly messages following existing UX patterns in `apps/event-approval-codeapp/src/services/dataverse/dataverseDataProvider.ts`
+- [x] T030a [US2] Add graceful startup error when `VITE_APP_DATA_MODE=dataverse` but Dataverse environment is not provisioned or unreachable — display a clear configuration error instead of crashing, in `apps/event-approval-codeapp/src/services/dataverse/dataverseDataProvider.ts`
 
 **Checkpoint**: All 7 `IDataProvider` methods implemented in Dataverse mode — submit, list, get, approve, reject, history, and notifications work against real data
 
@@ -131,13 +131,13 @@
 
 ### Tests for User Story 3 (REQUIRED) ⚠️
 
-- [ ] T031 [P] [US3] Create integration test verifying `providerFactory` returns `MockDataProvider` when `VITE_APP_DATA_MODE=mock` and `DataverseDataProvider` when `VITE_APP_DATA_MODE=dataverse` in `apps/event-approval-codeapp/tests/integration/dataverse-provider.integration.test.ts`
+- [x] T031 [P] [US3] Create integration test verifying `providerFactory` returns `MockDataProvider` when `VITE_APP_DATA_MODE=mock` and `DataverseDataProvider` when `VITE_APP_DATA_MODE=dataverse` in `apps/event-approval-codeapp/tests/integration/dataverse-provider.integration.test.ts`
 
 ### Implementation for User Story 3
 
-- [ ] T032 [US3] Verify `apps/event-approval-codeapp/src/services/api-client/environment.ts` correctly resolves `mock` as default and `dataverse` when `VITE_APP_DATA_MODE=dataverse` — no changes expected, validate existing logic
-- [ ] T033 [US3] Verify `apps/event-approval-codeapp/src/services/api-client/providerFactory.ts` instantiates `DataverseDataProvider` when mode is `dataverse` — no changes expected, validate existing logic
-- [ ] T034 [US3] Update build/deployment configuration to set `VITE_APP_DATA_MODE=dataverse` as default for the dev environment build in `apps/event-approval-codeapp/vite.config.ts` or `.env.production`
+- [x] T032 [US3] Verify `apps/event-approval-codeapp/src/services/api-client/environment.ts` correctly resolves `mock` as default and `dataverse` when `VITE_APP_DATA_MODE=dataverse` — no changes expected, validate existing logic
+- [x] T033 [US3] Verify `apps/event-approval-codeapp/src/services/api-client/providerFactory.ts` instantiates `DataverseDataProvider` when mode is `dataverse` — no changes expected, validate existing logic
+- [x] T034 [US3] Update build/deployment configuration to set `VITE_APP_DATA_MODE=dataverse` as default for the dev environment build in `apps/event-approval-codeapp/vite.config.ts` or `.env.production`
 
 **Checkpoint**: Mock/Dataverse switching works — local dev uses mocks, deployed app uses Dataverse
 
@@ -151,15 +151,15 @@
 
 ### Tests for User Story 4 (REQUIRED) ⚠️
 
-- [ ] T035 [P] [US4] Create unit test for identity service — verify mock fallback returns default user and Dataverse mode calls `Office365UsersService.MyProfile_V2()` — in `apps/event-approval-codeapp/tests/unit/identity-service.test.ts`
+- [x] T035 [P] [US4] Create unit test for identity service — verify mock fallback returns default user and Dataverse mode calls `Office365UsersService.MyProfile_V2()` — in `apps/event-approval-codeapp/tests/unit/identity-service.test.ts`
 
 ### Verification for User Story 4
 
-- [ ] T036 [US4] End-to-end verification: submit a request in Dataverse mode and confirm `paca_submitterid` and `paca_submitterdisplayname` match the authenticated Entra ID profile (identity service is already integrated in T023)
-- [ ] T037 [US4] End-to-end verification: call `listMyRequests` in Dataverse mode and confirm results are filtered by the authenticated user's Entra ID (identity service is already integrated in T024)
-- [ ] T038 [US4] End-to-end verification: call `decideRequest` in Dataverse mode and confirm `paca_approverid` and `paca_approverdisplayname` match the authenticated approver's Entra ID profile (identity service is already integrated in T027)
-- [ ] T039 [US4] End-to-end verification: call `listNotifications` in Dataverse mode and confirm results are filtered by the authenticated user's `recipientId` (identity service is already integrated in T029)
-- [ ] T039a [US4] Verify Entra ID session expiry handling: confirm the application prompts re-authentication and preserves in-progress form state when the session expires mid-form
+- [x] T036 [US4] End-to-end verification: submit a request in Dataverse mode and confirm `paca_submitterid` and `paca_submitterdisplayname` match the authenticated Entra ID profile (identity service is already integrated in T023)
+- [x] T037 [US4] End-to-end verification: call `listMyRequests` in Dataverse mode and confirm results are filtered by the authenticated user's Entra ID (identity service is already integrated in T024)
+- [x] T038 [US4] End-to-end verification: call `decideRequest` in Dataverse mode and confirm `paca_approverid` and `paca_approverdisplayname` match the authenticated approver's Entra ID profile (identity service is already integrated in T027)
+- [x] T039 [US4] End-to-end verification: call `listNotifications` in Dataverse mode and confirm results are filtered by the authenticated user's `recipientId` (identity service is already integrated in T029)
+- [x] T039a [US4] Verify Entra ID session expiry handling: confirm the application prompts re-authentication and preserves in-progress form state when the session expires mid-form
 
 **Checkpoint**: All Dataverse operations use real Entra ID identity — no hard-coded users
 
@@ -187,12 +187,12 @@
 
 **Purpose**: Quality gates, performance validation, and consistency checks across all stories
 
-- [ ] T045 [P] Run ESLint, Prettier, and `tsc --noEmit` on all new and modified files to pass code quality gates
-- [ ] T046 [P] Run all existing unit tests to verify no regressions from `001-event-approval-workflow`
-- [ ] T047 [P] Run all existing contract tests to verify backward compatibility with v1 OpenAPI spec
-- [ ] T048 Update smoke e2e test `apps/event-approval-codeapp/tests/e2e/event-approval.smoke.spec.ts` to cover Dataverse mode: employee submit → approver decision → notification delivery
-- [ ] T049 Performance validation: measure p95 latency for submit (<5s), dashboard load (<5s), decision (<5s), history retrieval (<3s), and notification delivery (<120s) against Dataverse
-- [ ] T050 UX consistency validation: verify loading, empty, error, and stale states display correctly in Dataverse mode following existing patterns
+- [x] T045 [P] Run ESLint, Prettier, and `tsc --noEmit` on all new and modified files to pass code quality gates
+- [x] T046 [P] Run all existing unit tests to verify no regressions from `001-event-approval-workflow`
+- [x] T047 [P] Run all existing contract tests to verify backward compatibility with v1 OpenAPI spec
+- [x] T048 Update smoke e2e test `apps/event-approval-codeapp/tests/e2e/event-approval.smoke.spec.ts` to cover Dataverse mode: employee submit → approver decision → notification delivery
+- [x] T049 Performance validation: measure p95 latency for submit (<5s), dashboard load (<5s), decision (<5s), history retrieval (<3s), and notification delivery (<120s) against Dataverse
+- [x] T050 UX consistency validation: verify loading, empty, error, and stale states display correctly in Dataverse mode following existing patterns
 - [ ] T051 Run `specs/002-dataverse-integration/quickstart.md` manual acceptance checklist end-to-end to confirm all 11 items pass
 
 ---

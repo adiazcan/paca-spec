@@ -362,21 +362,9 @@
           "x-ms-dataverse-type": "PicklistType",
           "x-ms-schema-name": "paca_rolecode",
           "required": true,
-          "enum": [
-            "Speaker",
-            "Organizer",
-            "Assistant"
-          ],
-          "x-ms-enum-values": [
-            0,
-            1,
-            2
-          ],
-          "Color": [
-            null,
-            null,
-            null
-          ],
+          "enum": ["Speaker", "Organizer", "Assistant"],
+          "x-ms-enum-values": [0, 1, 2],
+          "Color": [null, null, null],
           "x-ms-optionsetmetadataid": "7031d151-620b-f111-8342-000d3a316a82",
           "x-ms-isGlobal": true,
           "x-ms-optionsetdisplayname": "Role Type",
@@ -397,24 +385,9 @@
           "x-ms-dataverse-type": "PicklistType",
           "x-ms-schema-name": "paca_statuscode",
           "required": true,
-          "enum": [
-            "Draft",
-            "Submitted",
-            "Approved",
-            "Rejected"
-          ],
-          "x-ms-enum-values": [
-            0,
-            1,
-            2,
-            3
-          ],
-          "Color": [
-            null,
-            null,
-            null,
-            null
-          ],
+          "enum": ["Draft", "Submitted", "Approved", "Rejected"],
+          "x-ms-enum-values": [0, 1, 2, 3],
+          "Color": [null, null, null, null],
           "x-ms-optionsetmetadataid": "4c8e175c-620b-f111-8342-000d3a316a82",
           "x-ms-isGlobal": true,
           "x-ms-optionsetdisplayname": "Request Status",
@@ -476,27 +449,9 @@
           "x-ms-dataverse-type": "PicklistType",
           "x-ms-schema-name": "paca_transportationmodecode",
           "required": true,
-          "enum": [
-            "Air",
-            "Rail",
-            "Car",
-            "Bus",
-            "Other"
-          ],
-          "x-ms-enum-values": [
-            0,
-            1,
-            2,
-            3,
-            4
-          ],
-          "Color": [
-            null,
-            null,
-            null,
-            null,
-            null
-          ],
+          "enum": ["Air", "Rail", "Car", "Bus", "Other"],
+          "x-ms-enum-values": [0, 1, 2, 3, 4],
+          "Color": [null, null, null, null, null],
           "x-ms-optionsetmetadataid": "488e175c-620b-f111-8342-000d3a316a82",
           "x-ms-isGlobal": true,
           "x-ms-optionsetdisplayname": "Transportation Mode",
@@ -541,18 +496,9 @@
           "x-ms-dataverse-type": "StateType",
           "x-ms-schema-name": "statecode",
           "required": true,
-          "enum": [
-            "Active",
-            "Inactive"
-          ],
-          "x-ms-enum-values": [
-            0,
-            1
-          ],
-          "Color": [
-            null,
-            null
-          ],
+          "enum": ["Active", "Inactive"],
+          "x-ms-enum-values": [0, 1],
+          "Color": [null, null],
           "x-ms-optionsetmetadataid": "4f37aa71-620b-f111-8342-000d3a316a82",
           "x-ms-isGlobal": false,
           "x-ms-optionsetdisplayname": "Status",
@@ -572,18 +518,9 @@
           "x-ms-dataverse-attribute": "statuscode",
           "x-ms-dataverse-type": "StatusType",
           "x-ms-schema-name": "statuscode",
-          "enum": [
-            "Active",
-            "Inactive"
-          ],
-          "x-ms-enum-values": [
-            1,
-            2
-          ],
-          "Color": [
-            null,
-            null
-          ],
+          "enum": ["Active", "Inactive"],
+          "x-ms-enum-values": [1, 2],
+          "Color": [null, null],
           "x-ms-optionsetmetadataid": "5937aa71-620b-f111-8342-000d3a316a82",
           "x-ms-isGlobal": false,
           "x-ms-optionsetdisplayname": "Status Reason",

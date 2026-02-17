@@ -5,78 +5,82 @@
 export const Paca_statusnotificationspaca_channelcode = {
   0: 'InApp',
   1: 'Email',
-  2: 'Teams'
-} as const;
-export type Paca_statusnotificationspaca_channelcode = keyof typeof Paca_statusnotificationspaca_channelcode;
+  2: 'Teams',
+} as const
+export type Paca_statusnotificationspaca_channelcode =
+  keyof typeof Paca_statusnotificationspaca_channelcode
 export const Paca_statusnotificationspaca_deliverystatuscode = {
   0: 'Queued',
   1: 'Sent',
-  2: 'Failed'
-} as const;
-export type Paca_statusnotificationspaca_deliverystatuscode = keyof typeof Paca_statusnotificationspaca_deliverystatuscode;
+  2: 'Failed',
+} as const
+export type Paca_statusnotificationspaca_deliverystatuscode =
+  keyof typeof Paca_statusnotificationspaca_deliverystatuscode
 export const Paca_statusnotificationsstatecode = {
   0: 'Active',
-  1: 'Inactive'
-} as const;
-export type Paca_statusnotificationsstatecode = keyof typeof Paca_statusnotificationsstatecode;
+  1: 'Inactive',
+} as const
+export type Paca_statusnotificationsstatecode =
+  keyof typeof Paca_statusnotificationsstatecode
 export const Paca_statusnotificationsstatuscode = {
   1: 'Active',
-  2: 'Inactive'
-} as const;
-export type Paca_statusnotificationsstatuscode = keyof typeof Paca_statusnotificationsstatuscode;
+  2: 'Inactive',
+} as const
+export type Paca_statusnotificationsstatuscode =
+  keyof typeof Paca_statusnotificationsstatuscode
 
 export interface Paca_statusnotificationsBase {
-  importsequencenumber?: string;
-  overriddencreatedon?: string;
-  ownerid: string;
-  owneridtype: string;
-  paca_channelcode: Paca_statusnotificationspaca_channelcode;
-  paca_deliverystatuscode: Paca_statusnotificationspaca_deliverystatuscode;
-  paca_payload: string;
-  paca_recipientid: string;
-  "paca_requestid@odata.bind"?: string;
-  paca_sentat?: string;
-  paca_statusnotificationid: string;
-  statecode: Paca_statusnotificationsstatecode;
-  statuscode?: Paca_statusnotificationsstatuscode;
-  timezoneruleversionnumber?: string;
-  utcconversiontimezonecode?: string;
+  importsequencenumber?: string
+  overriddencreatedon?: string
+  ownerid: string
+  owneridtype: string
+  paca_channelcode: Paca_statusnotificationspaca_channelcode
+  paca_deliverystatuscode: Paca_statusnotificationspaca_deliverystatuscode
+  paca_payload: string
+  paca_recipientid: string
+  'paca_requestid@odata.bind'?: string
+  paca_sentat?: string
+  paca_statusnotificationid: string
+  statecode: Paca_statusnotificationsstatecode
+  statuscode?: Paca_statusnotificationsstatuscode
+  timezoneruleversionnumber?: string
+  utcconversiontimezonecode?: string
 }
 
 export interface Paca_statusnotifications extends Paca_statusnotificationsBase {
-  createdbyname?: string;
-  createdbyyominame: string;
-  createdon?: string;
-  createdonbehalfbyname?: string;
-  createdonbehalfbyyominame: string;
-  modifiedbyname?: string;
-  modifiedbyyominame: string;
-  modifiedon?: string;
-  modifiedonbehalfbyname?: string;
-  modifiedonbehalfbyyominame: string;
-  owneridname: string;
-  owneridyominame: string;
-  owningbusinessunitname: string;
-  paca_channelcodename?: string;
-  paca_deliverystatuscodename?: string;
-  paca_requestidname?: string;
-  statecodename?: string;
-  statuscodename?: string;
-  versionnumber?: string;
-  createdby?: object;
-  _createdby_value?: string;
-  createdonbehalfby?: object;
-  _createdonbehalfby_value?: string;
-  modifiedby?: object;
-  _modifiedby_value?: string;
-  modifiedonbehalfby?: object;
-  _modifiedonbehalfby_value?: string;
-  owningbusinessunit?: object;
-  _owningbusinessunit_value?: string;
-  owningteam?: object;
-  _owningteam_value?: string;
-  owninguser?: object;
-  _owninguser_value?: string;
-  paca_requestid?: object;
-  _paca_requestid_value?: string;
+  createdbyname?: string
+  createdbyyominame: string
+  createdon?: string
+  createdonbehalfbyname?: string
+  createdonbehalfbyyominame: string
+  modifiedbyname?: string
+  modifiedbyyominame: string
+  modifiedon?: string
+  modifiedonbehalfbyname?: string
+  modifiedonbehalfbyyominame: string
+  owneridname: string
+  owneridyominame: string
+  owningbusinessunitname: string
+  paca_channelcodename?: string
+  paca_deliverystatuscodename?: string
+  paca_requestidname?: string
+  statecodename?: string
+  statuscodename?: string
+  versionnumber?: string
+  createdby?: object
+  _createdby_value?: string
+  createdonbehalfby?: object
+  _createdonbehalfby_value?: string
+  modifiedby?: object
+  _modifiedby_value?: string
+  modifiedonbehalfby?: object
+  _modifiedonbehalfby_value?: string
+  owningbusinessunit?: object
+  _owningbusinessunit_value?: string
+  owningteam?: object
+  _owningteam_value?: string
+  owninguser?: object
+  _owninguser_value?: string
+  paca_requestid?: object
+  _paca_requestid_value?: string
 }

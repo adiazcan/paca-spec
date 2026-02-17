@@ -32,11 +32,15 @@ describe('approver dashboard view states', () => {
 
     render(createElement(ApproverDashboardPage))
 
-    expect(await screen.findByText(/No pending requests available\./i)).toBeInTheDocument()
+    expect(
+      await screen.findByText(/No pending requests available\./i),
+    ).toBeInTheDocument()
   })
 
   it('renders error state when loading pending approvals fails', async () => {
-    listPendingApprovalsMock.mockRejectedValueOnce(new Error('Unable to load pending approvals.'))
+    listPendingApprovalsMock.mockRejectedValueOnce(
+      new Error('Unable to load pending approvals.'),
+    )
 
     render(createElement(ApproverDashboardPage))
 
@@ -53,7 +57,9 @@ describe('approver dashboard view states', () => {
     render(createElement(ApproverDashboardPage))
 
     expect(
-      await screen.findByText(/Pending approvals are stale\. Reload and try again\./i),
+      await screen.findByText(
+        /Pending approvals are stale\. Reload and try again\./i,
+      ),
     ).toBeInTheDocument()
   })
 })

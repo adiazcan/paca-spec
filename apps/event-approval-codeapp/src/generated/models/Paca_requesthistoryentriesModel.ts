@@ -5,82 +5,86 @@
 export const Paca_requesthistoryentriespaca_actorrolecode = {
   0: 'Employee',
   1: 'Approver',
-  2: 'System'
-} as const;
-export type Paca_requesthistoryentriespaca_actorrolecode = keyof typeof Paca_requesthistoryentriespaca_actorrolecode;
+  2: 'System',
+} as const
+export type Paca_requesthistoryentriespaca_actorrolecode =
+  keyof typeof Paca_requesthistoryentriespaca_actorrolecode
 export const Paca_requesthistoryentriespaca_eventtypecode = {
   0: 'Submitted',
   1: 'Approved',
   2: 'Rejected',
   3: 'Commented',
   4: 'NotificationSent',
-  5: 'StaleDetected'
-} as const;
-export type Paca_requesthistoryentriespaca_eventtypecode = keyof typeof Paca_requesthistoryentriespaca_eventtypecode;
+  5: 'StaleDetected',
+} as const
+export type Paca_requesthistoryentriespaca_eventtypecode =
+  keyof typeof Paca_requesthistoryentriespaca_eventtypecode
 export const Paca_requesthistoryentriesstatecode = {
   0: 'Active',
-  1: 'Inactive'
-} as const;
-export type Paca_requesthistoryentriesstatecode = keyof typeof Paca_requesthistoryentriesstatecode;
+  1: 'Inactive',
+} as const
+export type Paca_requesthistoryentriesstatecode =
+  keyof typeof Paca_requesthistoryentriesstatecode
 export const Paca_requesthistoryentriesstatuscode = {
   1: 'Active',
-  2: 'Inactive'
-} as const;
-export type Paca_requesthistoryentriesstatuscode = keyof typeof Paca_requesthistoryentriesstatuscode;
+  2: 'Inactive',
+} as const
+export type Paca_requesthistoryentriesstatuscode =
+  keyof typeof Paca_requesthistoryentriesstatuscode
 
 export interface Paca_requesthistoryentriesBase {
-  importsequencenumber?: string;
-  overriddencreatedon?: string;
-  ownerid: string;
-  owneridtype: string;
-  paca_actorid: string;
-  paca_actorrolecode: Paca_requesthistoryentriespaca_actorrolecode;
-  paca_comment?: string;
-  paca_eventtypecode: Paca_requesthistoryentriespaca_eventtypecode;
-  paca_metadata?: string;
-  paca_occurredat: string;
-  paca_requesthistoryentryid: string;
-  "paca_requestid@odata.bind"?: string;
-  statecode: Paca_requesthistoryentriesstatecode;
-  statuscode?: Paca_requesthistoryentriesstatuscode;
-  timezoneruleversionnumber?: string;
-  utcconversiontimezonecode?: string;
+  importsequencenumber?: string
+  overriddencreatedon?: string
+  ownerid: string
+  owneridtype: string
+  paca_actorid: string
+  paca_actorrolecode: Paca_requesthistoryentriespaca_actorrolecode
+  paca_comment?: string
+  paca_eventtypecode: Paca_requesthistoryentriespaca_eventtypecode
+  paca_metadata?: string
+  paca_occurredat: string
+  paca_requesthistoryentryid: string
+  'paca_requestid@odata.bind'?: string
+  statecode: Paca_requesthistoryentriesstatecode
+  statuscode?: Paca_requesthistoryentriesstatuscode
+  timezoneruleversionnumber?: string
+  utcconversiontimezonecode?: string
 }
 
 export interface Paca_requesthistoryentries extends Paca_requesthistoryentriesBase {
-  createdbyname?: string;
-  createdbyyominame: string;
-  createdon?: string;
-  createdonbehalfbyname?: string;
-  createdonbehalfbyyominame: string;
-  modifiedbyname?: string;
-  modifiedbyyominame: string;
-  modifiedon?: string;
-  modifiedonbehalfbyname?: string;
-  modifiedonbehalfbyyominame: string;
-  owneridname: string;
-  owneridyominame: string;
-  owningbusinessunitname: string;
-  paca_actorrolecodename?: string;
-  paca_eventtypecodename?: string;
-  paca_requestidname?: string;
-  statecodename?: string;
-  statuscodename?: string;
-  versionnumber?: string;
-  createdby?: object;
-  _createdby_value?: string;
-  createdonbehalfby?: object;
-  _createdonbehalfby_value?: string;
-  modifiedby?: object;
-  _modifiedby_value?: string;
-  modifiedonbehalfby?: object;
-  _modifiedonbehalfby_value?: string;
-  owningbusinessunit?: object;
-  _owningbusinessunit_value?: string;
-  owningteam?: object;
-  _owningteam_value?: string;
-  owninguser?: object;
-  _owninguser_value?: string;
-  paca_requestid?: object;
-  _paca_requestid_value?: string;
+  createdbyname?: string
+  createdbyyominame: string
+  createdon?: string
+  createdonbehalfbyname?: string
+  createdonbehalfbyyominame: string
+  modifiedbyname?: string
+  modifiedbyyominame: string
+  modifiedon?: string
+  modifiedonbehalfbyname?: string
+  modifiedonbehalfbyyominame: string
+  owneridname: string
+  owneridyominame: string
+  owningbusinessunitname: string
+  paca_actorrolecodename?: string
+  paca_eventtypecodename?: string
+  paca_requestidname?: string
+  statecodename?: string
+  statuscodename?: string
+  versionnumber?: string
+  createdby?: object
+  _createdby_value?: string
+  createdonbehalfby?: object
+  _createdonbehalfby_value?: string
+  modifiedby?: object
+  _modifiedby_value?: string
+  modifiedonbehalfby?: object
+  _modifiedonbehalfby_value?: string
+  owningbusinessunit?: object
+  _owningbusinessunit_value?: string
+  owningteam?: object
+  _owningteam_value?: string
+  owninguser?: object
+  _owninguser_value?: string
+  paca_requestid?: object
+  _paca_requestid_value?: string
 }

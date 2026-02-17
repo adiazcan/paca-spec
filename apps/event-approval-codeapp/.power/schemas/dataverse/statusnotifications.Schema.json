@@ -225,21 +225,9 @@
           "x-ms-dataverse-type": "PicklistType",
           "x-ms-schema-name": "paca_channelcode",
           "required": true,
-          "enum": [
-            "In App",
-            "Email",
-            "Teams"
-          ],
-          "x-ms-enum-values": [
-            0,
-            1,
-            2
-          ],
-          "Color": [
-            null,
-            null,
-            null
-          ],
+          "enum": ["In App", "Email", "Teams"],
+          "x-ms-enum-values": [0, 1, 2],
+          "Color": [null, null, null],
           "x-ms-optionsetmetadataid": "09208463-620b-f111-8342-000d3a316a82",
           "x-ms-isGlobal": true,
           "x-ms-optionsetdisplayname": "Notification Channel",
@@ -260,21 +248,9 @@
           "x-ms-dataverse-type": "PicklistType",
           "x-ms-schema-name": "paca_deliverystatuscode",
           "required": true,
-          "enum": [
-            "Queued",
-            "Sent",
-            "Failed"
-          ],
-          "x-ms-enum-values": [
-            0,
-            1,
-            2
-          ],
-          "Color": [
-            null,
-            null,
-            null
-          ],
+          "enum": ["Queued", "Sent", "Failed"],
+          "x-ms-enum-values": [0, 1, 2],
+          "Color": [null, null, null],
           "x-ms-optionsetmetadataid": "ad67dd6a-620b-f111-8342-000d3a316a82",
           "x-ms-isGlobal": true,
           "x-ms-optionsetdisplayname": "Notification Delivery Status",
@@ -347,18 +323,9 @@
           "x-ms-dataverse-type": "StateType",
           "x-ms-schema-name": "statecode",
           "required": true,
-          "enum": [
-            "Active",
-            "Inactive"
-          ],
-          "x-ms-enum-values": [
-            0,
-            1
-          ],
-          "Color": [
-            null,
-            null
-          ],
+          "enum": ["Active", "Inactive"],
+          "x-ms-enum-values": [0, 1],
+          "Color": [null, null],
           "x-ms-optionsetmetadataid": "074d93ae-620b-f111-8342-000d3a316a82",
           "x-ms-isGlobal": false,
           "x-ms-optionsetdisplayname": "Status",
@@ -378,18 +345,9 @@
           "x-ms-dataverse-attribute": "statuscode",
           "x-ms-dataverse-type": "StatusType",
           "x-ms-schema-name": "statuscode",
-          "enum": [
-            "Active",
-            "Inactive"
-          ],
-          "x-ms-enum-values": [
-            1,
-            2
-          ],
-          "Color": [
-            null,
-            null
-          ],
+          "enum": ["Active", "Inactive"],
+          "x-ms-enum-values": [1, 2],
+          "Color": [null, null],
           "x-ms-optionsetmetadataid": "114d93ae-620b-f111-8342-000d3a316a82",
           "x-ms-isGlobal": false,
           "x-ms-optionsetdisplayname": "Status Reason",

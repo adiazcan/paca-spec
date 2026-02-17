@@ -31,11 +31,15 @@ describe('notifications center view states', () => {
 
     render(createElement(NotificationsPage))
 
-    expect(await screen.findByText(/No notifications available\./i)).toBeInTheDocument()
+    expect(
+      await screen.findByText(/No notifications available\./i),
+    ).toBeInTheDocument()
   })
 
   it('renders error state when notifications fail to load', async () => {
-    listNotificationsMock.mockRejectedValueOnce(new Error('Unable to load notifications.'))
+    listNotificationsMock.mockRejectedValueOnce(
+      new Error('Unable to load notifications.'),
+    )
 
     render(createElement(NotificationsPage))
 
@@ -45,12 +49,16 @@ describe('notifications center view states', () => {
   })
 
   it('renders stale state when notifications conflict is returned', async () => {
-    listNotificationsMock.mockRejectedValueOnce(new ApiError('CONFLICT', 'stale', 409))
+    listNotificationsMock.mockRejectedValueOnce(
+      new ApiError('CONFLICT', 'stale', 409),
+    )
 
     render(createElement(NotificationsPage))
 
     expect(
-      await screen.findByText(/Notifications are stale\. Reload and try again\./i),
+      await screen.findByText(
+        /Notifications are stale\. Reload and try again\./i,
+      ),
     ).toBeInTheDocument()
   })
 })

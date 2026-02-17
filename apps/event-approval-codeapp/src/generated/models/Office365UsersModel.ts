@@ -5,250 +5,250 @@
 
 export interface GraphUserUpdateable_V1 {
   // About Me
-  aboutMe?: string;
+  aboutMe?: string
   // Birthday
-  birthday?: string;
+  birthday?: string
   // Interests
-  interests?: string[];
+  interests?: string[]
   // My Site
-  mySite?: string;
+  mySite?: string
   // Past Projects
-  pastProjects?: string[];
+  pastProjects?: string[]
   // Schools
-  schools?: string[];
+  schools?: string[]
   // Skills
-  skills?: string[];
+  skills?: string[]
 }
 
 export interface GraphTrending {
   // Unique identifier of the relationship
-  id?: string;
+  id?: string
   // Value indicating how much the document is currently trending
-  weight?: number;
-  resourceVisualization?: resourceVisualization;
-  sensitivityLabelInfo?: sensitivityLabelMetadata[];
+  weight?: number
+  resourceVisualization?: resourceVisualization
+  sensitivityLabelInfo?: sensitivityLabelMetadata[]
 }
 
 export interface resourceVisualization {
   // The item's title text
-  title?: string;
+  title?: string
   // The item's media type (can be used for filtering for a specific file based on a specific type)
-  _type?: string;
+  _type?: string
   // The items media type (can be used for filtering for a specific type of file based on supported IANA Media MIME types)
-  mediaType?: string;
+  mediaType?: string
   // A URL leading to the preview image for the item
-  previewImageUrl?: string;
+  previewImageUrl?: string
   // A preview text for the item
-  previewText?: string;
+  previewText?: string
   // A path leading to the folder in which the item is stored
-  containerWebUrl?: string;
+  containerWebUrl?: string
   // A string describing where the item is stored
-  containerDisplayName?: string;
+  containerDisplayName?: string
   // Can be used for filtering by the type of container in which the file is stored
-  containerType?: string;
+  containerType?: string
 }
 
 export interface sensitivityLabelMetadata {
   // SensitivityLabel Id.
-  sensitivityLabelId?: string;
+  sensitivityLabelId?: string
   // SensitivityLabel name.
-  name?: string;
+  name?: string
   // SensitivityLabel displayName info
-  displayName?: string;
+  displayName?: string
   // SensitivityLabel details on tooltip.
-  tooltip?: string;
+  tooltip?: string
   // SensitivityLabel priority.
-  priority?: number;
+  priority?: number
   // SensitivityLabel color.
-  color?: string;
+  color?: string
   //  is SensitivityLabel Encrypted.
-  isEncrypted?: boolean;
+  isEncrypted?: boolean
   // Whether SensitivityLabel is Enabled.
-  isEnabled?: boolean;
+  isEnabled?: boolean
   // Whether SensitivityLabel is Parent.
-  isParent?: boolean;
+  isParent?: boolean
   // Parent SensitivityLabel Id.
-  parentSensitivityLabelId?: string;
+  parentSensitivityLabelId?: string
 }
 
 export interface LinklessEntityListResponse_List_Person {
   // Value
-  value?: Person[];
+  value?: Person[]
 }
 
 export interface Person {
   // A unique identifier for the Person object in the directory
-  id?: string;
+  id?: string
   // The person's display name
-  displayName?: string;
+  displayName?: string
   // The person's given name
-  givenName?: string;
+  givenName?: string
   // The person's surname
-  surname?: string;
+  surname?: string
   // The person's birthday
-  birthday?: string;
+  birthday?: string
   // Free-form notes that the current user has taken about this person
-  personNotes?: string;
+  personNotes?: string
   // If the current user has flagged this person as a favorite
-  isFavorite?: boolean;
+  isFavorite?: boolean
   // The person's job title
-  jobTitle?: string;
+  jobTitle?: string
   // The name of the person's company
-  companyName?: string;
+  companyName?: string
   // The person's department
-  department?: string;
+  department?: string
   // The location of the person's office
-  officeLocation?: string;
+  officeLocation?: string
   // The person's profession
-  profession?: string;
+  profession?: string
   // The user principal name(UPN) of the user.The UPN is an Internet-style login name for the user based on the Internet standard RFC 822. By convention, this should map to the user's email name.The general format is alias @domain, where domain must be present in the tenant's collection of verified domains.
-  userPrincipalName?: string;
+  userPrincipalName?: string
   // The person's VOIP SIP address
-  imAddress?: string;
+  imAddress?: string
   // Collection of the person's email addresses with a relevance score
-  scoredEmailAddresses?: ScoredEmailAddress[];
+  scoredEmailAddresses?: ScoredEmailAddress[]
   // The person's phone numbers
-  phones?: Phone[];
+  phones?: Phone[]
 }
 
 export interface ScoredEmailAddress {
   // The email address
-  address?: string;
+  address?: string
   // The relevance score of the email address. A relevance score is used as a sort key, in relation to the other returned results. A higher relevance score value corresponds to a more relevant result. Relevance is determined by the user's communication and collaboration patterns and business relationships.
-  relevanceScore?: number;
+  relevanceScore?: number
 }
 
 export interface Phone {
   // The phone number
-  _number?: string;
+  _number?: string
   // The type of phone number. Possible values: home, business, mobile, other, assistant, homeFax, businessFax, otherFax, pager, radio.
-  _type?: string;
+  _type?: string
 }
 
 export interface User {
   // A unique identifier for the user object in the directory.
-  Id: string;
+  Id: string
   // true if the account is enabled; otherwise, false. This property is required when a user is created.
-  AccountEnabled?: boolean;
+  AccountEnabled?: boolean
   // A list of business phone numbers for the user
-  BusinessPhones?: string[];
+  BusinessPhones?: string[]
   // The city in which the user is located.
-  City?: string;
+  City?: string
   // The name of the company in which the user works.
-  CompanyName?: string;
+  CompanyName?: string
   // The country/region in which the user is located; for example, "US" or "UK".
-  Country?: string;
+  Country?: string
   // The name of the department in which the user works.
-  Department?: string;
+  Department?: string
   // The name displayed in the address book for the user. This is usually the combination of the user's first name, middle initial and last name. This property is required when a user is created and it cannot be cleared during updates.
-  DisplayName?: string;
+  DisplayName?: string
   // The given name (first name) of the user.
-  GivenName?: string;
+  GivenName?: string
   // The user’s job title.
-  JobTitle?: string;
+  JobTitle?: string
   // The SMTP/email address for the user, for example, "jeff@contoso.onmicrosoft.com". Read-Only.
-  Mail?: string;
+  Mail?: string
   // The mail alias for the user. This property must be specified when a user is created.
-  MailNickname?: string;
+  MailNickname?: string
   // The primary cellular telephone number for the user.
-  mobilePhone?: string;
+  mobilePhone?: string
   // The office location in the user's place of business.
-  OfficeLocation?: string;
+  OfficeLocation?: string
   // The postal code for the user's postal address. The postal code is specific to the user's country/region. In the United States of America, this attribute contains the ZIP code.
-  PostalCode?: string;
+  PostalCode?: string
   // The user's surname (family name or last name).
-  Surname?: string;
+  Surname?: string
   // The primary cellular telephone number for the user.
-  TelephoneNumber?: string;
+  TelephoneNumber?: string
   // The user principal name (UPN) of the user. The UPN is an Internet-style login name for the user based on the Internet standard RFC 822. By convention, this should map to the user’s email name. The general format is alias@domain, where domain must be present in the tenant’s collection of verified domains.
-  UserPrincipalName?: string;
+  UserPrincipalName?: string
 }
 
 export interface ClientPhotoMetadata {
   // Has photo
-  HasPhoto?: boolean;
+  HasPhoto?: boolean
   // Height of photo
-  Height?: number;
+  Height?: number
   // Width of photo
-  Width?: number;
+  Width?: number
   // Content Type of photo
-  ContentType?: string;
+  ContentType?: string
   // File extension for the photo (ex: ".jpg")
-  ImageFileExtension?: string;
+  ImageFileExtension?: string
 }
 
-export type Object = object;
+export type Object = object
 
 export interface EntityListResponse_IReadOnlyList_User {
   // Value
-  value?: User[];
+  value?: User[]
   // Next page link
-  "@odata.nextLink"?: string;
+  '@odata.nextLink'?: string
 }
 
 export interface GraphUser_V1 {
   // About Me
-  aboutMe?: string;
+  aboutMe?: string
   // true if the account is enabled; otherwise, false. This property is required when a user is created.
-  accountEnabled?: boolean;
+  accountEnabled?: boolean
   // Birthday
-  birthday?: string;
+  birthday?: string
   // Business Phones
-  businessPhones?: string[];
+  businessPhones?: string[]
   // The city in which the user is located.
-  city?: string;
+  city?: string
   // The name of the company in which the user works.
-  companyName?: string;
+  companyName?: string
   // The country/region in which the user is located; for example, "US" or "UK".
-  country?: string;
+  country?: string
   // The name of the department in which the user works.
-  department?: string;
+  department?: string
   // Display Name
-  displayName?: string;
+  displayName?: string
   // Given Name
-  givenName?: string;
+  givenName?: string
   // Hire Date
-  hireDate?: string;
+  hireDate?: string
   // Id
-  id?: string;
+  id?: string
   // Interests
-  interests?: string[];
+  interests?: string[]
   // Job Title
-  jobTitle?: string;
+  jobTitle?: string
   // Mail
-  mail?: string;
+  mail?: string
   // The mail alias for the user. This property must be specified when a user is created.
-  mailNickname?: string;
+  mailNickname?: string
   // Mobile Phone
-  mobilePhone?: string;
+  mobilePhone?: string
   // My Site
-  mySite?: string;
+  mySite?: string
   // Office Location
-  officeLocation?: string;
+  officeLocation?: string
   // Past Projects
-  pastProjects?: string[];
+  pastProjects?: string[]
   // The postal code for the user's postal address. The postal code is specific to the user's country/region. In the United States of America, this attribute contains the ZIP code.
-  postalCode?: string;
+  postalCode?: string
   // Preferred Language
-  preferredLanguage?: string;
+  preferredLanguage?: string
   // Preferred Name
-  preferredName?: string;
+  preferredName?: string
   // Responsibilities
-  responsibilities?: string[];
+  responsibilities?: string[]
   // Schools
-  schools?: string[];
+  schools?: string[]
   // Skills
-  skills?: string[];
+  skills?: string[]
   // State
-  state?: string;
+  state?: string
   // Street Address
-  streetAddress?: string;
+  streetAddress?: string
   // Surname
-  surname?: string;
+  surname?: string
   // User Principal Name
-  userPrincipalName?: string;
+  userPrincipalName?: string
   // User Type
-  userType?: string;
+  userType?: string
 }
 
-export type ObjectWithoutType = object;
+export type ObjectWithoutType = object

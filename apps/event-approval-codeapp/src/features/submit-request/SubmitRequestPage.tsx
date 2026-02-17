@@ -32,6 +32,15 @@ export function SubmitRequestPage() {
         return
       }
 
+      if (error instanceof ApiError && error.code === 'UNAUTHORIZED') {
+        viewState.setError(
+          new Error(
+            'Your session expired. Please sign in again and resubmit your request.',
+          ),
+        )
+        return
+      }
+
       viewState.setError(
         error instanceof Error ? error : new Error('Failed to submit request.'),
       )
@@ -43,8 +52,11 @@ export function SubmitRequestPage() {
   return (
     <section>
       <h2>Submit Event Request</h2>
+      {isSubmitting ? <p role="status">Submitting request…</p> : null}
       {viewState.isError ? (
-        <p role="alert">{viewState.error?.message ?? 'Unable to submit request.'}</p>
+        <p role="alert">
+          {viewState.error?.message ?? 'Unable to submit request.'}
+        </p>
       ) : null}
       {viewState.isStale ? (
         <p role="status">Your data is stale. Reload and try again.</p>
@@ -57,10 +69,7 @@ export function SubmitRequestPage() {
         </p>
       ) : null}
 
-      <SubmitRequestForm
-        isSubmitting={isSubmitting}
-        onSubmit={handleSubmit}
-      />
+      <SubmitRequestForm isSubmitting={isSubmitting} onSubmit={handleSubmit} />
     </section>
   )
 }

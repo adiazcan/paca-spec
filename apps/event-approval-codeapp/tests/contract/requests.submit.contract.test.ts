@@ -29,9 +29,7 @@ describe('POST /requests contract', () => {
 
     const response = await provider.submitRequest(buildValidPayload())
 
-    expect(response.requestId).toMatch(
-      /^00000000-0000-4000-8000-[0-9a-f]{12}$/,
-    )
+    expect(response.requestId).toMatch(/^00000000-0000-4000-8000-[0-9a-f]{12}$/)
     expect(response.status).toBe('submitted')
     expect(response.submittedAt).not.toBeNull()
     expect(response.requestNumber).toMatch(/^EA-\d+$/)

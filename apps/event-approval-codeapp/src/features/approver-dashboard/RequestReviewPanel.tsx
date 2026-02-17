@@ -98,7 +98,9 @@ export function RequestReviewPanel({
     } catch (error) {
       if (error instanceof ApiError && error.code === 'CONFLICT') {
         setStale(viewState.data)
-        setSubmitError('This request was already updated. Reload and review the latest state.')
+        setSubmitError(
+          'This request was already updated. Reload and review the latest state.',
+        )
         return
       }
 
@@ -118,18 +120,25 @@ export function RequestReviewPanel({
     <section aria-label="Request review panel">
       <h3>Request Review</h3>
 
-      {viewState.isLoading ? <p role="status">Loading request details…</p> : null}
+      {viewState.isLoading ? (
+        <p role="status">Loading request details…</p>
+      ) : null}
       {viewState.isError ? (
-        <p role="alert">{viewState.error?.message ?? 'Unable to load request details.'}</p>
+        <p role="alert">
+          {viewState.error?.message ?? 'Unable to load request details.'}
+        </p>
       ) : null}
       {viewState.isStale ? (
-        <p role="status">Request details are stale because another decision was saved.</p>
+        <p role="status">
+          Request details are stale because another decision was saved.
+        </p>
       ) : null}
 
       {viewState.data ? (
         <div>
           <p>
-            <strong>{viewState.data.requestNumber}</strong> — {viewState.data.eventName}
+            <strong>{viewState.data.requestNumber}</strong> —{' '}
+            {viewState.data.eventName}
           </p>
           <p>Submitted by: {viewState.data.submitterDisplayName}</p>
           <p>Status: {viewState.data.status}</p>

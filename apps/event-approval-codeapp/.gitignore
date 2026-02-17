@@ -13,7 +13,10 @@ build
 coverage
 dist-ssr
 *.local
-.env*
+
+# Environment files - commit defaults, ignore local overrides
+.env.local
+.env.*.local
 
 # Editor directories and files
 .vscode/*

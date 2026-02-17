@@ -36,7 +36,9 @@ describe('request review panel view states', () => {
   })
 
   it('renders error state when request details fail to load', async () => {
-    getRequestMock.mockRejectedValueOnce(new Error('Unable to load request details.'))
+    getRequestMock.mockRejectedValueOnce(
+      new Error('Unable to load request details.'),
+    )
 
     render(createElement(RequestReviewPanel, { requestId: 'request-1' }))
 
@@ -73,19 +75,28 @@ describe('request review panel view states', () => {
       submittedAt: '2026-01-01T00:05:00.000Z',
       version: 1,
     })
-    decideRequestMock.mockRejectedValueOnce(new ApiError('CONFLICT', 'stale', 409))
+    decideRequestMock.mockRejectedValueOnce(
+      new ApiError('CONFLICT', 'stale', 409),
+    )
 
     render(createElement(RequestReviewPanel, { requestId: 'request-1' }))
 
     await screen.findByText(/Request Review/i)
-    await user.type(screen.getByLabelText('Decision comment'), 'Needs more details')
+    await user.type(
+      screen.getByLabelText('Decision comment'),
+      'Needs more details',
+    )
     await user.click(screen.getByRole('button', { name: 'Reject request' }))
 
     expect(
-      await screen.findByText(/already updated\. Reload and review the latest state\./i),
+      await screen.findByText(
+        /already updated\. Reload and review the latest state\./i,
+      ),
     ).toBeInTheDocument()
     expect(
-      screen.getByText(/Request details are stale because another decision was saved\./i),
+      screen.getByText(
+        /Request details are stale because another decision was saved\./i,
+      ),
     ).toBeInTheDocument()
   })
 })

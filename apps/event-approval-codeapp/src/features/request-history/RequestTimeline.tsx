@@ -59,10 +59,16 @@ export function RequestTimeline({ requestId }: RequestTimelineProps) {
 
   return (
     <section>
-      {viewState.isLoading ? <p role="status">Loading request timeline…</p> : null}
-      {viewState.isEmpty ? <p role="status">No timeline events found.</p> : null}
+      {viewState.isLoading ? (
+        <p role="status">Loading request timeline…</p>
+      ) : null}
+      {viewState.isEmpty ? (
+        <p role="status">No timeline events found.</p>
+      ) : null}
       {viewState.isError ? (
-        <p role="alert">{viewState.error?.message ?? 'Unable to load request timeline.'}</p>
+        <p role="alert">
+          {viewState.error?.message ?? 'Unable to load request timeline.'}
+        </p>
       ) : null}
       {viewState.isStale ? (
         <p role="status">Request timeline is stale. Reload and try again.</p>

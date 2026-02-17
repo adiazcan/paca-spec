@@ -84,7 +84,10 @@ const NOTIFICATION_CHANNEL_TO_CHOICE: Record<NotificationChannel, number> = {
   teams: 2,
 }
 
-const NOTIFICATION_DELIVERY_STATUS_TO_CHOICE: Record<NotificationDeliveryStatus, number> = {
+const NOTIFICATION_DELIVERY_STATUS_TO_CHOICE: Record<
+  NotificationDeliveryStatus,
+  number
+> = {
   queued: 0,
   sent: 1,
   failed: 2,
@@ -100,7 +103,10 @@ function parseChoiceValue(value: unknown, fieldName: string): number {
   return parsed
 }
 
-function parseNumericValue(value: string | number | undefined, fieldName: string): number {
+function parseNumericValue(
+  value: string | number | undefined,
+  fieldName: string,
+): number {
   const parsed = typeof value === 'number' ? value : Number(value)
 
   if (!Number.isFinite(parsed)) {
@@ -129,7 +135,9 @@ function requireLookupId(
   throw new Error(`Missing lookup id for ${fieldName}`)
 }
 
-function parseMetadata(metadata: string | undefined): Record<string, unknown> | undefined {
+function parseMetadata(
+  metadata: string | undefined,
+): Record<string, unknown> | undefined {
   if (!metadata) {
     return undefined
   }
@@ -145,7 +153,9 @@ function parseMetadata(metadata: string | undefined): Record<string, unknown> | 
   }
 }
 
-function parseNotificationPayload(payload: string): StatusNotification['payload'] {
+function parseNotificationPayload(
+  payload: string,
+): StatusNotification['payload'] {
   const parsed = JSON.parse(payload) as unknown
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
     throw new Error('Invalid notification payload')
@@ -189,7 +199,9 @@ export function transportationModeToChoice(value: TransportationMode): number {
   return TRANSPORTATION_MODE_TO_CHOICE[value]
 }
 
-export function transportationModeFromChoice(value: unknown): TransportationMode {
+export function transportationModeFromChoice(
+  value: unknown,
+): TransportationMode {
   switch (parseChoiceValue(value, 'TransportationMode')) {
     case 0:
       return 'air'
@@ -202,7 +214,9 @@ export function transportationModeFromChoice(value: unknown): TransportationMode
     case 4:
       return 'other'
     default:
-      throw new Error(`Unknown TransportationMode choice value: ${String(value)}`)
+      throw new Error(
+        `Unknown TransportationMode choice value: ${String(value)}`,
+      )
   }
 }
 
@@ -280,11 +294,15 @@ export function actorRoleFromChoice(value: unknown): ActorRole {
   }
 }
 
-export function notificationChannelToChoice(value: NotificationChannel): number {
+export function notificationChannelToChoice(
+  value: NotificationChannel,
+): number {
   return NOTIFICATION_CHANNEL_TO_CHOICE[value]
 }
 
-export function notificationChannelFromChoice(value: unknown): NotificationChannel {
+export function notificationChannelFromChoice(
+  value: unknown,
+): NotificationChannel {
   switch (parseChoiceValue(value, 'NotificationChannel')) {
     case 0:
       return 'in_app'
@@ -293,7 +311,9 @@ export function notificationChannelFromChoice(value: unknown): NotificationChann
     case 2:
       return 'teams'
     default:
-      throw new Error(`Unknown NotificationChannel choice value: ${String(value)}`)
+      throw new Error(
+        `Unknown NotificationChannel choice value: ${String(value)}`,
+      )
   }
 }
 
@@ -333,7 +353,10 @@ export function assembleCostEstimateFromRequestRow(
   >,
 ): EventApprovalRequest['costEstimate'] {
   return {
-    registration: parseNumericValue(row.paca_registrationfee, 'paca_registrationfee'),
+    registration: parseNumericValue(
+      row.paca_registrationfee,
+      'paca_registrationfee',
+    ),
     travel: parseNumericValue(row.paca_travelcost, 'paca_travelcost'),
     hotels: parseNumericValue(row.paca_hotelcost, 'paca_hotelcost'),
     meals: parseNumericValue(row.paca_mealscost, 'paca_mealscost'),

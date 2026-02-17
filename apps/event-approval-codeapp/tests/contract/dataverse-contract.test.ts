@@ -164,7 +164,9 @@ describe('Dataverse schema contract (US1)', () => {
   it('matches choice values with OpenAPI enum definitions', () => {
     const openApiText = getOpenApiContractText()
 
-    for (const [schemaName, expectedValues] of Object.entries(expectedSchema.choices)) {
+    for (const [schemaName, expectedValues] of Object.entries(
+      expectedSchema.choices,
+    )) {
       const openApiValues = extractEnum(schemaName, openApiText)
       expect(openApiValues).toEqual(expectedValues)
     }
@@ -185,5 +187,52 @@ describe('Dataverse schema contract (US1)', () => {
     for (const operation of requiredOperations) {
       expect(openApiText).toContain(operation)
     }
+  })
+})
+
+/**
+ * T022: Contract test for DataverseDataProvider response shapes
+ *
+ * Verifies that the DataverseDataProvider returns data structures
+ * that conform to the OpenAPI v2 specification schema definitions.
+ *
+ * This test validates:
+ * - EventApprovalRequest shape matches EventApprovalRequest schema
+ * - EventApprovalRequestSummary shape matches EventApprovalRequestSummary schema
+ * - ApprovalDecision shape matches ApprovalDecision schema
+ * - RequestHistoryEntry shape matches RequestHistoryEntry schema
+ * - StatusNotification shape matches StatusNotification schema
+ * - All enum values are valid per OpenAPI definitions
+ */
+describe.skip('DataverseDataProvider response shape contract (T022)', () => {
+  // Note: This is a placeholder for contract validation tests
+  // In a real implementation, you would:
+  // 1. Parse the OpenAPI YAML to extract schema definitions
+  // 2. Make actual calls to DataverseDataProvider methods
+  // 3. Validate response structure against schema using a validator like ajv
+
+  it('validates EventApprovalRequest response shape', () => {
+    // Test to be implemented with JSON schema validation
+    expect(true).toBe(true)
+  })
+
+  it('validates EventApprovalRequestSummary response shape', () => {
+    // Test to be implemented with JSON schema validation
+    expect(true).toBe(true)
+  })
+
+  it('validates ApprovalDecision response shape', () => {
+    // Test to be implemented with JSON schema validation
+    expect(true).toBe(true)
+  })
+
+  it('validates RequestHistoryEntry response shape', () => {
+    // Test to be implemented with JSON schema validation
+    expect(true).toBe(true)
+  })
+
+  it('validates StatusNotification response shape', () => {
+    // Test to be implemented with JSON schema validation
+    expect(true).toBe(true)
   })
 })

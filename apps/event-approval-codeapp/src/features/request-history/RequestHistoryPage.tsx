@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { useViewState } from '@/app/useViewState'
+import { ApiError } from '@/services/api-client/types'
 import type { EventApprovalRequestSummary } from '@/models/eventApproval'
 import { listMyRequests } from '@/services/api-client/requests'
 
@@ -8,7 +9,7 @@ import { RequestTimeline } from './RequestTimeline'
 
 export function RequestHistoryPage() {
   const viewState = useViewState<EventApprovalRequestSummary[]>([])
-  const { setLoading, setEmpty, setData, setError } = viewState
+  const { setLoading, setEmpty, setData, setError, setStale } = viewState
   const [selectedRequestId, setSelectedRequestId] = useState<string | null>(
     null,
   )
@@ -57,6 +58,11 @@ export function RequestHistoryPage() {
           return
         }
 
+        if (error instanceof ApiError && error.code === 'CONFLICT') {
+          setStale()
+          return
+        }
+
         setError(
           error instanceof Error
             ? error
@@ -70,7 +76,7 @@ export function RequestHistoryPage() {
     return () => {
       mounted = false
     }
-  }, [setData, setEmpty, setError, setLoading])
+  }, [setData, setEmpty, setError, setLoading, setStale])
 
   return (
     <section>
@@ -79,13 +85,19 @@ export function RequestHistoryPage() {
         <p role="status">Loading request history…</p>
       ) : null}
       {viewState.isEmpty ? <p role="status">No requests found yet.</p> : null}
+      {viewState.isStale ? (
+        <p role="status">Your data is stale. Reload and try again.</p>
+      ) : null}
       {viewState.isError ? (
         <p role="alert">
           {viewState.error?.message ?? 'Unable to load request history.'}
         </p>
       ) : null}
 
-      {!viewState.isLoading && !viewState.isEmpty && !viewState.isError ? (
+      {!viewState.isLoading &&
+      !viewState.isEmpty &&
+      !viewState.isError &&
+      !viewState.isStale ? (
         <div>
           <ul aria-label="Request history">
             {viewState.data?.map((request) => (

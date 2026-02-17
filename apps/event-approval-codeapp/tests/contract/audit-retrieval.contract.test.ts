@@ -6,7 +6,9 @@ import { MockDataProvider } from '@/services/mocks/mockDataProvider'
 describe('audit retrieval contract', () => {
   it('applies history retrieval filters by event type and time range', async () => {
     const seed = createFixtureSeed()
-    const approvedRequest = seed.requests.find((request) => request.status === 'approved')
+    const approvedRequest = seed.requests.find(
+      (request) => request.status === 'approved',
+    )
 
     if (!approvedRequest) {
       throw new Error('Expected approved request in fixture seed')
@@ -14,17 +16,22 @@ describe('audit retrieval contract', () => {
 
     const provider = new MockDataProvider(seed)
     const allItems = await provider.getRequestHistory(approvedRequest.requestId)
-    const approvedEntry = allItems.find((entry) => entry.eventType === 'approved')
+    const approvedEntry = allItems.find(
+      (entry) => entry.eventType === 'approved',
+    )
 
     if (!approvedEntry) {
       throw new Error('Expected approved history entry in fixture seed')
     }
 
-    const filtered = await provider.getRequestHistory(approvedRequest.requestId, {
-      eventTypes: ['approved'],
-      from: approvedEntry.occurredAt,
-      to: approvedEntry.occurredAt,
-    })
+    const filtered = await provider.getRequestHistory(
+      approvedRequest.requestId,
+      {
+        eventTypes: ['approved'],
+        from: approvedEntry.occurredAt,
+        to: approvedEntry.occurredAt,
+      },
+    )
 
     expect(filtered).toHaveLength(1)
     expect(filtered[0].eventType).toBe('approved')
@@ -33,7 +40,9 @@ describe('audit retrieval contract', () => {
 
   it('keeps audit entries retrievable for historical records under indefinite retention', async () => {
     const seed = createFixtureSeed()
-    const approvedRequest = seed.requests.find((request) => request.status === 'approved')
+    const approvedRequest = seed.requests.find(
+      (request) => request.status === 'approved',
+    )
 
     if (!approvedRequest) {
       throw new Error('Expected approved request in fixture seed')

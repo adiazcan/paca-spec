@@ -58,9 +58,13 @@ export function NotificationsPage() {
       <h2>Status Notifications</h2>
 
       {viewState.isLoading ? <p role="status">Loading notifications…</p> : null}
-      {viewState.isEmpty ? <p role="status">No notifications available.</p> : null}
+      {viewState.isEmpty ? (
+        <p role="status">No notifications available.</p>
+      ) : null}
       {viewState.isError ? (
-        <p role="alert">{viewState.error?.message ?? 'Unable to load notifications.'}</p>
+        <p role="alert">
+          {viewState.error?.message ?? 'Unable to load notifications.'}
+        </p>
       ) : null}
       {viewState.isStale ? (
         <p role="status">Notifications are stale. Reload and try again.</p>
@@ -70,8 +74,8 @@ export function NotificationsPage() {
         <ul aria-label="Notifications list">
           {viewState.data?.map((notification) => (
             <li key={notification.notificationId}>
-              {notification.payload.status} — {notification.payload.comment} — Delivery:{' '}
-              {notification.deliveryStatus}
+              {notification.payload.status} — {notification.payload.comment} —
+              Delivery: {notification.deliveryStatus}
             </li>
           ))}
         </ul>

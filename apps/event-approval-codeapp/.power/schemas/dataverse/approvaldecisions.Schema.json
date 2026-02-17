@@ -271,18 +271,9 @@
           "x-ms-dataverse-type": "PicklistType",
           "x-ms-schema-name": "paca_decisiontypecode",
           "required": true,
-          "enum": [
-            "Approved",
-            "Rejected"
-          ],
-          "x-ms-enum-values": [
-            0,
-            1
-          ],
-          "Color": [
-            null,
-            null
-          ],
+          "enum": ["Approved", "Rejected"],
+          "x-ms-enum-values": [0, 1],
+          "Color": [null, null],
           "x-ms-optionsetmetadataid": "508e175c-620b-f111-8342-000d3a316a82",
           "x-ms-isGlobal": true,
           "x-ms-optionsetdisplayname": "Decision Type",
@@ -319,18 +310,9 @@
           "x-ms-dataverse-type": "StateType",
           "x-ms-schema-name": "statecode",
           "required": true,
-          "enum": [
-            "Active",
-            "Inactive"
-          ],
-          "x-ms-enum-values": [
-            0,
-            1
-          ],
-          "Color": [
-            null,
-            null
-          ],
+          "enum": ["Active", "Inactive"],
+          "x-ms-enum-values": [0, 1],
+          "Color": [null, null],
           "x-ms-optionsetmetadataid": "c1a1238c-620b-f111-8342-000d3a316a82",
           "x-ms-isGlobal": false,
           "x-ms-optionsetdisplayname": "Status",
@@ -350,18 +332,9 @@
           "x-ms-dataverse-attribute": "statuscode",
           "x-ms-dataverse-type": "StatusType",
           "x-ms-schema-name": "statuscode",
-          "enum": [
-            "Active",
-            "Inactive"
-          ],
-          "x-ms-enum-values": [
-            1,
-            2
-          ],
-          "Color": [
-            null,
-            null
-          ],
+          "enum": ["Active", "Inactive"],
+          "x-ms-enum-values": [1, 2],
+          "Color": [null, null],
           "x-ms-optionsetmetadataid": "cba1238c-620b-f111-8342-000d3a316a82",
           "x-ms-isGlobal": false,
           "x-ms-optionsetdisplayname": "Status Reason",

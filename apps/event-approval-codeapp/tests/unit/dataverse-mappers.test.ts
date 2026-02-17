@@ -38,23 +38,25 @@ describe('dataverse mappers', () => {
     expect(roleTypeFromChoice(roleTypeToChoice('organizer'))).toBe('organizer')
     expect(roleTypeFromChoice(roleTypeToChoice('assistant'))).toBe('assistant')
 
-    expect(transportationModeFromChoice(transportationModeToChoice('air'))).toBe(
-      'air',
-    )
+    expect(
+      transportationModeFromChoice(transportationModeToChoice('air')),
+    ).toBe('air')
     expect(
       transportationModeFromChoice(transportationModeToChoice('rail')),
     ).toBe('rail')
-    expect(transportationModeFromChoice(transportationModeToChoice('car'))).toBe(
-      'car',
-    )
-    expect(transportationModeFromChoice(transportationModeToChoice('bus'))).toBe(
-      'bus',
-    )
+    expect(
+      transportationModeFromChoice(transportationModeToChoice('car')),
+    ).toBe('car')
+    expect(
+      transportationModeFromChoice(transportationModeToChoice('bus')),
+    ).toBe('bus')
     expect(
       transportationModeFromChoice(transportationModeToChoice('other')),
     ).toBe('other')
 
-    expect(requestStatusFromChoice(requestStatusToChoice('draft'))).toBe('draft')
+    expect(requestStatusFromChoice(requestStatusToChoice('draft'))).toBe(
+      'draft',
+    )
     expect(requestStatusFromChoice(requestStatusToChoice('submitted'))).toBe(
       'submitted',
     )
@@ -72,18 +74,18 @@ describe('dataverse mappers', () => {
       'rejected',
     )
 
-    expect(historyEventTypeFromChoice(historyEventTypeToChoice('submitted'))).toBe(
-      'submitted',
-    )
-    expect(historyEventTypeFromChoice(historyEventTypeToChoice('approved'))).toBe(
-      'approved',
-    )
-    expect(historyEventTypeFromChoice(historyEventTypeToChoice('rejected'))).toBe(
-      'rejected',
-    )
-    expect(historyEventTypeFromChoice(historyEventTypeToChoice('commented'))).toBe(
-      'commented',
-    )
+    expect(
+      historyEventTypeFromChoice(historyEventTypeToChoice('submitted')),
+    ).toBe('submitted')
+    expect(
+      historyEventTypeFromChoice(historyEventTypeToChoice('approved')),
+    ).toBe('approved')
+    expect(
+      historyEventTypeFromChoice(historyEventTypeToChoice('rejected')),
+    ).toBe('rejected')
+    expect(
+      historyEventTypeFromChoice(historyEventTypeToChoice('commented')),
+    ).toBe('commented')
     expect(
       historyEventTypeFromChoice(historyEventTypeToChoice('notification_sent')),
     ).toBe('notification_sent')
@@ -95,15 +97,15 @@ describe('dataverse mappers', () => {
     expect(actorRoleFromChoice(actorRoleToChoice('approver'))).toBe('approver')
     expect(actorRoleFromChoice(actorRoleToChoice('system'))).toBe('system')
 
-    expect(notificationChannelFromChoice(notificationChannelToChoice('in_app'))).toBe(
-      'in_app',
-    )
-    expect(notificationChannelFromChoice(notificationChannelToChoice('email'))).toBe(
-      'email',
-    )
-    expect(notificationChannelFromChoice(notificationChannelToChoice('teams'))).toBe(
-      'teams',
-    )
+    expect(
+      notificationChannelFromChoice(notificationChannelToChoice('in_app')),
+    ).toBe('in_app')
+    expect(
+      notificationChannelFromChoice(notificationChannelToChoice('email')),
+    ).toBe('email')
+    expect(
+      notificationChannelFromChoice(notificationChannelToChoice('teams')),
+    ).toBe('teams')
 
     expect(
       notificationDeliveryStatusFromChoice(
@@ -184,7 +186,9 @@ describe('dataverse mappers', () => {
 
     const row = mapApprovalDecisionDomainToRow(domainDecision)
     expect(row.paca_decisiontypecode).toBe(0)
-    expect(row['paca_requestid@odata.bind']).toBe('/paca_eventapprovalrequests(req-1)')
+    expect(row['paca_requestid@odata.bind']).toBe(
+      '/paca_eventapprovalrequests(req-1)',
+    )
 
     const mappedBack = mapApprovalDecisionRowToDomain({
       paca_approvaldecisionid: 'dec-1',
@@ -256,7 +260,8 @@ describe('dataverse mappers', () => {
       _paca_requestid_value: 'req-1',
       paca_recipientid: 'user-1',
       paca_channelcode: 2,
-      paca_payload: '{"requestId":"req-1","status":"approved","comment":"Approved by manager"}',
+      paca_payload:
+        '{"requestId":"req-1","status":"approved","comment":"Approved by manager"}',
       paca_deliverystatuscode: 1,
       createdon: '2026-02-16T12:30:00.000Z',
       paca_sentat: '2026-02-16T12:30:01.000Z',

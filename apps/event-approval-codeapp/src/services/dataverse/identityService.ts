@@ -30,6 +30,7 @@ export class IdentityService {
     MyProfile_V2: ($select?: string) => Promise<IOperationResult<GraphUser_V1>>
   }
   private readonly mockIdentity: UserIdentity
+  private cachedIdentity: UserIdentity | null = null
 
   public constructor(dependencies: IdentityServiceDependencies = {}) {
     this.getDataMode = dependencies.getDataMode ?? resolveDataMode
@@ -43,20 +44,55 @@ export class IdentityService {
       return this.mockIdentity
     }
 
-    const profileResult = await this.office365UsersService.MyProfile_V2(
-      'id,displayName',
-    )
+    if (this.cachedIdentity) {
+      return this.cachedIdentity
+    }
+
+    let profileResult: IOperationResult<GraphUser_V1>
+    try {
+      profileResult =
+        await this.office365UsersService.MyProfile_V2('id,displayName')
+    } catch (error) {
+      console.error(
+        '[IdentityService] Office 365 Users connector call failed:',
+        error,
+      )
+      throw new Error(
+        'Unable to resolve current user identity. The Office 365 Users connector may not be available. Check that the connection is authorized in Power Apps.',
+      )
+    }
+
+    if (profileResult.success === false) {
+      console.error(
+        '[IdentityService] MyProfile_V2 returned success=false:',
+        profileResult.error,
+      )
+      throw new Error(
+        'Office 365 Users connector returned an error. Verify the connection reference is active.',
+      )
+    }
 
     const profile = profileResult.data
 
     if (!profile?.id || !profile.displayName) {
+      console.error(
+        '[IdentityService] MyProfile_V2 returned incomplete profile:',
+        profile,
+      )
       throw new Error('Unable to resolve current user identity from Entra ID.')
     }
 
-    return {
+    this.cachedIdentity = {
       id: profile.id,
       displayName: profile.displayName,
     }
+
+    console.info(
+      '[IdentityService] Resolved identity:',
+      this.cachedIdentity.displayName,
+    )
+
+    return this.cachedIdentity
   }
 }
 
