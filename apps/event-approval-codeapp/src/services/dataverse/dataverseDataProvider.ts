@@ -195,13 +195,13 @@ export class DataverseDataProvider implements IDataProvider {
         ) as any,
         paca_origin: input.origin,
         paca_destination: input.destination,
-        paca_registrationfee: String(input.costEstimate.registration),
-        paca_travelcost: String(input.costEstimate.travel),
-        paca_hotelcost: String(input.costEstimate.hotels),
-        paca_mealscost: String(input.costEstimate.meals),
-        paca_otherexpenses: String(input.costEstimate.other),
+        paca_registrationfee: input.costEstimate.registration.toString(),
+        paca_travelcost: input.costEstimate.travel.toString(),
+        paca_hotelcost: input.costEstimate.hotels.toString(),
+        paca_mealscost: input.costEstimate.meals.toString(),
+        paca_otherexpenses: input.costEstimate.other.toString(),
         paca_currencycode: input.costEstimate.currencyCode,
-        paca_totalcost: String(input.costEstimate.total),
+        paca_totalcost: input.costEstimate.total.toString(),
         paca_statuscode: requestStatusToChoice('submitted') as any,
         paca_submittedat: now,
         paca_version: '1',
@@ -320,9 +320,67 @@ export class DataverseDataProvider implements IDataProvider {
         role: roleTypeFromChoice(row.paca_rolecode),
         status: requestStatusFromChoice(row.paca_statuscode),
         submittedAt: row.paca_submittedat ?? null,
+        destination: row.paca_destination,
+        totalCost: Number(row.paca_totalcost),
+        submitterDisplayName: row.paca_submitterdisplayname,
       }))
     } catch (error) {
       handleDataverseError(error, 'List my requests failed')
+    }
+  }
+
+  /**
+   * T025a: Implement listAllRequests
+   *
+   * Retrieves all requests for approver dashboard including latest decision comment
+   */
+
+  public async listAllRequests(): Promise<EventApprovalRequestSummary[]> {
+    try {
+      const [requestsResult, decisionsResult] = await Promise.all([
+        Paca_eventapprovalrequestsService.getAll({
+          orderBy: ['paca_submittedat desc'],
+        }),
+        Paca_approvaldecisionsService.getAll({
+          orderBy: ['paca_decidedat desc'],
+        }),
+      ])
+
+      requireSuccessResult(requestsResult, 'List all requests')
+      requireSuccessResult(decisionsResult, 'List approval decisions')
+
+      if (!requestsResult.data || requestsResult.data.length === 0) {
+        return []
+      }
+
+      const latestCommentsByRequestId = new Map<string, string>()
+
+      for (const decision of decisionsResult.data ?? []) {
+        const requestId = decision._paca_requestid_value
+
+        if (!requestId || latestCommentsByRequestId.has(requestId)) {
+          continue
+        }
+
+        latestCommentsByRequestId.set(requestId, decision.paca_comment)
+      }
+
+      return requestsResult.data.map((row) => ({
+        requestId: row.paca_eventapprovalrequestid,
+        requestNumber: row.paca_requestnumber,
+        eventName: row.paca_eventname,
+        role: roleTypeFromChoice(row.paca_rolecode),
+        status: requestStatusFromChoice(row.paca_statuscode),
+        submittedAt: row.paca_submittedat ?? null,
+        destination: row.paca_destination,
+        totalCost: Number(row.paca_totalcost),
+        submitterDisplayName: row.paca_submitterdisplayname,
+        latestComment: latestCommentsByRequestId.get(
+          row.paca_eventapprovalrequestid,
+        ),
+      }))
+    } catch (error) {
+      handleDataverseError(error, 'List all requests failed')
     }
   }
 
@@ -376,6 +434,9 @@ export class DataverseDataProvider implements IDataProvider {
         role: roleTypeFromChoice(row.paca_rolecode),
         status: requestStatusFromChoice(row.paca_statuscode),
         submittedAt: row.paca_submittedat ?? null,
+        destination: row.paca_destination,
+        totalCost: Number(row.paca_totalcost),
+        submitterDisplayName: row.paca_submitterdisplayname,
       }))
     } catch (error) {
       handleDataverseError(error, 'List pending approvals failed')
@@ -440,7 +501,7 @@ export class DataverseDataProvider implements IDataProvider {
 
       await Paca_eventapprovalrequestsService.update(requestId, {
         paca_statuscode: requestStatusToChoice(newStatus) as any,
-        paca_version: String(newVersion),
+        paca_version: newVersion.toString(),
       })
 
       // Step 4: Create history entry

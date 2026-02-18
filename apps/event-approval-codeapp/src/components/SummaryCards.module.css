@@ -1,0 +1,44 @@
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  height: 100px;
+  overflow: hidden;
+  padding: 24px 24px 8px;
+}
+
+.label {
+  color: var(--color-text-muted);
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0 0 6px;
+}
+
+.value {
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 36px;
+  margin: 0;
+}
+
+.total {
+  color: var(--color-text-primary);
+}
+
+.pending {
+  color: var(--color-status-pending-count);
+}
+
+.approved {
+  color: var(--color-status-approved-count);
+}
+
+.rejected {
+  color: var(--color-status-rejected-count);
+}

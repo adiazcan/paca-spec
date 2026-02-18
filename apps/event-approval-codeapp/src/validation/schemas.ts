@@ -39,15 +39,28 @@ export const submitRequestInputSchema = z.object({
   costEstimate: costEstimateSchema,
 })
 
-export const decisionInputSchema = z.object({
-  decisionType: z.enum(decisionTypes),
-  comment: z.string().trim().min(1).max(2000),
-  version: z.number().int().min(1),
-})
+export const decisionInputSchema = z
+  .object({
+    decisionType: z.enum(decisionTypes),
+    comment: z.string().trim().max(2000),
+    version: z.number().int().min(1),
+  })
+  .superRefine((value, context) => {
+    if (
+      value.decisionType === 'rejected' &&
+      value.comment.trim().length === 0
+    ) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['comment'],
+        message: 'Comment is required when rejecting a request',
+      })
+    }
+  })
 
 export const requestHistoryEntrySchema = z.object({
-  historyEntryId: z.uuid(),
-  requestId: z.uuid(),
+  historyEntryId: z.guid(),
+  requestId: z.guid(),
   eventType: z.enum(historyEventTypes),
   actorId: z.string().trim().min(1),
   actorRole: z.enum(actorRoles),
@@ -59,12 +72,12 @@ export const requestHistoryEntrySchema = z.object({
 export const requestStatusSchema = z.enum(requestStatuses)
 
 export const statusNotificationSchema = z.object({
-  notificationId: z.uuid(),
-  requestId: z.uuid(),
+  notificationId: z.guid(),
+  requestId: z.guid(),
   recipientId: z.string().trim().min(1),
   channel: z.enum(['in_app', 'email', 'teams']),
   payload: z.object({
-    requestId: z.uuid(),
+    requestId: z.guid(),
     status: requestStatusSchema,
     comment: z.string(),
   }),

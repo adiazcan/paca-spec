@@ -1,0 +1,190 @@
+/* Page wrapper — full width, flex column */
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+/* Centered white card container */
+.card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  margin: 0 auto;
+  max-width: 768px;
+  padding: 24px;
+  width: 100%;
+}
+
+/* Card title — 16px regular weight */
+.cardTitle {
+  color: var(--color-text-primary);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 16px;
+  margin: 0;
+}
+
+/* Card subtitle — muted gray */
+.cardSubtitle {
+  color: var(--color-text-muted);
+  font-size: 16px;
+  line-height: 24px;
+  margin: 6px 0 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+/* Form section — no border, just vertical stack */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Section heading — 18px bold */
+.sectionTitle {
+  color: var(--color-text-primary);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 28px;
+  margin: 0;
+}
+
+/* Single-column field stack */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field label {
+  color: var(--color-text-primary);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 14px;
+}
+
+.field input,
+.field select {
+  appearance: auto;
+  background: var(--color-bg-input);
+  border: 1px solid transparent;
+  border-radius: var(--radius-btn);
+  color: var(--color-text-primary);
+  font-family: inherit;
+  font-size: 14px;
+  height: 36px;
+  outline: none;
+  padding: 4px 12px;
+}
+
+.field input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: var(--color-link);
+}
+
+/* Two-column row (Origin + Destination) */
+.twoCol {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* Cost fields — 2-column grid */
+.costsGrid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* Total cost highlighted box */
+.totalCard {
+  align-items: center;
+  background: var(--color-bg-total);
+  border: 1px solid var(--color-border-total);
+  border-radius: 10px;
+  display: flex;
+  height: 66px;
+  justify-content: space-between;
+  padding: 0 17px;
+}
+
+.totalLabel {
+  color: var(--color-text-primary);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.totalValue {
+  color: var(--color-link);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+}
+
+/* Inline validation/status messages */
+.error {
+  color: var(--color-status-rejected-count);
+  font-size: 12px;
+  margin: 0;
+}
+
+.status {
+  color: var(--color-text-muted);
+  font-size: 12px;
+  margin: 0;
+}
+
+/* Action buttons row */
+.actions {
+  display: flex;
+  gap: 12px;
+  padding-top: 16px;
+}
+
+/* Submit button — flex-grow, dark fill */
+.primaryAction {
+  background: var(--color-nav-active-bg);
+  border: none;
+  border-radius: var(--radius-btn);
+  color: var(--color-nav-active-text);
+  cursor: pointer;
+  flex: 1 0 0;
+  font-family: inherit;
+  font-size: 14px;
+  height: 36px;
+  min-height: 1px;
+  min-width: 1px;
+}
+
+/* Cancel button — fixed width, outlined */
+.secondaryAction {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  flex: 0 0 auto;
+  font-family: inherit;
+  font-size: 14px;
+  height: 36px;
+  width: 337px;
+}
+
+.primaryAction:disabled,
+.secondaryAction:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}

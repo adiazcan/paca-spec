@@ -2,44 +2,54 @@ import { expect, test } from '@playwright/test'
 
 test('employee -> approver -> notification smoke flow', async ({ page }) => {
   const approvalComment = 'Approved in smoke validation run.'
+  const eventName = 'Global Reliability Summit 2026'
+
+  await page.route('https://events.contoso.com/**', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'text/plain',
+      body: 'ok',
+    })
+  })
 
   await page.goto('/')
 
   // Step 1: Employee submits a request
-  await page.getByLabel('Event name').fill('Global Reliability Summit 2026')
+  await page.getByRole('button', { name: 'New Request' }).click()
+  await expect(
+    page.getByRole('heading', { name: 'Submit Event Request' }).first(),
+  ).toBeVisible({ timeout: 10_000 })
+
+  await page.getByLabel(/Event Name/i).fill(eventName)
   await page
-    .getByLabel('Event website')
+    .getByLabel(/Event Website/i)
     .fill('https://events.contoso.com/reliability-2026')
-  await page.getByLabel('Origin').fill('Seattle')
-  await page.getByLabel('Destination').fill('London')
-  await page.getByLabel('Registration').fill('950')
+  await page.getByLabel(/Origin/i).fill('Seattle')
+  await page.getByLabel(/Destination/i).fill('London')
+  await page.getByLabel(/Registration Fee/i).fill('950')
 
   await page.locator('form button[type="submit"]').click()
-  await expect(page.getByText(/submitted with status submitted/i)).toBeVisible({
-    timeout: 10_000,
-  })
+  await expect(
+    page.getByRole('heading', { name: 'My Event Requests' }).first(),
+  ).toBeVisible({ timeout: 10_000 })
 
   // Step 2: Approver decides
-  await page.getByRole('button', { name: 'Approver View' }).click()
+  await page.getByRole('button', { name: 'Switch to Approver' }).click()
   await expect(
-    page.getByRole('button', {
-      name: /Global Reliability Summit 2026 — submitted/i,
-    }),
+    page.getByRole('heading', { name: 'All Event Requests' }).first(),
   ).toBeVisible({ timeout: 10_000 })
-  await page
-    .getByRole('button', {
-      name: /Global Reliability Summit 2026 — submitted/i,
-    })
-    .click()
 
-  await page.getByLabel('Decision comment').fill(approvalComment)
-  await page.getByRole('button', { name: 'Approve request' }).click()
+  const eventCard = page.locator('article', { hasText: eventName }).first()
+  await eventCard.getByRole('button', { name: 'View Details' }).click()
 
-  // Step 3: Employee checks notification
-  await page.getByRole('button', { name: 'Employee View' }).click()
-  await page.getByRole('button', { name: 'Notifications' }).click()
+  await page.getByLabel('Comment').fill(approvalComment)
+  await page.getByRole('button', { name: 'Approve' }).click()
 
-  await expect(
-    page.getByRole('listitem').filter({ hasText: approvalComment }),
-  ).toBeVisible({ timeout: 10_000 })
+  // Step 3: Employee verifies updated status
+  await page.getByRole('button', { name: 'Switch to Employee' }).click()
+  const employeeEventCard = page
+    .locator('article', { hasText: eventName })
+    .first()
+
+  await expect(employeeEventCard).toContainText('Approved', { timeout: 10_000 })
 })

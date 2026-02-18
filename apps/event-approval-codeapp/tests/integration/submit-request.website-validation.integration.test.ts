@@ -7,11 +7,11 @@ import { SubmitRequestPage } from '@/features/submit-request/SubmitRequestPage'
 import { resetDataProviderCache } from '@/services/api-client/providerFactory'
 
 async function fillCommonFields(user: ReturnType<typeof userEvent.setup>) {
-  await user.type(screen.getByLabelText('Event name'), 'Fabrikam AI Summit')
-  await user.type(screen.getByLabelText('Origin'), 'Seattle')
-  await user.type(screen.getByLabelText('Destination'), 'Tokyo')
-  await user.clear(screen.getByLabelText('Registration'))
-  await user.type(screen.getByLabelText('Registration'), '350')
+  await user.type(screen.getByLabelText(/Event Name/i), 'Fabrikam AI Summit')
+  await user.type(screen.getByLabelText(/Origin/i), 'Seattle')
+  await user.type(screen.getByLabelText(/Destination/i), 'Tokyo')
+  await user.clear(screen.getByLabelText(/Registration Fee/i))
+  await user.type(screen.getByLabelText(/Registration Fee/i), '350')
 }
 
 describe('website validation behavior', () => {
@@ -29,11 +29,11 @@ describe('website validation behavior', () => {
 
     await fillCommonFields(user)
     await user.type(
-      screen.getByLabelText('Event website'),
+      screen.getByLabelText(/Event Website/i),
       'http://example.com',
     )
 
-    await user.click(screen.getByRole('button', { name: 'Submit request' }))
+    await user.click(screen.getByRole('button', { name: /Submit Request/i }))
 
     expect(
       await screen.findByText('Event website must use https.'),
@@ -51,11 +51,11 @@ describe('website validation behavior', () => {
 
     await fillCommonFields(user)
     await user.type(
-      screen.getByLabelText('Event website'),
+      screen.getByLabelText(/Event Website/i),
       'https://example.com',
     )
 
-    await user.click(screen.getByRole('button', { name: 'Submit request' }))
+    await user.click(screen.getByRole('button', { name: /Submit Request/i }))
 
     expect(
       await screen.findByText(/Website could not be reached right now/i),

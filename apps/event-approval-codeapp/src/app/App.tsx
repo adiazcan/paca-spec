@@ -1,115 +1,188 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { resolveDataMode } from '@/services/api-client/environment'
 import { ApproverDashboardPage } from '@/features/approver-dashboard/ApproverDashboardPage'
-import { NotificationsPage } from '@/features/notifications/NotificationsPage'
-import { RequestHistoryPage } from '@/features/request-history/RequestHistoryPage'
+import { ApproverReviewPage } from '@/features/approver-review/ApproverReviewPage'
+import { EmployeeDashboardPage } from '@/features/employee-dashboard/EmployeeDashboardPage'
+import { RequestDetailPage } from '@/features/request-detail/RequestDetailPage'
 import { SubmitRequestPage } from '@/features/submit-request/SubmitRequestPage'
+import { Header } from '@/components/Header'
+import type { AppScreen, DashboardSummary } from '@/models/eventApproval'
+import { identityService } from '@/services/dataverse/identityService'
+import '@/App.css'
 
 type AppRole = 'employee' | 'approver'
-type AppRoute =
-  | 'submit'
-  | 'history'
-  | 'timeline'
-  | 'dashboard'
-  | 'notifications'
-
-interface NavItem {
-  route: AppRoute
-  label: string
+const dashboardByRole: Record<AppRole, AppScreen> = {
+  employee: 'employee-dashboard',
+  approver: 'approver-dashboard',
 }
 
-const navByRole: Record<AppRole, NavItem[]> = {
-  employee: [
-    { route: 'submit', label: 'Submit Request' },
-    { route: 'history', label: 'My History' },
-    { route: 'timeline', label: 'Request Timeline' },
-    { route: 'notifications', label: 'Notifications' },
-  ],
-  approver: [
-    { route: 'dashboard', label: 'Pending Approvals' },
-    { route: 'notifications', label: 'Notifications' },
-  ],
+const routeHeadings: Record<AppScreen, string> = {
+  'employee-dashboard': 'My Event Requests',
+  'new-request': 'Submit Event Request',
+  'view-request': 'Request Details',
+  'approver-dashboard': 'All Event Requests',
+  'approve-request': 'Review Request',
 }
 
-const routeHeadings: Record<AppRoute, string> = {
-  submit: 'Submit Event Request',
-  history: 'My Request History',
-  timeline: 'Request Timeline',
-  dashboard: 'Approver Dashboard',
-  notifications: 'Status Notifications',
+const defaultAvailableRoles: AppRole[] = ['employee', 'approver']
+
+interface AppProps {
+  availableRoles?: AppRole[]
 }
 
-function renderRoute(route: AppRoute) {
-  if (route === 'submit') {
-    return <SubmitRequestPage />
-  }
-
-  if (route === 'history') {
-    return <RequestHistoryPage />
-  }
-
-  if (route === 'timeline') {
-    return <RequestHistoryPage />
-  }
-
-  if (route === 'dashboard') {
-    return <ApproverDashboardPage />
-  }
-
-  return <NotificationsPage />
+interface ScreenHandlers {
+  onCancelSubmitRequest: () => void
+  onSubmitRequestComplete: () => void
+  onSelectEmployeeRequest: (requestId: string) => void
+  onEmployeeRequestBack: () => void
+  onSelectApproverRequest: (requestId: string) => void
+  onApproverSummaryChange: (summary: DashboardSummary) => void
+  onApproverBack: () => void
+  onApproverDecisionComplete: () => void
 }
 
-export default function App() {
-  const [role, setRole] = useState<AppRole>('employee')
-  const navItems = useMemo(() => navByRole[role], [role])
-  const [route, setRoute] = useState<AppRoute>(navItems[0].route)
+function renderScreen(
+  screen: AppScreen,
+  selectedRequestId: string | null,
+  handlers: ScreenHandlers,
+) {
+  if (screen === 'new-request') {
+    return (
+      <SubmitRequestPage
+        onCancel={handlers.onCancelSubmitRequest}
+        onSubmitted={handlers.onSubmitRequestComplete}
+      />
+    )
+  }
 
-  function updateRole(nextRole: AppRole): void {
-    setRole(nextRole)
-    setRoute(navByRole[nextRole][0].route)
+  if (screen === 'employee-dashboard') {
+    return (
+      <EmployeeDashboardPage onViewDetails={handlers.onSelectEmployeeRequest} />
+    )
+  }
+
+  if (screen === 'view-request') {
+    return (
+      <RequestDetailPage
+        onBack={handlers.onEmployeeRequestBack}
+        requestId={selectedRequestId}
+      />
+    )
+  }
+
+  if (screen === 'approver-dashboard') {
+    return (
+      <ApproverDashboardPage
+        onSummaryChange={handlers.onApproverSummaryChange}
+        onViewDetails={handlers.onSelectApproverRequest}
+      />
+    )
   }
 
   return (
-    <div
-      style={{
-        fontFamily: 'Segoe UI, sans-serif',
-        margin: '0 auto',
-        maxWidth: 920,
-        padding: 24,
-      }}
-    >
-      <header>
-        <h1>Event Approval Workflow</h1>
-        <p style={{ marginBottom: 8 }}>Data mode: {resolveDataMode()}</p>
-        <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
-          <button onClick={() => updateRole('employee')} type="button">
-            Employee View
-          </button>
-          <button onClick={() => updateRole('approver')} type="button">
-            Approver View
-          </button>
-        </div>
-      </header>
+    <ApproverReviewPage
+      onBack={handlers.onApproverBack}
+      onDecisionComplete={handlers.onApproverDecisionComplete}
+      requestId={selectedRequestId}
+    />
+  )
+}
 
-      <nav
-        aria-label="Primary"
-        style={{ display: 'flex', gap: 8, marginBottom: 20 }}
-      >
-        {navItems.map((item) => (
-          <button
-            key={item.route}
-            onClick={() => setRoute(item.route)}
-            type="button"
-          >
-            {item.label}
-          </button>
-        ))}
-      </nav>
+export default function App({
+  availableRoles = defaultAvailableRoles,
+}: AppProps) {
+  const normalizedAvailableRoles = availableRoles.filter(
+    (value, index, source) => source.indexOf(value) === index,
+  )
+  const initialRole = normalizedAvailableRoles.includes('employee')
+    ? 'employee'
+    : (normalizedAvailableRoles[0] ?? 'employee')
+  const canSwitchRole = normalizedAvailableRoles.length > 1
 
-      <main>
-        <h2>{routeHeadings[route]}</h2>
-        {renderRoute(route)}
+  const [role, setRole] = useState<AppRole>(initialRole)
+  const [screen, setScreen] = useState<AppScreen>(dashboardByRole[initialRole])
+  const [selectedRequestId, setSelectedRequestId] = useState<string | null>(
+    null,
+  )
+  const [pendingCount, setPendingCount] = useState(0)
+  const [userName, setUserName] = useState('')
+
+  useEffect(() => {
+    identityService
+      .getCurrentUser()
+      .then((user) => setUserName(user.displayName))
+      .catch(() => setUserName('Unknown User'))
+  }, [])
+
+  function updateRole(nextRole: AppRole): void {
+    setRole(nextRole)
+    setScreen(dashboardByRole[nextRole])
+    setSelectedRequestId(null)
+
+    if (nextRole === 'employee') {
+      setPendingCount(0)
+    }
+  }
+
+  return (
+    <div className="appShell">
+      <Header
+        activeScreen={screen}
+        canSwitchRole={canSwitchRole}
+        onNavigate={(nextScreen) => {
+          setScreen(nextScreen)
+          setSelectedRequestId(null)
+        }}
+        onSwitchRole={() => {
+          if (!canSwitchRole) {
+            return
+          }
+
+          const nextRole = role === 'employee' ? 'approver' : 'employee'
+          updateRole(nextRole)
+        }}
+        pendingCount={pendingCount}
+        role={role}
+        userName={userName}
+      />
+
+      <main className="main">
+        {screen !== 'employee-dashboard' && screen !== 'new-request' ? (
+          <h2 className="routeHeading">{routeHeadings[screen]}</h2>
+        ) : null}
+        {renderScreen(screen, selectedRequestId, {
+          onCancelSubmitRequest: () => {
+            setScreen('employee-dashboard')
+            setSelectedRequestId(null)
+          },
+          onSubmitRequestComplete: () => {
+            setScreen('employee-dashboard')
+            setSelectedRequestId(null)
+          },
+          onSelectEmployeeRequest: (requestId) => {
+            setSelectedRequestId(requestId)
+            setScreen('view-request')
+          },
+          onEmployeeRequestBack: () => {
+            setScreen('employee-dashboard')
+            setSelectedRequestId(null)
+          },
+          onSelectApproverRequest: (requestId) => {
+            setSelectedRequestId(requestId)
+            setScreen('approve-request')
+          },
+          onApproverSummaryChange: (summary) => {
+            setPendingCount(summary.pending)
+          },
+          onApproverBack: () => {
+            setScreen('approver-dashboard')
+            setSelectedRequestId(null)
+          },
+          onApproverDecisionComplete: () => {
+            setScreen('approver-dashboard')
+            setSelectedRequestId(null)
+          },
+        })}
       </main>
     </div>
   )

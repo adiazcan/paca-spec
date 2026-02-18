@@ -1,6 +1,7 @@
 export type PerfMetricName =
   | 'submit-request'
   | 'dashboard-load'
+  | 'request-detail-load'
   | 'decision-propagation'
   | 'history-retrieval'
 

@@ -1,6 +1,7 @@
 import type {
   ApprovalDecision,
   DecisionInput,
+  EventApprovalRequest,
   EventApprovalRequestSummary,
 } from '@/models/eventApproval'
 import { decisionInputSchema } from '@/validation/schemas'
@@ -19,7 +20,27 @@ export async function listPendingApprovals(): Promise<
   )
 }
 
-export async function decideRequest(
+export async function listAllRequests(): Promise<
+  EventApprovalRequestSummary[]
+> {
+  const provider = createDataProvider()
+
+  return recordPerfMetric('dashboard-load', async () =>
+    provider.listAllRequests(),
+  )
+}
+
+export async function getRequestDetail(
+  requestId: string,
+): Promise<EventApprovalRequest> {
+  const provider = createDataProvider()
+
+  return recordPerfMetric('request-detail-load', async () =>
+    provider.getRequest(requestId),
+  )
+}
+
+export async function submitDecision(
   requestId: string,
   input: DecisionInput,
   context?: ProviderContext,
@@ -41,4 +62,12 @@ export async function decideRequest(
   return recordPerfMetric('decision-propagation', async () =>
     provider.decideRequest(requestId, parsed.data, context),
   )
+}
+
+export async function decideRequest(
+  requestId: string,
+  input: DecisionInput,
+  context?: ProviderContext,
+): Promise<ApprovalDecision> {
+  return submitDecision(requestId, input, context)
 }

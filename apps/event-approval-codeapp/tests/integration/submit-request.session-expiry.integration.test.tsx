@@ -21,17 +21,17 @@ describe('submit request session expiry handling (Phase 7 - US4)', () => {
 
     render(createElement(SubmitRequestPage))
 
-    await user.type(screen.getByLabelText('Event name'), 'Identity Test Event')
+    await user.type(screen.getByLabelText(/Event Name/i), 'Identity Test Event')
     await user.type(
-      screen.getByLabelText('Event website'),
+      screen.getByLabelText(/Event Website/i),
       'https://contoso.com/event',
     )
-    await user.type(screen.getByLabelText('Origin'), 'Seattle')
-    await user.type(screen.getByLabelText('Destination'), 'Austin')
-    await user.clear(screen.getByLabelText('Registration'))
-    await user.type(screen.getByLabelText('Registration'), '100')
+    await user.type(screen.getByLabelText(/Origin/i), 'Seattle')
+    await user.type(screen.getByLabelText(/Destination/i), 'Austin')
+    await user.clear(screen.getByLabelText(/Registration Fee/i))
+    await user.type(screen.getByLabelText(/Registration Fee/i), '100')
 
-    await user.click(screen.getByRole('button', { name: 'Submit request' }))
+    await user.click(screen.getByRole('button', { name: /Submit Request/i }))
 
     expect(
       await screen.findByText(
@@ -39,9 +39,9 @@ describe('submit request session expiry handling (Phase 7 - US4)', () => {
       ),
     ).toBeInTheDocument()
 
-    expect(screen.getByLabelText('Event name')).toHaveValue(
+    expect(screen.getByLabelText(/Event Name/i)).toHaveValue(
       'Identity Test Event',
     )
-    expect(screen.getByLabelText('Origin')).toHaveValue('Seattle')
+    expect(screen.getByLabelText(/Origin/i)).toHaveValue('Seattle')
   })
 })

@@ -1,0 +1,32 @@
+.empty {
+  color: var(--color-text-empty);
+  margin: 0;
+}
+
+.list {
+  display: grid;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  background: var(--color-bg-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px;
+}
+
+.content {
+  color: var(--color-text-comment);
+  margin: 0;
+}
+
+.meta {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  margin: 0;
+}

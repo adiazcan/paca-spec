@@ -477,7 +477,7 @@ export function mapRequestHistoryEntryRowToDomain(
     eventType: historyEventTypeFromChoice(row.paca_eventtypecode),
     actorId: row.paca_actorid,
     actorRole: actorRoleFromChoice(row.paca_actorrolecode),
-    comment: row.paca_comment,
+    comment: row.paca_comment ?? undefined,
     metadata: parseMetadata(row.paca_metadata),
     occurredAt: row.paca_occurredat,
   }

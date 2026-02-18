@@ -1,0 +1,111 @@
+.header {
+  background: var(--color-bg-card);
+  border-bottom: 1px solid var(--color-border);
+  height: 69px;
+  padding: 16px 42px 1px;
+}
+
+.container {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  min-height: 36px;
+}
+
+.brand {
+  align-items: center;
+  display: inline-flex;
+  gap: 8px;
+}
+
+.brandIcon {
+  color: var(--color-text-primary);
+  display: inline-flex;
+}
+
+.title {
+  color: var(--color-text-primary);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+  margin: 0;
+}
+
+.userInfo {
+  align-items: center;
+  display: inline-flex;
+  gap: 8px;
+}
+
+.userName {
+  color: var(--color-text-primary);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.switchButton {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 5px 13px;
+}
+
+.nav {
+  align-items: center;
+  display: flex;
+  gap: 16px;
+}
+
+.navButton,
+.navActive {
+  align-items: center;
+  background: transparent;
+  border-radius: var(--radius-btn);
+  border: 0;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 14px;
+  gap: 8px;
+  line-height: 20px;
+  padding: 8px 16px;
+}
+
+.navButton {
+  color: var(--color-text-primary);
+}
+
+.navActive {
+  background: var(--color-nav-active-bg);
+  color: var(--color-nav-active-text);
+}
+
+.userSection {
+  align-items: center;
+  border-left: 1px solid var(--color-border);
+  display: inline-flex;
+  gap: 8px;
+  margin-left: 1px;
+  min-height: 32px;
+  padding-left: 17px;
+}
+
+.bellIcon,
+.userIcon {
+  color: var(--color-text-primary);
+  display: inline-flex;
+}
+
+.badge {
+  background: var(--color-status-rejected);
+  border-radius: 999px;
+  color: var(--color-nav-active-text);
+  font-size: 0.75rem;
+  line-height: 1;
+  min-width: 20px;
+  padding: 4px 6px;
+  text-align: center;
+}

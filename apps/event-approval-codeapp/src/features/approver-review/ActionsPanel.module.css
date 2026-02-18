@@ -1,0 +1,64 @@
+.panel {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+}
+
+.title {
+  color: var(--color-text-primary);
+  font-size: 1.125rem;
+  margin: 0;
+}
+
+.label {
+  color: var(--color-text-secondary);
+  font-weight: 700;
+}
+
+.textarea {
+  background: var(--color-bg-input);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  color: var(--color-text-primary);
+  min-height: 120px;
+  padding: 12px;
+  resize: vertical;
+}
+
+.error {
+  color: var(--color-status-rejected-count);
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.approveButton,
+.rejectButton {
+  border: 0;
+  border-radius: var(--radius-btn);
+  color: var(--color-nav-active-text);
+  cursor: pointer;
+  font-weight: 700;
+  min-height: 40px;
+  padding: 0 18px;
+}
+
+.approveButton {
+  background: var(--color-btn-approve);
+}
+
+.rejectButton {
+  background: var(--color-btn-reject);
+}
+
+.approveButton:disabled,
+.rejectButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
