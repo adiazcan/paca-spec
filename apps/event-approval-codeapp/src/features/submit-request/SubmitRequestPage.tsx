@@ -179,7 +179,7 @@ export function SubmitRequestPage({
 
       <div className={styles.card}>
         <header>
-          <p className={styles.cardTitle}>Submit Event Attendance Request</p>
+          <h2 className={styles.cardTitle}>Submit Event Attendance Request</h2>
           <p className={styles.cardSubtitle}>
             Fill out the form below to request approval for attending an event
             as a speaker, organizer, or assistant
