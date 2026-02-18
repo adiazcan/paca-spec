@@ -59,8 +59,8 @@ export const decisionInputSchema = z
   })
 
 export const requestHistoryEntrySchema = z.object({
-  historyEntryId: z.uuid(),
-  requestId: z.uuid(),
+  historyEntryId: z.guid(),
+  requestId: z.guid(),
   eventType: z.enum(historyEventTypes),
   actorId: z.string().trim().min(1),
   actorRole: z.enum(actorRoles),
@@ -72,12 +72,12 @@ export const requestHistoryEntrySchema = z.object({
 export const requestStatusSchema = z.enum(requestStatuses)
 
 export const statusNotificationSchema = z.object({
-  notificationId: z.uuid(),
-  requestId: z.uuid(),
+  notificationId: z.guid(),
+  requestId: z.guid(),
   recipientId: z.string().trim().min(1),
   channel: z.enum(['in_app', 'email', 'teams']),
   payload: z.object({
-    requestId: z.uuid(),
+    requestId: z.guid(),
     status: requestStatusSchema,
     comment: z.string(),
   }),
