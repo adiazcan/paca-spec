@@ -80,7 +80,7 @@ describe('EmployeeDashboardPage', () => {
     expect(onViewDetails).toHaveBeenCalledWith('req-1')
   })
 
-  it('shows loading and then Figma baseline content for empty data', async () => {
+  it('shows loading and then empty state message for empty data', async () => {
     let resolveRequest: ((value: []) => void) | undefined
     vi.mocked(listMyRequests).mockImplementation(
       () =>
@@ -96,11 +96,12 @@ describe('EmployeeDashboardPage', () => {
     resolveRequest?.([])
 
     await waitFor(() => {
-      expect(screen.getByText('Tech Conference 2026')).toBeInTheDocument()
+      expect(
+        screen.getByText(/No event requests yet/i),
+      ).toBeInTheDocument()
     })
 
     expect(screen.getByText('Total Requests')).toBeInTheDocument()
-    expect(screen.getAllByText('1')).toHaveLength(2)
-    expect(screen.getAllByText('0')).toHaveLength(2)
+    expect(screen.getAllByText('0')).toHaveLength(4)
   })
 })

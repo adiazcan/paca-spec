@@ -32,11 +32,6 @@ const navByRole: Record<HeaderRole, HeaderNavItem[]> = {
   ],
   approver: [
     {
-      key: 'approver-dashboard',
-      label: 'Dashboard',
-      screen: 'approver-dashboard',
-    },
-    {
       key: 'approvals',
       label: 'Approvals',
       screen: 'approver-dashboard',

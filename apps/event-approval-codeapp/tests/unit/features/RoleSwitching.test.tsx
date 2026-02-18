@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import App from '@/app/App'
 
@@ -9,7 +9,12 @@ vi.mock('@/features/employee-dashboard/EmployeeDashboardPage', () => ({
 }))
 
 vi.mock('@/features/submit-request/SubmitRequestPage', () => ({
-  SubmitRequestPage: () => <div>Submit request content</div>,
+  SubmitRequestPage: () => (
+    <>
+      <h2>Submit Event Request</h2>
+      <div>Submit request content</div>
+    </>
+  ),
 }))
 
 vi.mock('@/features/request-detail/RequestDetailPage', () => ({

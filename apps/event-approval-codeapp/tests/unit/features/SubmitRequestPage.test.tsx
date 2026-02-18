@@ -18,7 +18,7 @@ describe('SubmitRequestPage', () => {
     render(<SubmitRequestPage onCancel={vi.fn()} onSubmitted={vi.fn()} />)
 
     expect(
-      screen.getByRole('heading', { name: 'Submit Event Request' }),
+      screen.getByRole('heading', { name: 'Submit Event Attendance Request' }),
     ).toBeInTheDocument()
     expect(
       screen.getByRole('heading', { name: 'Event Information' }),
