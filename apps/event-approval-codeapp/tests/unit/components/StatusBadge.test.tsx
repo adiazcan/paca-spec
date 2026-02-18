@@ -6,12 +6,12 @@ import { StatusBadge } from '@/components/StatusBadge'
 describe('StatusBadge', () => {
   it('renders user-facing status labels', () => {
     const { rerender } = render(<StatusBadge status="submitted" />)
-    expect(screen.getByText('Pending')).toBeInTheDocument()
+    expect(screen.getByText('PENDING')).toBeInTheDocument()
 
     rerender(<StatusBadge status="approved" />)
-    expect(screen.getByText('Approved')).toBeInTheDocument()
+    expect(screen.getByText('APPROVED')).toBeInTheDocument()
 
     rerender(<StatusBadge status="rejected" />)
-    expect(screen.getByText('Rejected')).toBeInTheDocument()
+    expect(screen.getByText('REJECTED')).toBeInTheDocument()
   })
 })

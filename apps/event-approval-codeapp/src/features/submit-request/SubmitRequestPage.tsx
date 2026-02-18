@@ -1,6 +1,7 @@
 import { useMemo, useState, type ChangeEvent, type FormEvent } from 'react'
 
 import { useViewState } from '@/app/useViewState'
+import { BackLink } from '@/components/BackLink'
 import type { SubmitRequestInput } from '@/models/eventApproval'
 import { validateSubmitRequestInput } from '@/features/submit-request/submitRequestSchema'
 import { ApiError } from '@/services/api-client/types'
@@ -12,6 +13,23 @@ import styles from './SubmitRequestPage.module.css'
 
 const roleOptions = ['speaker', 'organizer', 'assistant'] as const
 const transportationOptions = ['air', 'rail', 'car', 'bus', 'other'] as const
+
+const roleDisplayLabels: Record<(typeof roleOptions)[number], string> = {
+  speaker: 'Speaker',
+  organizer: 'Organizer',
+  assistant: 'Assistant',
+}
+
+const transportationDisplayLabels: Record<
+  (typeof transportationOptions)[number],
+  string
+> = {
+  air: 'Flight',
+  rail: 'Rail',
+  car: 'Car',
+  bus: 'Bus',
+  other: 'Other',
+}
 
 interface SubmitRequestFormValues {
   eventName: string
@@ -156,46 +174,51 @@ export function SubmitRequestPage({
   }
 
   return (
-    <section className={styles.container}>
-      <header>
-        <h2 className={styles.heading}>Submit Event Request</h2>
-        <p className={styles.description}>
-          Complete the form below to request event attendance approval.
-        </p>
-      </header>
+    <div className={styles.page}>
+      <BackLink label="Back to Dashboard" onClick={() => onCancel?.()} />
 
-      {isSubmitting ? <p role="status">Submitting request…</p> : null}
-      {viewState.isError ? (
-        <p className={styles.error} role="alert">
-          {viewState.error?.message ?? 'Unable to submit request.'}
-        </p>
-      ) : null}
-      {viewState.isStale ? (
-        <p className={styles.status} role="status">
-          Your data is stale. Reload and try again.
-        </p>
-      ) : null}
-      {websiteWarning ? (
-        <p className={styles.status} role="status">
-          {websiteWarning}
-        </p>
-      ) : null}
-      {viewState.data?.request ? (
-        <p className={styles.status} role="status">
-          Request {viewState.data.request.requestNumber} submitted with status{' '}
-          {viewState.data.request.status}.
-        </p>
-      ) : null}
+      <div className={styles.card}>
+        <header>
+          <p className={styles.cardTitle}>Submit Event Attendance Request</p>
+          <p className={styles.cardSubtitle}>
+            Fill out the form below to request approval for attending an event
+            as a speaker, organizer, or assistant
+          </p>
+        </header>
 
-      <form
-        className={styles.form}
-        onSubmit={(event) => {
-          void onFormSubmit(event)
-        }}
-      >
-        <section className={styles.section}>
-          <h3 className={styles.sectionTitle}>Event Information</h3>
-          <div className={styles.fieldsGrid}>
+        {isSubmitting ? <p role="status">Submitting request…</p> : null}
+        {viewState.isError ? (
+          <p className={styles.error} role="alert">
+            {viewState.error?.message ?? 'Unable to submit request.'}
+          </p>
+        ) : null}
+        {viewState.isStale ? (
+          <p className={styles.status} role="status">
+            Your data is stale. Reload and try again.
+          </p>
+        ) : null}
+        {websiteWarning ? (
+          <p className={styles.status} role="status">
+            {websiteWarning}
+          </p>
+        ) : null}
+        {viewState.data?.request ? (
+          <p className={styles.status} role="status">
+            Request {viewState.data.request.requestNumber} submitted with status{' '}
+            {viewState.data.request.status}.
+          </p>
+        ) : null}
+
+        <form
+          className={styles.form}
+          onSubmit={(event) => {
+            void onFormSubmit(event)
+          }}
+        >
+          {/* Section 1: Event Information */}
+          <section className={styles.section}>
+            <h3 className={styles.sectionTitle}>Event Information</h3>
+
             <div className={styles.field}>
               <label htmlFor="eventName">Event Name *</label>
               <input
@@ -240,17 +263,17 @@ export function SubmitRequestPage({
               >
                 {roleOptions.map((option) => (
                   <option key={option} value={option}>
-                    {option}
+                    {roleDisplayLabels[option]}
                   </option>
                 ))}
               </select>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <section className={styles.section}>
-          <h3 className={styles.sectionTitle}>Travel Details</h3>
-          <div className={styles.fieldsGrid}>
+          {/* Section 2: Travel Details */}
+          <section className={styles.section}>
+            <h3 className={styles.sectionTitle}>Travel Details</h3>
+
             <div className={styles.field}>
               <label htmlFor="transportationMode">Transportation Mode *</label>
               <select
@@ -261,150 +284,148 @@ export function SubmitRequestPage({
               >
                 {transportationOptions.map((option) => (
                   <option key={option} value={option}>
-                    {option}
+                    {transportationDisplayLabels[option]}
                   </option>
                 ))}
               </select>
             </div>
 
-            <div className={styles.field}>
-              <label htmlFor="origin">Origin *</label>
-              <input
-                id="origin"
-                name="origin"
-                placeholder="e.g., New York, NY"
-                value={values.origin}
-                onChange={updateField}
-              />
-              {errors.origin ? (
-                <p className={styles.error} role="alert">
-                  {errors.origin}
-                </p>
-              ) : null}
+            <div className={styles.twoCol}>
+              <div className={styles.field}>
+                <label htmlFor="origin">Origin *</label>
+                <input
+                  id="origin"
+                  name="origin"
+                  placeholder="e.g., New York, NY"
+                  value={values.origin}
+                  onChange={updateField}
+                />
+                {errors.origin ? (
+                  <p className={styles.error} role="alert">
+                    {errors.origin}
+                  </p>
+                ) : null}
+              </div>
+
+              <div className={styles.field}>
+                <label htmlFor="destination">Destination *</label>
+                <input
+                  id="destination"
+                  name="destination"
+                  placeholder="e.g., San Francisco, CA"
+                  value={values.destination}
+                  onChange={updateField}
+                />
+                {errors.destination ? (
+                  <p className={styles.error} role="alert">
+                    {errors.destination}
+                  </p>
+                ) : null}
+              </div>
+            </div>
+          </section>
+
+          {/* Section 3: Estimated Costs */}
+          <section className={styles.section}>
+            <h3 className={styles.sectionTitle}>Estimated Costs</h3>
+
+            <div className={styles.costsGrid}>
+              <div className={styles.field}>
+                <label htmlFor="registration">Registration Fee ($)</label>
+                <input
+                  id="registration"
+                  min="0"
+                  name="registration"
+                  type="number"
+                  placeholder="0.00"
+                  value={values.registration}
+                  onChange={updateField}
+                />
+              </div>
+
+              <div className={styles.field}>
+                <label htmlFor="travel">Travel Cost ($)</label>
+                <input
+                  id="travel"
+                  min="0"
+                  name="travel"
+                  type="number"
+                  placeholder="0.00"
+                  value={values.travel}
+                  onChange={updateField}
+                />
+              </div>
+
+              <div className={styles.field}>
+                <label htmlFor="hotels">Hotel Cost ($)</label>
+                <input
+                  id="hotels"
+                  min="0"
+                  name="hotels"
+                  type="number"
+                  placeholder="0.00"
+                  value={values.hotels}
+                  onChange={updateField}
+                />
+              </div>
+
+              <div className={styles.field}>
+                <label htmlFor="meals">Meals ($)</label>
+                <input
+                  id="meals"
+                  min="0"
+                  name="meals"
+                  type="number"
+                  placeholder="0.00"
+                  value={values.meals}
+                  onChange={updateField}
+                />
+              </div>
+
+              <div className={styles.field}>
+                <label htmlFor="other">Other Expenses ($)</label>
+                <input
+                  id="other"
+                  min="0"
+                  name="other"
+                  type="number"
+                  placeholder="0.00"
+                  value={values.other}
+                  onChange={updateField}
+                />
+              </div>
             </div>
 
-            <div className={styles.field}>
-              <label htmlFor="destination">Destination *</label>
-              <input
-                id="destination"
-                name="destination"
-                placeholder="e.g., San Francisco, CA"
-                value={values.destination}
-                onChange={updateField}
-              />
-              {errors.destination ? (
-                <p className={styles.error} role="alert">
-                  {errors.destination}
-                </p>
-              ) : null}
+            {errors['costEstimate.total'] ? (
+              <p className={styles.error} role="alert">
+                {errors['costEstimate.total']}
+              </p>
+            ) : null}
+
+            <div className={styles.totalCard}>
+              <span className={styles.totalLabel}>Total Estimated Cost:</span>
+              <span className={styles.totalValue}>${costTotal.toFixed(2)}</span>
             </div>
+          </section>
+
+          <div className={styles.actions}>
+            <button
+              className={styles.primaryAction}
+              disabled={isSubmitting}
+              type="submit"
+            >
+              {isSubmitting ? 'Submitting…' : 'Submit Request'}
+            </button>
+            <button
+              className={styles.secondaryAction}
+              type="button"
+              onClick={() => onCancel?.()}
+            >
+              Cancel
+            </button>
           </div>
-        </section>
-
-        <section className={styles.section}>
-          <h3 className={styles.sectionTitle}>Estimated Costs</h3>
-          <div className={styles.fieldsGrid}>
-            <div className={styles.field}>
-              <label htmlFor="registration">Registration Fee ($)</label>
-              <input
-                id="registration"
-                min="0"
-                name="registration"
-                type="number"
-                value={values.registration}
-                onChange={updateField}
-              />
-            </div>
-
-            <div className={styles.field}>
-              <label htmlFor="travel">Travel Cost ($)</label>
-              <input
-                id="travel"
-                min="0"
-                name="travel"
-                type="number"
-                value={values.travel}
-                onChange={updateField}
-              />
-            </div>
-
-            <div className={styles.field}>
-              <label htmlFor="hotels">Hotel Cost ($)</label>
-              <input
-                id="hotels"
-                min="0"
-                name="hotels"
-                type="number"
-                value={values.hotels}
-                onChange={updateField}
-              />
-            </div>
-
-            <div className={styles.field}>
-              <label htmlFor="meals">Meals ($)</label>
-              <input
-                id="meals"
-                min="0"
-                name="meals"
-                type="number"
-                value={values.meals}
-                onChange={updateField}
-              />
-            </div>
-
-            <div className={styles.field}>
-              <label htmlFor="other">Other Expenses ($)</label>
-              <input
-                id="other"
-                min="0"
-                name="other"
-                type="number"
-                value={values.other}
-                onChange={updateField}
-              />
-            </div>
-
-            <div className={styles.field}>
-              <label htmlFor="currencyCode">Currency</label>
-              <input
-                id="currencyCode"
-                maxLength={3}
-                name="currencyCode"
-                value={values.currencyCode}
-                onChange={updateField}
-              />
-            </div>
-          </div>
-
-          {errors['costEstimate.total'] ? (
-            <p className={styles.error} role="alert">
-              {errors['costEstimate.total']}
-            </p>
-          ) : null}
-
-          <div className={styles.totalCard}>
-            <span className={styles.totalLabel}>Total Estimated Cost</span>
-            <span className={styles.totalValue}>${costTotal.toFixed(2)}</span>
-          </div>
-        </section>
-
-        <div className={styles.actions}>
-          <button
-            className={styles.secondaryAction}
-            type="button"
-            onClick={() => onCancel?.()}
-          >
-            Cancel
-          </button>
-          <button
-            className={styles.primaryAction}
-            disabled={isSubmitting}
-            type="submit"
-          >
-            {isSubmitting ? 'Submitting…' : 'Submit Request'}
-          </button>
-        </div>
-      </form>
-    </section>
+        </form>
+      </div>
+    </div>
   )
 }

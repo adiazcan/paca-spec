@@ -23,7 +23,7 @@ describe('Header', () => {
     )
 
     expect(
-      screen.getByRole('heading', { name: 'Event Attendance' }),
+      screen.getByRole('heading', { name: 'Event Approval System' }),
     ).toBeInTheDocument()
     expect(screen.getByText('Jordan')).toBeInTheDocument()
     expect(

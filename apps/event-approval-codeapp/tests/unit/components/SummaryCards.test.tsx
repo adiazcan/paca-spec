@@ -7,7 +7,7 @@ describe('SummaryCards', () => {
   it('renders the four summary counts', () => {
     render(<SummaryCards approved={7} pending={4} rejected={2} total={13} />)
 
-    expect(screen.getByText('Total')).toBeInTheDocument()
+    expect(screen.getByText('Total Requests')).toBeInTheDocument()
     expect(screen.getByText('Pending')).toBeInTheDocument()
     expect(screen.getByText('Approved')).toBeInTheDocument()
     expect(screen.getByText('Rejected')).toBeInTheDocument()

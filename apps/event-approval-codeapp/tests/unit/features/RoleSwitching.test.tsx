@@ -37,7 +37,7 @@ describe('role switching', () => {
       screen.getByRole('button', { name: 'New Request' }),
     ).toBeInTheDocument()
     expect(
-      screen.getByRole('heading', { name: 'My Event Requests' }),
+      screen.getByRole('heading', { name: 'Event Approval System' }),
     ).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: 'New Request' }))
@@ -63,7 +63,7 @@ describe('role switching', () => {
     await user.click(screen.getByRole('button', { name: 'Switch to Employee' }))
 
     expect(
-      screen.getByRole('heading', { name: 'My Event Requests' }),
+      screen.getByRole('heading', { name: 'Event Approval System' }),
     ).toBeInTheDocument()
     expect(screen.getByText('Employee dashboard content')).toBeInTheDocument()
     expect(

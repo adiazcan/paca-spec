@@ -1,10 +1,12 @@
 .badge {
   border-radius: var(--radius-btn);
   color: #fff;
-  display: inline-block;
-  font-size: 0.8rem;
-  font-weight: 700;
-  padding: 4px 10px;
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 16px;
+  padding: 3px 9px;
 }
 
 .pending {

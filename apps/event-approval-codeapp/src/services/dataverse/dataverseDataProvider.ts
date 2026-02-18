@@ -195,16 +195,16 @@ export class DataverseDataProvider implements IDataProvider {
         ) as any,
         paca_origin: input.origin,
         paca_destination: input.destination,
-        paca_registrationfee: String(input.costEstimate.registration),
-        paca_travelcost: String(input.costEstimate.travel),
-        paca_hotelcost: String(input.costEstimate.hotels),
-        paca_mealscost: String(input.costEstimate.meals),
-        paca_otherexpenses: String(input.costEstimate.other),
+        paca_registrationfee: input.costEstimate.registration,
+        paca_travelcost: input.costEstimate.travel,
+        paca_hotelcost: input.costEstimate.hotels,
+        paca_mealscost: input.costEstimate.meals,
+        paca_otherexpenses: input.costEstimate.other,
         paca_currencycode: input.costEstimate.currencyCode,
-        paca_totalcost: String(input.costEstimate.total),
+        paca_totalcost: input.costEstimate.total,
         paca_statuscode: requestStatusToChoice('submitted') as any,
         paca_submittedat: now,
-        paca_version: '1',
+        paca_version: 1,
       } as any)
 
       requireSuccessResult(createResult, 'Create request')
@@ -501,7 +501,7 @@ export class DataverseDataProvider implements IDataProvider {
 
       await Paca_eventapprovalrequestsService.update(requestId, {
         paca_statuscode: requestStatusToChoice(newStatus) as any,
-        paca_version: String(newVersion),
+        paca_version: newVersion,
       })
 
       // Step 4: Create history entry

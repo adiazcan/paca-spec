@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { ApproverDashboardPage } from '@/features/approver-dashboard/ApproverDashboardPage'
 import { ApproverReviewPage } from '@/features/approver-review/ApproverReviewPage'
@@ -7,6 +7,8 @@ import { RequestDetailPage } from '@/features/request-detail/RequestDetailPage'
 import { SubmitRequestPage } from '@/features/submit-request/SubmitRequestPage'
 import { Header } from '@/components/Header'
 import type { AppScreen, DashboardSummary } from '@/models/eventApproval'
+import { identityService } from '@/services/dataverse/identityService'
+import '@/App.css'
 
 type AppRole = 'employee' | 'approver'
 const dashboardByRole: Record<AppRole, AppScreen> = {
@@ -103,6 +105,14 @@ export default function App({
     null,
   )
   const [pendingCount, setPendingCount] = useState(0)
+  const [userName, setUserName] = useState('')
+
+  useEffect(() => {
+    identityService
+      .getCurrentUser()
+      .then((user) => setUserName(user.displayName))
+      .catch(() => setUserName('Unknown User'))
+  }, [])
 
   function updateRole(nextRole: AppRole): void {
     setRole(nextRole)
@@ -115,9 +125,7 @@ export default function App({
   }
 
   return (
-    <div
-      style={{ margin: '0 auto', maxWidth: 1120, padding: 24, width: '100%' }}
-    >
+    <div className="appShell">
       <Header
         activeScreen={screen}
         canSwitchRole={canSwitchRole}
@@ -135,11 +143,13 @@ export default function App({
         }}
         pendingCount={pendingCount}
         role={role}
-        userName="Current User"
+        userName={userName}
       />
 
-      <main>
-        <h2>{routeHeadings[screen]}</h2>
+      <main className="main">
+        {screen !== 'employee-dashboard' && screen !== 'new-request' ? (
+          <h2 className="routeHeading">{routeHeadings[screen]}</h2>
+        ) : null}
         {renderScreen(screen, selectedRequestId, {
           onCancelSubmitRequest: () => {
             setScreen('employee-dashboard')

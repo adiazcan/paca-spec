@@ -8,18 +8,18 @@ interface StatusBadgeProps {
 
 function getLabel(status: RequestStatus) {
   if (status === 'submitted') {
-    return 'Pending'
+    return 'PENDING'
   }
 
   if (status === 'approved') {
-    return 'Approved'
+    return 'APPROVED'
   }
 
   if (status === 'rejected') {
-    return 'Rejected'
+    return 'REJECTED'
   }
 
-  return 'Draft'
+  return 'DRAFT'
 }
 
 function getClassName(status: RequestStatus) {

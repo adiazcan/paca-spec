@@ -99,30 +99,35 @@ export function EmployeeDashboardPage({
     [viewState.data],
   )
 
+  const shouldRenderDashboardContent =
+    !viewState.isLoading && !viewState.isError && !viewState.isStale
+
   return (
     <section className={styles.container}>
       <div className={styles.header}>
         <h2 className={styles.title}>My Event Requests</h2>
         <p className={styles.subtitle}>
-          Track the status of your event requests.
+          Track your event attendance requests and their status
         </p>
       </div>
 
-      {viewState.isLoading ? <p role="status">Loading requests…</p> : null}
-      {viewState.isEmpty ? <p role="status">No requests found yet.</p> : null}
+      {viewState.isLoading ? (
+        <p className={styles.stateMessage} role="status">
+          Loading requests…
+        </p>
+      ) : null}
       {viewState.isStale ? (
-        <p role="status">Your request data is stale. Refresh and try again.</p>
+        <p className={styles.stateMessage} role="status">
+          Your request data is stale. Refresh and try again.
+        </p>
       ) : null}
       {viewState.isError ? (
-        <p role="alert">
+        <p className={styles.stateMessage} role="alert">
           {viewState.error?.message ?? 'Unable to load your requests.'}
         </p>
       ) : null}
 
-      {!viewState.isLoading &&
-      !viewState.isEmpty &&
-      !viewState.isError &&
-      !viewState.isStale ? (
+      {shouldRenderDashboardContent ? (
         <>
           <SummaryCards
             approved={summary.approved}
@@ -131,21 +136,27 @@ export function EmployeeDashboardPage({
             total={summary.total}
           />
 
-          <div className={styles.requestList}>
-            {viewState.data?.map((request) => (
-              <RequestCard
-                destination={request.destination ?? '—'}
-                eventName={request.eventName}
-                key={request.requestId}
-                onViewDetails={onViewDetails}
-                requestId={request.requestId}
-                role={request.role}
-                status={request.status}
-                submittedAt={request.submittedAt}
-                totalCost={request.totalCost ?? 0}
-              />
-            ))}
-          </div>
+          {viewState.isEmpty ? (
+            <p className={styles.emptyMessage}>
+              No event requests yet. Click <strong>New Request</strong> to submit your first request.
+            </p>
+          ) : (
+            <div className={styles.requestList}>
+              {(viewState.data ?? []).map((request) => (
+                <RequestCard
+                  destination={request.destination ?? '—'}
+                  eventName={request.eventName}
+                  key={request.requestId}
+                  onViewDetails={onViewDetails}
+                  requestId={request.requestId}
+                  role={request.role}
+                  status={request.status}
+                  submittedAt={request.submittedAt}
+                  totalCost={request.totalCost ?? 0}
+                />
+              ))}
+            </div>
+          )}
         </>
       ) : null}
     </section>

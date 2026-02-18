@@ -1,70 +1,102 @@
 .header {
   background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-card);
-  margin-bottom: 20px;
-  padding: 16px;
+  border-bottom: 1px solid var(--color-border);
+  height: 69px;
+  padding: 16px 42px 1px;
 }
 
-.topRow {
+.container {
   align-items: center;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 12px;
+  min-height: 36px;
+}
+
+.brand {
+  align-items: center;
+  display: inline-flex;
+  gap: 8px;
+}
+
+.brandIcon {
+  color: var(--color-text-primary);
+  display: inline-flex;
 }
 
 .title {
   color: var(--color-text-primary);
-  font-size: 1.5rem;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
   margin: 0;
 }
 
 .userInfo {
   align-items: center;
-  display: flex;
-  gap: 10px;
+  display: inline-flex;
+  gap: 8px;
 }
 
 .userName {
-  color: var(--color-text-secondary);
-  font-size: 0.95rem;
+  color: var(--color-text-primary);
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .switchButton {
-  background: var(--color-bg-input);
+  background: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-btn);
   color: var(--color-text-primary);
   cursor: pointer;
-  font: inherit;
-  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 5px 13px;
 }
 
 .nav {
+  align-items: center;
   display: flex;
-  gap: 8px;
+  gap: 16px;
 }
 
 .navButton,
 .navActive {
   align-items: center;
+  background: transparent;
   border-radius: var(--radius-btn);
-  border: 1px solid var(--color-border);
+  border: 0;
   cursor: pointer;
   display: inline-flex;
-  font: inherit;
+  font-size: 14px;
   gap: 8px;
-  padding: 8px 12px;
+  line-height: 20px;
+  padding: 8px 16px;
 }
 
 .navButton {
-  background: var(--color-bg-card);
   color: var(--color-text-primary);
 }
 
 .navActive {
   background: var(--color-nav-active-bg);
   color: var(--color-nav-active-text);
+}
+
+.userSection {
+  align-items: center;
+  border-left: 1px solid var(--color-border);
+  display: inline-flex;
+  gap: 8px;
+  margin-left: 1px;
+  min-height: 32px;
+  padding-left: 17px;
+}
+
+.bellIcon,
+.userIcon {
+  color: var(--color-text-primary);
+  display: inline-flex;
 }
 
 .badge {

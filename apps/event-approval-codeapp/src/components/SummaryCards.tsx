@@ -16,7 +16,7 @@ export function SummaryCards({
   return (
     <section aria-label="Request summary" className={styles.grid}>
       <article className={styles.card}>
-        <p className={styles.label}>Total</p>
+        <p className={styles.label}>Total Requests</p>
         <p className={`${styles.value} ${styles.total}`}>{total}</p>
       </article>
       <article className={styles.card}>

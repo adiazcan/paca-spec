@@ -1,6 +1,6 @@
 .grid {
   display: grid;
-  gap: 12px;
+  gap: 16px;
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
@@ -8,17 +8,22 @@
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-card);
-  padding: 16px;
+  height: 100px;
+  overflow: hidden;
+  padding: 24px 24px 8px;
 }
 
 .label {
-  color: var(--color-text-secondary);
-  margin: 0 0 8px;
+  color: var(--color-text-muted);
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0 0 6px;
 }
 
 .value {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 36px;
   margin: 0;
 }
 

@@ -25,9 +25,9 @@ describe('RequestCard', () => {
     )
 
     expect(screen.getByText('React Summit')).toBeInTheDocument()
-    expect(screen.getByText('Approved')).toBeInTheDocument()
-    expect(screen.getByText('Role: speaker')).toBeInTheDocument()
-    expect(screen.getByText('Destination: Chicago')).toBeInTheDocument()
+    expect(screen.getByText('APPROVED')).toBeInTheDocument()
+    expect(screen.getByText('speaker')).toBeInTheDocument()
+    expect(screen.getByText('Chicago')).toBeInTheDocument()
     expect(
       screen.getByText('Requested by: Jordan Employee'),
     ).toBeInTheDocument()
